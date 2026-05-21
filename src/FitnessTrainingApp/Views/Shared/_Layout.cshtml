@@ -34,6 +34,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Playlist" asp-action="Index">My Playlist</a>
                             </li>
                         }
+                        @if (User.IsInRole("Trainer"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Trainer" asp-controller="Exercises" asp-action="Index">Trainer</a>
+                            </li>
+                        }
                     </ul>
                     <ul class="navbar-nav">
                         @if (User.Identity?.IsAuthenticated == true)

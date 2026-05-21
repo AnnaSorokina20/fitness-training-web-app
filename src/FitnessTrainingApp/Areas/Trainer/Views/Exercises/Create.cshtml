@@ -1,0 +1,19 @@
+@model FitnessTrainingApp.Models.ViewModels.Trainer.TrainerExerciseFormViewModel
+
+@{
+    ViewData["Title"] = "Create Exercise";
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Trainer area</p>
+        <h1>Create Exercise</h1>
+        <p class="lead">New exercises are submitted with PendingModeration status.</p>
+    </div>
+</section>
+
+<partial name="_ExerciseForm" model="Model" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -94,10 +94,111 @@ public sealed class ExerciseService(FitnessTrainingDbContext context) : IExercis
             .FirstOrDefaultAsync(exercise => exercise.Id == id);
     }
 
+    public async Task<IReadOnlyList<Exercise>> GetForTrainerAsync(int trainerId)
+    {
+        return await context.Exercises
+            .AsNoTracking()
+            .Where(exercise => exercise.TrainerId == trainerId && !exercise.IsDeleted)
+            .OrderByDescending(exercise => exercise.UpdatedAt ?? exercise.CreatedAt)
+            .ToListAsync();
+    }
+
+    public async Task<Exercise?> GetTrainerExerciseAsync(int id, int trainerId)
+    {
+        return await context.Exercises
+            .AsNoTracking()
+            .Include(exercise => exercise.MediaFiles)
+            .FirstOrDefaultAsync(exercise => exercise.Id == id && exercise.TrainerId == trainerId && !exercise.IsDeleted);
+    }
+
+    public async Task<bool> CreateForTrainerAsync(Exercise exercise, string mediaUrl)
+    {
+        if (!IsValidTrainerExercise(exercise, mediaUrl))
+        {
+            return false;
+        }
+
+        exercise.Status = ContentStatus.PendingModeration;
+        exercise.CreatedAt = DateTime.UtcNow;
+
+        context.Exercises.Add(exercise);
+        await context.SaveChangesAsync();
+
+        context.MediaFiles.Add(CreateMediaFile(exercise.Id, mediaUrl));
+        await context.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<bool> UpdateForTrainerAsync(int id, int trainerId, Exercise exercise, string mediaUrl)
+    {
+        if (!IsValidTrainerExercise(exercise, mediaUrl))
+        {
+            return false;
+        }
+
+        var existing = await context.Exercises
+            .Include(item => item.MediaFiles)
+            .FirstOrDefaultAsync(item => item.Id == id && item.TrainerId == trainerId && !item.IsDeleted);
+
+        if (existing is null)
+        {
+            return false;
+        }
+
+        existing.Name = exercise.Name.Trim();
+        existing.Description = exercise.Description.Trim();
+        existing.Difficulty = exercise.Difficulty;
+        existing.WorkoutType = exercise.WorkoutType;
+        existing.Equipment = exercise.Equipment.Trim();
+        existing.MuscleGroup = exercise.MuscleGroup.Trim();
+        existing.SafetyNotes = exercise.SafetyNotes.Trim();
+        existing.Status = ContentStatus.PendingModeration;
+        existing.UpdatedAt = DateTime.UtcNow;
+
+        var mediaFile = existing.MediaFiles.FirstOrDefault();
+
+        if (mediaFile is null)
+        {
+            context.MediaFiles.Add(CreateMediaFile(existing.Id, mediaUrl));
+        }
+        else
+        {
+            mediaFile.Url = mediaUrl.Trim();
+            mediaFile.FileName = Path.GetFileName(mediaUrl.Trim());
+            mediaFile.UpdatedAt = DateTime.UtcNow;
+        }
+
+        await context.SaveChangesAsync();
+        return true;
+    }
+
     private IQueryable<Exercise> PublishedExercises()
     {
         return context.Exercises
             .AsNoTracking()
             .Where(exercise => !exercise.IsDeleted && exercise.Status == ContentStatus.Published);
+    }
+
+    private static bool IsValidTrainerExercise(Exercise exercise, string mediaUrl)
+    {
+        return !string.IsNullOrWhiteSpace(exercise.Name) &&
+               !string.IsNullOrWhiteSpace(exercise.Description) &&
+               !string.IsNullOrWhiteSpace(exercise.Equipment) &&
+               !string.IsNullOrWhiteSpace(exercise.MuscleGroup) &&
+               !string.IsNullOrWhiteSpace(exercise.SafetyNotes) &&
+               !string.IsNullOrWhiteSpace(mediaUrl);
+    }
+
+    private static MediaFile CreateMediaFile(int exerciseId, string mediaUrl)
+    {
+        var normalizedUrl = mediaUrl.Trim();
+
+        return new MediaFile
+        {
+            ExerciseId = exerciseId,
+            Url = normalizedUrl,
+            FileName = Path.GetFileName(normalizedUrl),
+            ContentType = "image/jpeg"
+        };
     }
 }

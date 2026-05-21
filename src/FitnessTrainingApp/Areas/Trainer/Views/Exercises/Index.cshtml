@@ -1,0 +1,39 @@
+@model FitnessTrainingApp.Models.ViewModels.Trainer.TrainerExerciseIndexViewModel
+
+@{
+    ViewData["Title"] = "Trainer Exercises";
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Trainer area</p>
+        <h1>My Exercises</h1>
+        <p class="lead">Create and update exercise content before administrator moderation.</p>
+    </div>
+    <a class="btn btn-primary align-self-start" asp-area="Trainer" asp-controller="Exercises" asp-action="Create">Create exercise</a>
+</section>
+
+@if (Model.Exercises.Count == 0)
+{
+    <div class="empty-state">
+        <h2>No exercises yet</h2>
+        <p>Create the first exercise and submit it for moderation.</p>
+    </div>
+}
+else
+{
+    <section class="management-list" aria-label="Trainer exercise list">
+        @foreach (var exercise in Model.Exercises)
+        {
+            <article class="management-row">
+                <div>
+                    <span class="playlist-type">@exercise.Status</span>
+                    <h2>@exercise.Name</h2>
+                    <p>@exercise.WorkoutType · @exercise.Difficulty · @exercise.MuscleGroup</p>
+                    <span class="playlist-meta">Updated @exercise.UpdatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
+                </div>
+                <a class="btn btn-outline-primary" asp-area="Trainer" asp-controller="Exercises" asp-action="Edit" asp-route-id="@exercise.Id">Edit</a>
+            </article>
+        }
+    </section>
+}
