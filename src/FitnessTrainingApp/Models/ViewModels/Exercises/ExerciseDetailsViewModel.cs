@@ -15,4 +15,6 @@ public sealed class ExerciseDetailsViewModel
     public IReadOnlyList<string> MediaUrls { get; set; } = [];
     public double AverageRating { get; set; }
     public int CommentCount { get; set; }
+    public int? UserRating { get; set; }
+    public IReadOnlyList<ExerciseCommentViewModel> Comments { get; set; } = [];
 }

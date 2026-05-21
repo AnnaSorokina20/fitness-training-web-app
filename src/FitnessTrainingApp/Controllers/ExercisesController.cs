@@ -1,12 +1,17 @@
 using FitnessTrainingApp.Models.Entities;
 using FitnessTrainingApp.Models.Entities.Enums;
 using FitnessTrainingApp.Models.ViewModels.Exercises;
+using FitnessTrainingApp.Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using FitnessTrainingApp.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessTrainingApp.Controllers;
 
-public sealed class ExercisesController(IExerciseService exerciseService) : Controller
+public sealed class ExercisesController(
+    IExerciseService exerciseService,
+    ICommentService commentService,
+    IRatingService ratingService) : Controller
 {
     public async Task<IActionResult> Index(
         string? search,
@@ -46,6 +51,9 @@ public sealed class ExercisesController(IExerciseService exerciseService) : Cont
             return NotFound();
         }
 
+        var userId = User.Identity?.IsAuthenticated == true ? User.GetUserId() : 0;
+        var comments = await commentService.GetForExerciseAsync(id);
+
         return View(new ExerciseDetailsViewModel
         {
             Id = exercise.Id,
@@ -57,9 +65,34 @@ public sealed class ExercisesController(IExerciseService exerciseService) : Cont
             MuscleGroup = exercise.MuscleGroup,
             SafetyNotes = exercise.SafetyNotes,
             MediaUrls = exercise.MediaFiles.Select(file => file.Url).ToList(),
-            AverageRating = exercise.Ratings.Count == 0 ? 0 : exercise.Ratings.Average(rating => rating.Value),
-            CommentCount = exercise.Comments.Count
+            AverageRating = await ratingService.CalculateAverageAsync(id),
+            CommentCount = comments.Count,
+            UserRating = userId == 0 ? null : await ratingService.GetUserRatingAsync(userId, id),
+            Comments = comments.Select(comment => new ExerciseCommentViewModel
+            {
+                AuthorName = comment.User?.FullName ?? "User",
+                Text = comment.Text,
+                CreatedAt = comment.CreatedAt
+            }).ToList()
         });
+    }
+
+    [Authorize]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddComment(int exerciseId, string text)
+    {
+        await commentService.AddAsync(User.GetUserId(), exerciseId, text);
+        return RedirectToAction(nameof(Details), new { id = exerciseId });
+    }
+
+    [Authorize]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Rate(int exerciseId, int value)
+    {
+        await ratingService.AddOrUpdateAsync(User.GetUserId(), exerciseId, value);
+        return RedirectToAction(nameof(Details), new { id = exerciseId });
     }
 
     private static IReadOnlyList<Exercise> ApplyFilters(

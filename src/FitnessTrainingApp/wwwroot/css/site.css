@@ -464,6 +464,58 @@ body {
   gap: 8px;
 }
 
+.interaction-section {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.rating-form,
+.comment-form {
+  display: grid;
+  gap: 10px;
+  max-width: 520px;
+}
+
+.rating-form {
+  grid-template-columns: minmax(120px, 1fr) minmax(120px, 160px) auto;
+  align-items: end;
+}
+
+.rating-form label,
+.comment-form label {
+  color: #334e68;
+  font-weight: 650;
+}
+
+.comment-list {
+  display: grid;
+  gap: 10px;
+}
+
+.comment-item {
+  padding: 14px;
+  background: #f8fafc;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+}
+
+.comment-item div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.comment-item span,
+.muted-text {
+  color: #627d98;
+}
+
+.comment-item p {
+  margin: 0;
+}
+
 .workout-steps {
   display: grid;
   gap: 12px;
@@ -534,6 +586,10 @@ body {
   .playlist-actions {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .rating-form {
+    grid-template-columns: 1fr;
   }
 
   .filter-field-wide {

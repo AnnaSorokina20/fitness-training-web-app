@@ -53,6 +53,58 @@
 
             <h2>Safety notes</h2>
             <p>@Model.SafetyNotes</p>
+
+            <section class="interaction-section">
+                <h2>Ratings and comments</h2>
+
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <form asp-controller="Exercises" asp-action="Rate" method="post" class="rating-form">
+                        <input type="hidden" name="exerciseId" value="@Model.Id" />
+                        <label for="ratingValue">Your rating</label>
+                        <select id="ratingValue" name="value" class="form-select">
+                            @for (var value = 1; value <= 5; value++)
+                            {
+                                <option value="@value" selected="@(Model.UserRating == value)">@value</option>
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-primary">Save rating</button>
+                    </form>
+
+                    <form asp-controller="Exercises" asp-action="AddComment" method="post" class="comment-form">
+                        <input type="hidden" name="exerciseId" value="@Model.Id" />
+                        <label for="commentText">Comment</label>
+                        <textarea id="commentText" name="text" class="form-control" rows="4" maxlength="1000" required></textarea>
+                        <button type="submit" class="btn btn-primary">Add comment</button>
+                    </form>
+                }
+                else
+                {
+                    <div class="signin-note">
+                        <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">Log in</a> to rate and comment on this exercise.
+                    </div>
+                }
+
+                @if (Model.Comments.Count == 0)
+                {
+                    <p class="muted-text">No comments yet.</p>
+                }
+                else
+                {
+                    <div class="comment-list">
+                        @foreach (var comment in Model.Comments)
+                        {
+                            <article class="comment-item">
+                                <div>
+                                    <strong>@comment.AuthorName</strong>
+                                    <span>@comment.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
+                                </div>
+                                <p>@comment.Text</p>
+                            </article>
+                        }
+                    </div>
+                }
+            </section>
         </div>
 
         <aside class="details-side">
