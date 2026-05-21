@@ -49,10 +49,8 @@
 
 - C#;
 - ASP.NET Core MVC;
-- Razor Views;
 - Entity Framework Core;
 - PostgreSQL;
-- Swagger / OpenAPI.
 
 ### Тестування
 
