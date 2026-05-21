@@ -403,6 +403,67 @@ body {
   border-radius: 8px;
 }
 
+.details-action-form,
+.signin-note {
+  margin: -6px 0 18px;
+}
+
+.signin-note {
+  padding: 14px 16px;
+  color: #52606d;
+  background: #ffffff;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+}
+
+.playlist-list {
+  display: grid;
+  gap: 14px;
+}
+
+.playlist-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+}
+
+.playlist-type {
+  display: inline-flex;
+  margin-bottom: 8px;
+  padding: 4px 8px;
+  color: #0f5132;
+  background: #d1e7dd;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.playlist-item h2 {
+  margin: 0 0 6px;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.playlist-item p {
+  margin: 0 0 8px;
+  color: #52606d;
+}
+
+.playlist-meta {
+  color: #627d98;
+  font-weight: 650;
+}
+
+.playlist-actions {
+  display: flex;
+  gap: 8px;
+}
+
 .workout-steps {
   display: grid;
   gap: 12px;
@@ -465,8 +526,14 @@ body {
   .home-hero,
   .complex-preview-grid,
   .complex-preview,
-  .auth-layout {
+  .auth-layout,
+  .playlist-item {
     grid-template-columns: 1fr;
+  }
+
+  .playlist-actions {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .filter-field-wide {

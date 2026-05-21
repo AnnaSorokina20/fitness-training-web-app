@@ -20,6 +20,7 @@ builder.Services.AddDbContext<FitnessTrainingDbContext>(options =>
 builder.Services.AddScoped<IExerciseService, ExerciseService>();
 builder.Services.AddScoped<IWorkoutComplexService, WorkoutComplexService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPlaylistService, PlaylistService>();
 
 var app = builder.Build();
 

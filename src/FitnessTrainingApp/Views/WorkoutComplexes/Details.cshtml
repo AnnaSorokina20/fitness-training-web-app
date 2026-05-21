@@ -19,6 +19,21 @@
         </div>
     </header>
 
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <form asp-controller="Playlist" asp-action="AddWorkoutComplex" method="post" class="details-action-form">
+            <input type="hidden" name="workoutComplexId" value="@Model.Id" />
+            <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+            <button type="submit" class="btn btn-primary">Save to playlist</button>
+        </form>
+    }
+    else
+    {
+        <div class="signin-note">
+            <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">Log in</a> to save this workout complex to your playlist.
+        </div>
+    }
+
     <section class="details-layout">
         <div class="details-main">
             <h2>Workout sequence</h2>

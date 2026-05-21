@@ -1,0 +1,53 @@
+@model FitnessTrainingApp.Models.ViewModels.Playlist.PlaylistIndexViewModel
+@using FitnessTrainingApp.Models.Entities.Enums
+
+@{
+    ViewData["Title"] = "My Playlist";
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Personal content</p>
+        <h1>My Playlist</h1>
+        <p class="lead">Saved exercises and workout complexes are collected here for quick access.</p>
+    </div>
+</section>
+
+@if (Model.Items.Count == 0)
+{
+    <div class="empty-state">
+        <h2>Your playlist is empty</h2>
+        <p>Save exercises or workout complexes to build your personal training list.</p>
+        <a class="btn btn-primary" asp-controller="Exercises" asp-action="Index">Browse exercises</a>
+    </div>
+}
+else
+{
+    <section class="playlist-list" aria-label="Saved playlist items">
+        @foreach (var item in Model.Items)
+        {
+            <article class="playlist-item">
+                <div>
+                    <span class="playlist-type">@item.ItemType</span>
+                    <h2>@item.Title</h2>
+                    <p>@item.Description</p>
+                    <span class="playlist-meta">@item.Meta</span>
+                </div>
+                <div class="playlist-actions">
+                    @if (item.ItemType == PlaylistItemType.Exercise)
+                    {
+                        <a class="btn btn-outline-primary" asp-controller="Exercises" asp-action="Details" asp-route-id="@item.ItemId">Open</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-primary" asp-controller="WorkoutComplexes" asp-action="Details" asp-route-id="@item.ItemId">Open</a>
+                    }
+                    <form asp-controller="Playlist" asp-action="Remove" method="post">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-outline-danger">Remove</button>
+                    </form>
+                </div>
+            </article>
+        }
+    </section>
+}
