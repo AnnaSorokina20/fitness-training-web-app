@@ -12,6 +12,11 @@ builder.Services.AddScoped<IExerciseService, ExerciseService>();
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    await app.Services.InitializeDatabaseAsync();
+}
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
