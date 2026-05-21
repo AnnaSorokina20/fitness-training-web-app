@@ -9,6 +9,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<FitnessTrainingDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IExerciseService, ExerciseService>();
+builder.Services.AddScoped<IWorkoutComplexService, WorkoutComplexService>();
 
 var app = builder.Build();
 

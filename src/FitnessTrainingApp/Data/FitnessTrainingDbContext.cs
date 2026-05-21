@@ -59,6 +59,7 @@ public sealed class FitnessTrainingDbContext(DbContextOptions<FitnessTrainingDbC
                 .WithMany(user => user.WorkoutComplexes)
                 .HasForeignKey(complex => complex.TrainerId)
                 .OnDelete(DeleteBehavior.Restrict);
+            entity.HasData(SeedData.WorkoutComplexes);
         });
 
         modelBuilder.Entity<WorkoutComplexExercise>(entity =>
@@ -70,6 +71,7 @@ public sealed class FitnessTrainingDbContext(DbContextOptions<FitnessTrainingDbC
             entity.HasOne(item => item.Exercise)
                 .WithMany(exercise => exercise.WorkoutComplexExercises)
                 .HasForeignKey(item => item.ExerciseId);
+            entity.HasData(SeedData.WorkoutComplexExercises);
         });
 
         modelBuilder.Entity<PlaylistItem>(entity =>

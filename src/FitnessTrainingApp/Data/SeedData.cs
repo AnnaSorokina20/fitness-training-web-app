@@ -135,4 +135,56 @@ public static class SeedData
         new() { Id = 5, ExerciseId = 5, FileName = "deadlift.jpg", Url = "/images/exercises/deadlift.jpg", ContentType = "image/jpeg", CreatedAt = CreatedAt },
         new() { Id = 6, ExerciseId = 6, FileName = "push-up.jpg", Url = "/images/exercises/push-up.jpg", ContentType = "image/jpeg", CreatedAt = CreatedAt }
     ];
+
+    public static IReadOnlyList<WorkoutComplex> WorkoutComplexes =>
+    [
+        new()
+        {
+            Id = 1,
+            Name = "Home Starter Plan",
+            Description = "A simple beginner-friendly home workout for building consistency without gym equipment.",
+            Difficulty = DifficultyLevel.Beginner,
+            WorkoutType = WorkoutType.Home,
+            DurationMinutes = 25,
+            Status = ContentStatus.Published,
+            TrainerId = 2,
+            CreatedAt = CreatedAt
+        },
+        new()
+        {
+            Id = 2,
+            Name = "Gym Strength Base",
+            Description = "A structured gym workout focused on foundational compound strength exercises.",
+            Difficulty = DifficultyLevel.Intermediate,
+            WorkoutType = WorkoutType.Gym,
+            DurationMinutes = 50,
+            Status = ContentStatus.Published,
+            TrainerId = 2,
+            CreatedAt = CreatedAt
+        },
+        new()
+        {
+            Id = 3,
+            Name = "Upper Body Push",
+            Description = "A focused chest and triceps workout built around pushing movements.",
+            Difficulty = DifficultyLevel.Intermediate,
+            WorkoutType = WorkoutType.Gym,
+            DurationMinutes = 40,
+            Status = ContentStatus.Published,
+            TrainerId = 2,
+            CreatedAt = CreatedAt
+        }
+    ];
+
+    public static IReadOnlyList<WorkoutComplexExercise> WorkoutComplexExercises =>
+    [
+        new() { WorkoutComplexId = 1, ExerciseId = 1, OrderNumber = 1, Sets = 3, Repetitions = 12 },
+        new() { WorkoutComplexId = 1, ExerciseId = 6, OrderNumber = 2, Sets = 3, Repetitions = 10 },
+        new() { WorkoutComplexId = 1, ExerciseId = 2, OrderNumber = 3, Sets = 3, Repetitions = 45 },
+        new() { WorkoutComplexId = 2, ExerciseId = 5, OrderNumber = 1, Sets = 4, Repetitions = 6 },
+        new() { WorkoutComplexId = 2, ExerciseId = 4, OrderNumber = 2, Sets = 4, Repetitions = 8 },
+        new() { WorkoutComplexId = 2, ExerciseId = 3, OrderNumber = 3, Sets = 3, Repetitions = 10 },
+        new() { WorkoutComplexId = 3, ExerciseId = 4, OrderNumber = 1, Sets = 4, Repetitions = 8 },
+        new() { WorkoutComplexId = 3, ExerciseId = 6, OrderNumber = 2, Sets = 3, Repetitions = 12 }
+    ];
 }
