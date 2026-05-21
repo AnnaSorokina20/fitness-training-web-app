@@ -1,31 +1,66 @@
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using FitnessTrainingApp.Models;
+using FitnessTrainingApp.Models.Entities;
+using FitnessTrainingApp.Models.Entities.Enums;
+using FitnessTrainingApp.Models.ViewModels.Exercises;
+using FitnessTrainingApp.Models.ViewModels.Home;
+using FitnessTrainingApp.Models.ViewModels.WorkoutComplexes;
+using FitnessTrainingApp.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessTrainingApp.Controllers;
 
-public class HomeController : Controller
+public sealed class HomeController(
+    IExerciseService exerciseService,
+    IWorkoutComplexService workoutComplexService) : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public async Task<IActionResult> Index()
     {
-        _logger = logger;
-    }
+        var exercises = await exerciseService.GetAllAsync();
+        var complexes = await workoutComplexService.GetAllAsync();
 
-    public IActionResult Index()
-    {
-        return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
+        return View(new HomeIndexViewModel
+        {
+            ExerciseCount = exercises.Count,
+            WorkoutComplexCount = complexes.Count,
+            HomeWorkoutCount = exercises.Count(exercise => exercise.WorkoutType == WorkoutType.Home),
+            GymWorkoutCount = exercises.Count(exercise => exercise.WorkoutType == WorkoutType.Gym),
+            FeaturedExercises = exercises.Take(3).Select(ToExerciseCardViewModel).ToList(),
+            FeaturedComplexes = complexes.Take(2).Select(ToWorkoutComplexCardViewModel).ToList()
+        });
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+
+    private static ExerciseCardViewModel ToExerciseCardViewModel(Exercise exercise)
+    {
+        return new ExerciseCardViewModel
+        {
+            Id = exercise.Id,
+            Name = exercise.Name,
+            Description = exercise.Description,
+            Difficulty = exercise.Difficulty,
+            WorkoutType = exercise.WorkoutType,
+            Equipment = exercise.Equipment,
+            MuscleGroup = exercise.MuscleGroup
+        };
+    }
+
+    private static WorkoutComplexCardViewModel ToWorkoutComplexCardViewModel(WorkoutComplex complex)
+    {
+        return new WorkoutComplexCardViewModel
+        {
+            Id = complex.Id,
+            Name = complex.Name,
+            Description = complex.Description,
+            Difficulty = complex.Difficulty,
+            WorkoutType = complex.WorkoutType,
+            DurationMinutes = complex.DurationMinutes,
+            ExerciseCount = complex.WorkoutComplexExercises.Count
+        };
     }
 }

@@ -56,6 +56,142 @@ body {
   color: #52606d;
 }
 
+.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.8fr);
+  gap: 24px;
+  align-items: stretch;
+  margin: 30px 0;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+}
+
+.home-hero h1 {
+  max-width: 760px;
+  margin: 0;
+  font-size: 2.55rem;
+  font-weight: 800;
+  line-height: 1.08;
+}
+
+.home-hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.home-hero-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.home-hero-panel div {
+  display: flex;
+  min-height: 112px;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px;
+  background: #f0f4f8;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+}
+
+.home-hero-panel strong {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.home-hero-panel span {
+  margin-top: 8px;
+  color: #52606d;
+  font-weight: 650;
+}
+
+.home-section {
+  margin: 30px 0;
+}
+
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: end;
+  margin-bottom: 14px;
+}
+
+.section-title-row h2 {
+  margin: 0;
+  font-size: 1.55rem;
+  font-weight: 800;
+}
+
+.section-title-row a {
+  color: #0d6efd;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.complex-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.complex-preview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(160px, 0.35fr) auto;
+  gap: 18px;
+  align-items: center;
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+}
+
+.complex-preview h3 {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.complex-preview p {
+  margin: 0;
+  color: #52606d;
+}
+
+.complex-preview dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.complex-preview dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.complex-preview dt {
+  color: #627d98;
+  font-weight: 650;
+}
+
+.complex-preview dd {
+  margin-bottom: 6px;
+  text-align: right;
+}
+
 .catalog-filter {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -277,7 +413,10 @@ body {
 @media (max-width: 991px) {
   .catalog-filter,
   .exercise-grid,
-  .details-layout {
+  .details-layout,
+  .home-hero,
+  .complex-preview-grid,
+  .complex-preview {
     grid-template-columns: 1fr;
   }
 
