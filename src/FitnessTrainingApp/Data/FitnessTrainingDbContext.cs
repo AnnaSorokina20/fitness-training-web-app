@@ -28,6 +28,7 @@ public sealed class FitnessTrainingDbContext(DbContextOptions<FitnessTrainingDbC
             entity.Property(user => user.FullName).HasMaxLength(160).IsRequired();
             entity.Property(user => user.PasswordHash).HasMaxLength(512).IsRequired();
             entity.Property(user => user.Role).HasConversion<string>().HasMaxLength(32);
+            entity.HasData(SeedData.Users);
         });
 
         modelBuilder.Entity<Exercise>(entity =>
@@ -44,6 +45,7 @@ public sealed class FitnessTrainingDbContext(DbContextOptions<FitnessTrainingDbC
                 .WithMany(user => user.Exercises)
                 .HasForeignKey(exercise => exercise.TrainerId)
                 .OnDelete(DeleteBehavior.Restrict);
+            entity.HasData(SeedData.Exercises);
         });
 
         modelBuilder.Entity<WorkoutComplex>(entity =>
@@ -106,6 +108,7 @@ public sealed class FitnessTrainingDbContext(DbContextOptions<FitnessTrainingDbC
             entity.Property(file => file.FileName).HasMaxLength(255).IsRequired();
             entity.Property(file => file.Url).HasMaxLength(1000).IsRequired();
             entity.Property(file => file.ContentType).HasMaxLength(100).IsRequired();
+            entity.HasData(SeedData.MediaFiles);
         });
 
         modelBuilder.Entity<UserSession>(entity =>
