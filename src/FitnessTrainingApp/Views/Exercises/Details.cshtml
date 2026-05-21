@@ -1,0 +1,65 @@
+@model FitnessTrainingApp.Models.ViewModels.Exercises.ExerciseDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<article class="exercise-details">
+    <a class="back-link" asp-controller="Exercises" asp-action="Index">Back to catalog</a>
+
+    <header class="details-header">
+        <div>
+            <p class="eyebrow">@Model.WorkoutType workout</p>
+            <h1>@Model.Name</h1>
+            <p class="lead">@Model.Description</p>
+        </div>
+        <div class="details-rating">
+            <span class="rating-value">@(Model.AverageRating == 0 ? "No ratings" : Model.AverageRating.ToString("0.0"))</span>
+            <span>@Model.CommentCount comment@(Model.CommentCount == 1 ? "" : "s")</span>
+        </div>
+    </header>
+
+    <section class="details-layout">
+        <div class="details-main">
+            <h2>Exercise media</h2>
+            @if (Model.MediaUrls.Count == 0)
+            {
+                <div class="media-placeholder">Media will be added by the trainer.</div>
+            }
+            else
+            {
+                <div class="media-list">
+                    @foreach (var mediaUrl in Model.MediaUrls)
+                    {
+                        <div class="media-placeholder">@mediaUrl</div>
+                    }
+                </div>
+            }
+
+            <h2>Safety notes</h2>
+            <p>@Model.SafetyNotes</p>
+        </div>
+
+        <aside class="details-side">
+            <h2>Parameters</h2>
+            <dl>
+                <div>
+                    <dt>Difficulty</dt>
+                    <dd>@Model.Difficulty</dd>
+                </div>
+                <div>
+                    <dt>Workout type</dt>
+                    <dd>@Model.WorkoutType</dd>
+                </div>
+                <div>
+                    <dt>Equipment</dt>
+                    <dd>@Model.Equipment</dd>
+                </div>
+                <div>
+                    <dt>Muscle group</dt>
+                    <dd>@Model.MuscleGroup</dd>
+                </div>
+            </dl>
+        </aside>
+    </section>
+</article>

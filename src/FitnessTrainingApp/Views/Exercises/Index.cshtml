@@ -1,0 +1,89 @@
+@model FitnessTrainingApp.Models.ViewModels.Exercises.ExerciseCatalogViewModel
+@using FitnessTrainingApp.Models.Entities.Enums
+
+@{
+    ViewData["Title"] = "Exercise Catalog";
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Training content</p>
+        <h1>Exercise Catalog</h1>
+        <p class="lead">Find exercises for home and gym workouts by difficulty, equipment, and muscle group.</p>
+    </div>
+</section>
+
+<form class="catalog-filter" method="get" asp-controller="Exercises" asp-action="Index">
+    <div class="filter-field filter-field-wide">
+        <label asp-for="Search">Search</label>
+        <input asp-for="Search" class="form-control" placeholder="Name, muscle group, equipment" />
+    </div>
+
+    <div class="filter-field">
+        <label asp-for="Difficulty">Difficulty</label>
+        <select asp-for="Difficulty" class="form-select" asp-items="Html.GetEnumSelectList<DifficultyLevel>()">
+            <option value="">Any</option>
+        </select>
+    </div>
+
+    <div class="filter-field">
+        <label asp-for="WorkoutType">Workout type</label>
+        <select asp-for="WorkoutType" class="form-select" asp-items="Html.GetEnumSelectList<WorkoutType>()">
+            <option value="">Any</option>
+        </select>
+    </div>
+
+    <div class="filter-field">
+        <label asp-for="Equipment">Equipment</label>
+        <input asp-for="Equipment" class="form-control" placeholder="Barbell, mat..." />
+    </div>
+
+    <div class="filter-field">
+        <label asp-for="MuscleGroup">Muscle group</label>
+        <input asp-for="MuscleGroup" class="form-control" placeholder="Chest, legs..." />
+    </div>
+
+    <div class="filter-actions">
+        <button type="submit" class="btn btn-primary">Apply</button>
+        <a class="btn btn-outline-secondary" asp-controller="Exercises" asp-action="Index">Reset</a>
+    </div>
+</form>
+
+<section class="catalog-summary" aria-label="Catalog summary">
+    <span>@Model.Exercises.Count exercise@(Model.Exercises.Count == 1 ? "" : "s") found</span>
+</section>
+
+@if (Model.Exercises.Count == 0)
+{
+    <div class="empty-state">
+        <h2>No exercises found</h2>
+        <p>Try changing the search query or removing one of the filters.</p>
+    </div>
+}
+else
+{
+    <section class="exercise-grid" aria-label="Exercise list">
+        @foreach (var exercise in Model.Exercises)
+        {
+            <article class="exercise-card">
+                <div class="exercise-card-meta">
+                    <span>@exercise.WorkoutType</span>
+                    <span>@exercise.Difficulty</span>
+                </div>
+                <h2>@exercise.Name</h2>
+                <p>@exercise.Description</p>
+                <dl>
+                    <div>
+                        <dt>Muscle group</dt>
+                        <dd>@exercise.MuscleGroup</dd>
+                    </div>
+                    <div>
+                        <dt>Equipment</dt>
+                        <dd>@exercise.Equipment</dd>
+                    </div>
+                </dl>
+                <a class="btn btn-outline-primary" asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.Id">View details</a>
+            </article>
+        }
+    </section>
+}
