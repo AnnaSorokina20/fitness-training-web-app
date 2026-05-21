@@ -1,0 +1,42 @@
+@model FitnessTrainingApp.Models.ViewModels.Account.LoginViewModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<section class="auth-layout">
+    <div class="auth-panel">
+        <p class="eyebrow">Account access</p>
+        <h1>Log in</h1>
+        <p class="lead">Sign in to save exercises, manage your playlist, and leave ratings or comments.</p>
+
+        <form asp-controller="Account" asp-action="Login" method="post" class="auth-form">
+            <input asp-for="ReturnUrl" type="hidden" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div>
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" autocomplete="email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" autocomplete="current-password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Log in</button>
+        </form>
+    </div>
+
+    <aside class="auth-side">
+        <h2>New here?</h2>
+        <p>Create a user account to unlock personal features described in the project requirements.</p>
+        <a class="btn btn-outline-primary" asp-controller="Account" asp-action="Register">Create account</a>
+    </aside>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

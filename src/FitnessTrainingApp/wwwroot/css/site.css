@@ -27,6 +27,16 @@ body {
   font-weight: 700;
 }
 
+.nav-form {
+  margin: 0;
+}
+
+.nav-button {
+  border: 0;
+  background: transparent;
+  color: #212529;
+}
+
 .page-header,
 .details-header {
   display: flex;
@@ -190,6 +200,44 @@ body {
 .complex-preview dd {
   margin-bottom: 6px;
   text-align: right;
+}
+
+.auth-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.45fr);
+  gap: 18px;
+  align-items: start;
+  max-width: 980px;
+  margin: 34px auto;
+}
+
+.auth-panel,
+.auth-side {
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+}
+
+.auth-panel h1,
+.auth-side h2 {
+  font-weight: 800;
+}
+
+.auth-form {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.auth-form label {
+  margin-bottom: 6px;
+  color: #334e68;
+  font-weight: 650;
+}
+
+.auth-side p {
+  color: #52606d;
 }
 
 .catalog-filter {
@@ -416,7 +464,8 @@ body {
   .details-layout,
   .home-hero,
   .complex-preview-grid,
-  .complex-preview {
+  .complex-preview,
+  .auth-layout {
     grid-template-columns: 1fr;
   }
 

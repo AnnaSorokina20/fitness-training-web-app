@@ -1,11 +1,15 @@
 using FitnessTrainingApp.Models.Entities;
 using FitnessTrainingApp.Models.Entities.Enums;
+using FitnessTrainingApp.Infrastructure.Security;
 
 namespace FitnessTrainingApp.Data;
 
 public static class SeedData
 {
     private static readonly DateTime CreatedAt = new(2026, 5, 21, 0, 0, 0, DateTimeKind.Utc);
+    private static readonly byte[] AdminSalt = Convert.FromBase64String("YWRtaW4tc2VlZC1zYWx0IQ==");
+    private static readonly byte[] TrainerSalt = Convert.FromBase64String("dHJhaW5lci1zZWVkLTEhIQ==");
+    private static readonly byte[] UserSalt = Convert.FromBase64String("dXNlci1zZWVkLXNhbHQhIQ==");
 
     public static IReadOnlyList<User> Users =>
     [
@@ -14,7 +18,7 @@ public static class SeedData
             Id = 1,
             FullName = "System Administrator",
             Email = "admin@fit.local",
-            PasswordHash = "seed-admin-password-hash",
+            PasswordHash = PasswordHasher.HashPassword("Admin12345", AdminSalt),
             Role = UserRole.Administrator,
             CreatedAt = CreatedAt
         },
@@ -23,7 +27,7 @@ public static class SeedData
             Id = 2,
             FullName = "Olena Trainer",
             Email = "trainer@fit.local",
-            PasswordHash = "seed-trainer-password-hash",
+            PasswordHash = PasswordHasher.HashPassword("Trainer12345", TrainerSalt),
             Role = UserRole.Trainer,
             CreatedAt = CreatedAt
         },
@@ -32,7 +36,7 @@ public static class SeedData
             Id = 3,
             FullName = "Demo User",
             Email = "user@fit.local",
-            PasswordHash = "seed-user-password-hash",
+            PasswordHash = PasswordHasher.HashPassword("User12345", UserSalt),
             Role = UserRole.User,
             CreatedAt = CreatedAt
         }

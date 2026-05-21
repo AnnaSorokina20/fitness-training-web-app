@@ -21,6 +21,15 @@ public static class DatabaseInitializer
             {
                 context.Users.Add(user);
             }
+            else
+            {
+                var existingUser = await context.Users.FirstAsync(existing => existing.Id == user.Id);
+
+                if (existingUser.PasswordHash.StartsWith("seed-", StringComparison.Ordinal))
+                {
+                    existingUser.PasswordHash = user.PasswordHash;
+                }
+            }
         }
 
         foreach (var exercise in SeedData.Exercises)
