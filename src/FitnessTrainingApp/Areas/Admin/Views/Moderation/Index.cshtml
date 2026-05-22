@@ -1,0 +1,50 @@
+@model FitnessTrainingApp.Models.ViewModels.Admin.ModerationIndexViewModel
+
+@{
+    ViewData["Title"] = "Content Moderation";
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Admin area</p>
+        <h1>Content Moderation</h1>
+        <p class="lead">Review trainer-created exercises before they become visible in the public catalog.</p>
+    </div>
+</section>
+
+@if (Model.PendingExercises.Count == 0)
+{
+    <div class="empty-state">
+        <h2>No pending exercises</h2>
+        <p>Exercises submitted by trainers will appear here.</p>
+    </div>
+}
+else
+{
+    <section class="management-list" aria-label="Pending exercises">
+        @foreach (var exercise in Model.PendingExercises)
+        {
+            <article class="management-row moderation-row">
+                <div>
+                    <span class="playlist-type">PendingModeration</span>
+                    <h2>@exercise.Name</h2>
+                    <p>@exercise.Description</p>
+                    <span class="playlist-meta">
+                        @exercise.TrainerName · @exercise.WorkoutType · @exercise.Difficulty · @exercise.MuscleGroup · @exercise.Equipment
+                    </span>
+                    <span class="playlist-meta">Submitted @exercise.SubmittedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
+                </div>
+                <div class="playlist-actions">
+                    <form asp-area="Admin" asp-controller="Moderation" asp-action="PublishExercise" method="post">
+                        <input type="hidden" name="id" value="@exercise.Id" />
+                        <button type="submit" class="btn btn-primary">Publish</button>
+                    </form>
+                    <form asp-area="Admin" asp-controller="Moderation" asp-action="RejectExercise" method="post">
+                        <input type="hidden" name="id" value="@exercise.Id" />
+                        <button type="submit" class="btn btn-outline-danger">Reject</button>
+                    </form>
+                </div>
+            </article>
+        }
+    </section>
+}

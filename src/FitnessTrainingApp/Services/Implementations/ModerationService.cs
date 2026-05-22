@@ -1,0 +1,57 @@
+using FitnessTrainingApp.Data;
+using FitnessTrainingApp.Models.Entities;
+using FitnessTrainingApp.Models.Entities.Enums;
+using FitnessTrainingApp.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
+namespace FitnessTrainingApp.Services.Implementations;
+
+public sealed class ModerationService(FitnessTrainingDbContext context) : IModerationService
+{
+    public async Task<IReadOnlyList<Exercise>> GetPendingExercisesAsync()
+    {
+        return await context.Exercises
+            .AsNoTracking()
+            .Include(exercise => exercise.Trainer)
+            .Where(exercise => !exercise.IsDeleted && exercise.Status == ContentStatus.PendingModeration)
+            .OrderBy(exercise => exercise.UpdatedAt ?? exercise.CreatedAt)
+            .ToListAsync();
+    }
+
+    public async Task<bool> PublishExerciseAsync(int exerciseId, int adminId)
+    {
+        return await ChangeExerciseStatusAsync(exerciseId, adminId, ContentStatus.Published, "PublishExercise");
+    }
+
+    public async Task<bool> RejectExerciseAsync(int exerciseId, int adminId)
+    {
+        return await ChangeExerciseStatusAsync(exerciseId, adminId, ContentStatus.Rejected, "RejectExercise");
+    }
+
+    private async Task<bool> ChangeExerciseStatusAsync(int exerciseId, int adminId, ContentStatus status, string action)
+    {
+        var exercise = await context.Exercises.FirstOrDefaultAsync(existing =>
+            existing.Id == exerciseId &&
+            !existing.IsDeleted &&
+            existing.Status == ContentStatus.PendingModeration);
+
+        if (exercise is null)
+        {
+            return false;
+        }
+
+        exercise.Status = status;
+        exercise.UpdatedAt = DateTime.UtcNow;
+
+        context.AdminLogs.Add(new AdminLog
+        {
+            AdminId = adminId,
+            Action = action,
+            EntityName = nameof(Exercise),
+            EntityId = exercise.Id
+        });
+
+        await context.SaveChangesAsync();
+        return true;
+    }
+}

@@ -543,6 +543,15 @@ body {
   color: #52606d;
 }
 
+.moderation-row {
+  align-items: start;
+}
+
+.moderation-row .playlist-meta {
+  display: block;
+  margin-top: 4px;
+}
+
 .management-form {
   padding: 22px;
   background: #ffffff;
