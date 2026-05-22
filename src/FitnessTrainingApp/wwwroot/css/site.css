@@ -610,6 +610,29 @@ body {
   font-weight: 800;
 }
 
+.exercise-picker {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.exercise-picker h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.exercise-picker-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 120px 140px;
+  gap: 12px;
+  align-items: start;
+  padding: 14px;
+  background: #f8fafc;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+}
+
 .workout-steps {
   display: grid;
   gap: 12px;
@@ -684,6 +707,10 @@ body {
   }
 
   .log-row {
+    grid-template-columns: 1fr;
+  }
+
+  .exercise-picker-row {
     grid-template-columns: 1fr;
   }
 

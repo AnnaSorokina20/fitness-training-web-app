@@ -37,7 +37,10 @@
                         @if (User.IsInRole("Trainer"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Trainer" asp-controller="Exercises" asp-action="Index">Trainer</a>
+                                <a class="nav-link text-dark" asp-area="Trainer" asp-controller="Exercises" asp-action="Index">Trainer Exercises</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Trainer" asp-controller="WorkoutComplexes" asp-action="Index">Trainer Complexes</a>
                             </li>
                         }
                         @if (User.IsInRole("Administrator"))

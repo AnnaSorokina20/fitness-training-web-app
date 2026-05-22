@@ -1,0 +1,84 @@
+@model FitnessTrainingApp.Models.ViewModels.Trainer.TrainerWorkoutComplexFormViewModel
+@using FitnessTrainingApp.Models.Entities.Enums
+
+@{
+    ViewData["Title"] = "Create Workout Complex";
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Trainer area</p>
+        <h1>Create Workout Complex</h1>
+        <p class="lead">New complexes are submitted with PendingModeration status.</p>
+    </div>
+</section>
+
+<form method="post" class="management-form">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-grid">
+        <div class="form-field form-field-wide">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="Difficulty"></label>
+            <select asp-for="Difficulty" class="form-select" asp-items="Html.GetEnumSelectList<DifficultyLevel>()"></select>
+            <span asp-validation-for="Difficulty" class="text-danger"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="WorkoutType">Workout type</label>
+            <select asp-for="WorkoutType" class="form-select" asp-items="Html.GetEnumSelectList<WorkoutType>()"></select>
+            <span asp-validation-for="WorkoutType" class="text-danger"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="DurationMinutes"></label>
+            <input asp-for="DurationMinutes" class="form-control" />
+            <span asp-validation-for="DurationMinutes" class="text-danger"></span>
+        </div>
+
+        <div class="form-field form-field-wide">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+    </div>
+
+    <section class="exercise-picker">
+        <h2>Exercises</h2>
+        @for (var i = 0; i < Model.Exercises.Count; i++)
+        {
+            <div class="exercise-picker-row">
+                <div class="form-field">
+                    <label asp-for="Exercises[i].ExerciseId">Exercise @(i + 1)</label>
+                    <select asp-for="Exercises[i].ExerciseId" class="form-select" asp-items="Model.ExerciseOptions">
+                        <option value="0">Not selected</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label asp-for="Exercises[i].Sets"></label>
+                    <input asp-for="Exercises[i].Sets" class="form-control" />
+                    <span asp-validation-for="Exercises[i].Sets" class="text-danger"></span>
+                </div>
+                <div class="form-field">
+                    <label asp-for="Exercises[i].Repetitions"></label>
+                    <input asp-for="Exercises[i].Repetitions" class="form-control" />
+                    <span asp-validation-for="Exercises[i].Repetitions" class="text-danger"></span>
+                </div>
+            </div>
+        }
+    </section>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a class="btn btn-outline-secondary" asp-area="Trainer" asp-controller="WorkoutComplexes" asp-action="Index">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
