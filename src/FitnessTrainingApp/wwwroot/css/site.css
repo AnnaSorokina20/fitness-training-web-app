@@ -661,6 +661,13 @@ body {
   margin-top: 20px;
 }
 
+.exercise-picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .exercise-picker h2 {
   margin: 0;
   font-size: 1.2rem;
@@ -669,13 +676,23 @@ body {
 
 .exercise-picker-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 120px 140px;
+  grid-template-columns: minmax(0, 1fr) 120px 140px auto;
   gap: 12px;
   align-items: start;
   padding: 14px;
   background: #f8fafc;
   border: 1px solid #d9e2ec;
   border-radius: 8px;
+}
+
+.exercise-picker-title {
+  grid-column: 1 / 4;
+  color: #334e68;
+  font-weight: 800;
+}
+
+.exercise-remove {
+  justify-self: end;
 }
 
 .workout-steps {
@@ -757,6 +774,14 @@ body {
 
   .exercise-picker-row {
     grid-template-columns: 1fr;
+  }
+
+  .exercise-picker-title {
+    grid-column: auto;
+  }
+
+  .exercise-remove {
+    justify-self: stretch;
   }
 
   .playlist-actions {

@@ -96,6 +96,7 @@ public sealed class WorkoutComplexService(FitnessTrainingDbContext context) : IW
                !string.IsNullOrWhiteSpace(complex.Description) &&
                complex.DurationMinutes > 0 &&
                exercises.Count > 0 &&
+               exercises.Select(item => item.ExerciseId).Distinct().Count() == exercises.Count &&
                exercises.All(item => item.ExerciseId > 0 && item.Sets > 0 && item.Repetitions > 0);
     }
 }

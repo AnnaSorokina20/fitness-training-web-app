@@ -69,5 +69,33 @@ public static class DatabaseInitializer
         }
 
         await context.SaveChangesAsync();
+        await ResetPostgresSequencesAsync(context);
+    }
+
+    private static async Task ResetPostgresSequencesAsync(FitnessTrainingDbContext context)
+    {
+        if (!context.Database.IsNpgsql())
+        {
+            return;
+        }
+
+        await ResetPostgresSequenceAsync(context, "Users");
+        await ResetPostgresSequenceAsync(context, "Exercises");
+        await ResetPostgresSequenceAsync(context, "MediaFiles");
+        await ResetPostgresSequenceAsync(context, "WorkoutComplexes");
+    }
+
+    private static async Task ResetPostgresSequenceAsync(FitnessTrainingDbContext context, string tableName)
+    {
+        var sql = tableName switch
+        {
+            "Users" => """SELECT setval(pg_get_serial_sequence('"public"."Users"', 'Id'), COALESCE((SELECT MAX("Id") FROM "public"."Users"), 1), (SELECT COUNT(*) > 0 FROM "public"."Users"));""",
+            "Exercises" => """SELECT setval(pg_get_serial_sequence('"public"."Exercises"', 'Id'), COALESCE((SELECT MAX("Id") FROM "public"."Exercises"), 1), (SELECT COUNT(*) > 0 FROM "public"."Exercises"));""",
+            "MediaFiles" => """SELECT setval(pg_get_serial_sequence('"public"."MediaFiles"', 'Id'), COALESCE((SELECT MAX("Id") FROM "public"."MediaFiles"), 1), (SELECT COUNT(*) > 0 FROM "public"."MediaFiles"));""",
+            "WorkoutComplexes" => """SELECT setval(pg_get_serial_sequence('"public"."WorkoutComplexes"', 'Id'), COALESCE((SELECT MAX("Id") FROM "public"."WorkoutComplexes"), 1), (SELECT COUNT(*) > 0 FROM "public"."WorkoutComplexes"));""",
+            _ => throw new InvalidOperationException("Unknown seeded table.")
+        };
+
+        await context.Database.ExecuteSqlRawAsync(sql);
     }
 }

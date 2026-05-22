@@ -26,8 +26,6 @@ public sealed class TrainerWorkoutComplexFormViewModel
 
     public List<TrainerWorkoutComplexExerciseFormViewModel> Exercises { get; set; } =
     [
-        new(),
-        new(),
         new()
     ];
 

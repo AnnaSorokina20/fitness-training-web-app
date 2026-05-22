@@ -48,29 +48,63 @@
         </div>
     </div>
 
-    <section class="exercise-picker">
-        <h2>Exercises</h2>
-        @for (var i = 0; i < Model.Exercises.Count; i++)
-        {
-            <div class="exercise-picker-row">
+    <section class="exercise-picker" data-exercise-picker>
+        <div class="exercise-picker-header">
+            <h2>Exercises</h2>
+            <button type="button" class="btn btn-outline-primary" data-add-exercise>Add exercise</button>
+        </div>
+        <div data-exercise-list>
+            @for (var i = 0; i < Model.Exercises.Count; i++)
+            {
+                <div class="exercise-picker-row" data-exercise-row>
+                    <div class="exercise-picker-title">Exercise @(i + 1)</div>
+                    <button type="button" class="btn btn-outline-danger exercise-remove" data-remove-exercise>Remove</button>
+
+                    <div class="form-field">
+                        <label asp-for="Exercises[i].ExerciseId">Exercise</label>
+                        <select asp-for="Exercises[i].ExerciseId" class="form-select" asp-items="Model.ExerciseOptions">
+                            <option value="0">Not selected</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label asp-for="Exercises[i].Sets"></label>
+                        <input asp-for="Exercises[i].Sets" class="form-control" />
+                        <span asp-validation-for="Exercises[i].Sets" class="text-danger"></span>
+                    </div>
+                    <div class="form-field">
+                        <label asp-for="Exercises[i].Repetitions"></label>
+                        <input asp-for="Exercises[i].Repetitions" class="form-control" />
+                        <span asp-validation-for="Exercises[i].Repetitions" class="text-danger"></span>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <template data-exercise-template>
+            <div class="exercise-picker-row" data-exercise-row>
+                <div class="exercise-picker-title">Exercise __NUMBER__</div>
+                <button type="button" class="btn btn-outline-danger exercise-remove" data-remove-exercise>Remove</button>
+
                 <div class="form-field">
-                    <label asp-for="Exercises[i].ExerciseId">Exercise @(i + 1)</label>
-                    <select asp-for="Exercises[i].ExerciseId" class="form-select" asp-items="Model.ExerciseOptions">
+                    <label for="Exercises___INDEX____ExerciseId">Exercise</label>
+                    <select id="Exercises___INDEX____ExerciseId" name="Exercises[__INDEX__].ExerciseId" class="form-select">
                         <option value="0">Not selected</option>
+                        @foreach (var option in Model.ExerciseOptions)
+                        {
+                            <option value="@option.Value">@option.Text</option>
+                        }
                     </select>
                 </div>
                 <div class="form-field">
-                    <label asp-for="Exercises[i].Sets"></label>
-                    <input asp-for="Exercises[i].Sets" class="form-control" />
-                    <span asp-validation-for="Exercises[i].Sets" class="text-danger"></span>
+                    <label for="Exercises___INDEX____Sets">Sets</label>
+                    <input id="Exercises___INDEX____Sets" name="Exercises[__INDEX__].Sets" class="form-control" type="number" value="3" min="1" max="20" />
                 </div>
                 <div class="form-field">
-                    <label asp-for="Exercises[i].Repetitions"></label>
-                    <input asp-for="Exercises[i].Repetitions" class="form-control" />
-                    <span asp-validation-for="Exercises[i].Repetitions" class="text-danger"></span>
+                    <label for="Exercises___INDEX____Repetitions">Repetitions</label>
+                    <input id="Exercises___INDEX____Repetitions" name="Exercises[__INDEX__].Repetitions" class="form-control" type="number" value="10" min="1" max="100" />
                 </div>
             </div>
-        }
+        </template>
     </section>
 
     <div class="form-actions">
@@ -81,4 +115,5 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/workout-complex-form.js" asp-append-version="true"></script>
 }

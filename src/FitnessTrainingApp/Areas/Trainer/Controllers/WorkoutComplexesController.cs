@@ -52,6 +52,11 @@ public sealed class WorkoutComplexesController(IWorkoutComplexService workoutCom
             ModelState.AddModelError(string.Empty, "Select at least one exercise.");
         }
 
+        if (selectedExercises.Select(item => item.ExerciseId).Distinct().Count() != selectedExercises.Count)
+        {
+            ModelState.AddModelError(string.Empty, "Select each exercise only once.");
+        }
+
         if (!ModelState.IsValid)
         {
             return View(await PopulateExerciseOptionsAsync(model));
