@@ -11,5 +11,6 @@ public sealed class TrainerWorkoutComplexListItemViewModel
     public int DurationMinutes { get; set; }
     public int ExerciseCount { get; set; }
     public ContentStatus Status { get; set; }
+    public string? ModerationComment { get; set; }
     public DateTime UpdatedAt { get; set; }
 }

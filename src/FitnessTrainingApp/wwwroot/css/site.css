@@ -597,6 +597,36 @@ body {
   margin-top: 4px;
 }
 
+.moderation-comment {
+  margin: 8px 0;
+  padding: 10px 12px;
+  color: #842029;
+  background: #f8d7da;
+  border: 1px solid #f5c2c7;
+  border-radius: 8px;
+}
+
+.moderation-actions {
+  display: grid;
+  grid-template-columns: auto minmax(280px, 520px);
+  gap: 12px;
+  align-items: end;
+  margin: -6px 0 18px;
+}
+
+.moderation-reject-form {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) auto;
+  gap: 8px;
+  align-items: end;
+}
+
+.moderation-reject-form label {
+  grid-column: 1 / -1;
+  color: #334e68;
+  font-weight: 650;
+}
+
 .management-form {
   padding: 22px;
   background: #ffffff;
@@ -760,7 +790,12 @@ body {
   .auth-layout,
   .playlist-item,
   .management-row,
+  .moderation-actions,
   .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .moderation-reject-form {
     grid-template-columns: 1fr;
   }
 

@@ -38,6 +38,7 @@ public sealed class FitnessTrainingDbContext(DbContextOptions<FitnessTrainingDbC
             entity.Property(exercise => exercise.Equipment).HasMaxLength(160).IsRequired();
             entity.Property(exercise => exercise.MuscleGroup).HasMaxLength(120).IsRequired();
             entity.Property(exercise => exercise.SafetyNotes).HasMaxLength(1000);
+            entity.Property(exercise => exercise.ModerationComment).HasMaxLength(1000);
             entity.Property(exercise => exercise.Difficulty).HasConversion<string>().HasMaxLength(32);
             entity.Property(exercise => exercise.WorkoutType).HasConversion<string>().HasMaxLength(32);
             entity.Property(exercise => exercise.Status).HasConversion<string>().HasMaxLength(32);
@@ -52,6 +53,7 @@ public sealed class FitnessTrainingDbContext(DbContextOptions<FitnessTrainingDbC
         {
             entity.Property(complex => complex.Name).HasMaxLength(160).IsRequired();
             entity.Property(complex => complex.Description).HasMaxLength(2000).IsRequired();
+            entity.Property(complex => complex.ModerationComment).HasMaxLength(1000);
             entity.Property(complex => complex.Difficulty).HasConversion<string>().HasMaxLength(32);
             entity.Property(complex => complex.WorkoutType).HasConversion<string>().HasMaxLength(32);
             entity.Property(complex => complex.Status).HasConversion<string>().HasMaxLength(32);

@@ -12,5 +12,7 @@ public sealed class PendingExerciseViewModel
     public WorkoutType WorkoutType { get; set; }
     public string MuscleGroup { get; set; } = string.Empty;
     public string Equipment { get; set; } = string.Empty;
+    public string SafetyNotes { get; set; } = string.Empty;
+    public IReadOnlyList<string> MediaUrls { get; set; } = [];
     public DateTime SubmittedAt { get; set; }
 }

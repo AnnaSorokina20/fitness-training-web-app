@@ -10,6 +10,7 @@ public sealed class WorkoutComplex : BaseEntity
     public WorkoutType WorkoutType { get; set; }
     public int DurationMinutes { get; set; }
     public ContentStatus Status { get; set; } = ContentStatus.PendingModeration;
+    public string? ModerationComment { get; set; }
     public int TrainerId { get; set; }
 
     public User? Trainer { get; set; }

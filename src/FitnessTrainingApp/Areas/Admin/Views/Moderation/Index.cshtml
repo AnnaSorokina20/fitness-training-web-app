@@ -43,6 +43,7 @@
                         <span class="playlist-meta">Submitted @exercise.SubmittedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
                     </div>
                     <div class="playlist-actions">
+                        <a class="btn btn-outline-primary" asp-area="Admin" asp-controller="Moderation" asp-action="ExerciseDetails" asp-route-id="@exercise.Id">Review</a>
                         <form asp-area="Admin" asp-controller="Moderation" asp-action="PublishExercise" method="post">
                             <input type="hidden" name="id" value="@exercise.Id" />
                             <button type="submit" class="btn btn-primary">Publish</button>
@@ -89,6 +90,7 @@
                         <span class="playlist-meta">Submitted @complex.SubmittedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
                     </div>
                     <div class="playlist-actions">
+                        <a class="btn btn-outline-primary" asp-area="Admin" asp-controller="Moderation" asp-action="WorkoutComplexDetails" asp-route-id="@complex.Id">Review</a>
                         <form asp-area="Admin" asp-controller="Moderation" asp-action="PublishWorkoutComplex" method="post">
                             <input type="hidden" name="id" value="@complex.Id" />
                             <button type="submit" class="btn btn-primary">Publish</button>

@@ -10,7 +10,19 @@ public static class DatabaseInitializer
         var context = scope.ServiceProvider.GetRequiredService<FitnessTrainingDbContext>();
 
         await context.Database.EnsureCreatedAsync();
+        await ApplySchemaUpdatesAsync(context);
         await SeedMissingDataAsync(context);
+    }
+
+    private static async Task ApplySchemaUpdatesAsync(FitnessTrainingDbContext context)
+    {
+        if (!context.Database.IsNpgsql())
+        {
+            return;
+        }
+
+        await context.Database.ExecuteSqlRawAsync("""ALTER TABLE "Exercises" ADD COLUMN IF NOT EXISTS "ModerationComment" character varying(1000);""");
+        await context.Database.ExecuteSqlRawAsync("""ALTER TABLE "WorkoutComplexes" ADD COLUMN IF NOT EXISTS "ModerationComment" character varying(1000);""");
     }
 
     private static async Task SeedMissingDataAsync(FitnessTrainingDbContext context)

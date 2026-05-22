@@ -10,5 +10,6 @@ public sealed class TrainerExerciseListItemViewModel
     public WorkoutType WorkoutType { get; set; }
     public string MuscleGroup { get; set; } = string.Empty;
     public ContentStatus Status { get; set; }
+    public string? ModerationComment { get; set; }
     public DateTime UpdatedAt { get; set; }
 }

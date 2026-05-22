@@ -32,6 +32,10 @@ else
                     <span class="status-badge status-badge-@statusClass">@complex.Status</span>
                     <h2>@complex.Name</h2>
                     <p>@complex.WorkoutType · @complex.Difficulty · @complex.DurationMinutes min · @complex.ExerciseCount exercises</p>
+                    @if (complex.Status == FitnessTrainingApp.Models.Entities.Enums.ContentStatus.Rejected && !string.IsNullOrWhiteSpace(complex.ModerationComment))
+                    {
+                        <p class="moderation-comment"><strong>Admin comment:</strong> @complex.ModerationComment</p>
+                    }
                     <span class="playlist-meta">Updated @complex.UpdatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
                 </div>
             </article>

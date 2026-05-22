@@ -12,6 +12,7 @@ public sealed class Exercise : BaseEntity
     public string MuscleGroup { get; set; } = string.Empty;
     public string SafetyNotes { get; set; } = string.Empty;
     public ContentStatus Status { get; set; } = ContentStatus.PendingModeration;
+    public string? ModerationComment { get; set; }
     public int TrainerId { get; set; }
 
     public User? Trainer { get; set; }

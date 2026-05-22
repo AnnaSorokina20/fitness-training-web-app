@@ -26,6 +26,7 @@ public sealed class ExercisesController(IExerciseService exerciseService) : Cont
                 WorkoutType = exercise.WorkoutType,
                 MuscleGroup = exercise.MuscleGroup,
                 Status = exercise.Status,
+                ModerationComment = exercise.ModerationComment,
                 UpdatedAt = exercise.UpdatedAt ?? exercise.CreatedAt
             }).ToList()
         });

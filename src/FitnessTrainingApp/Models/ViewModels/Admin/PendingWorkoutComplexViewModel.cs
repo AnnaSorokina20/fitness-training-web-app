@@ -1,4 +1,5 @@
 using FitnessTrainingApp.Models.Entities.Enums;
+using FitnessTrainingApp.Models.ViewModels.WorkoutComplexes;
 
 namespace FitnessTrainingApp.Models.ViewModels.Admin;
 
@@ -12,5 +13,6 @@ public sealed class PendingWorkoutComplexViewModel
     public WorkoutType WorkoutType { get; set; }
     public int DurationMinutes { get; set; }
     public int ExerciseCount { get; set; }
+    public IReadOnlyList<WorkoutComplexExerciseViewModel> Exercises { get; set; } = [];
     public DateTime SubmittedAt { get; set; }
 }

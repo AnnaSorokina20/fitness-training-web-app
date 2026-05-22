@@ -32,6 +32,10 @@ else
                     <span class="status-badge status-badge-@statusClass">@exercise.Status</span>
                     <h2>@exercise.Name</h2>
                     <p>@exercise.WorkoutType · @exercise.Difficulty · @exercise.MuscleGroup</p>
+                    @if (exercise.Status == FitnessTrainingApp.Models.Entities.Enums.ContentStatus.Rejected && !string.IsNullOrWhiteSpace(exercise.ModerationComment))
+                    {
+                        <p class="moderation-comment"><strong>Admin comment:</strong> @exercise.ModerationComment</p>
+                    }
                     <span class="playlist-meta">Updated @exercise.UpdatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
                 </div>
                 <a class="btn btn-outline-primary" asp-area="Trainer" asp-controller="Exercises" asp-action="Edit" asp-route-id="@exercise.Id">Edit</a>

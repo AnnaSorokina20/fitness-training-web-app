@@ -28,6 +28,7 @@ public sealed class WorkoutComplexesController(IWorkoutComplexService workoutCom
                 DurationMinutes = complex.DurationMinutes,
                 ExerciseCount = complex.WorkoutComplexExercises.Count,
                 Status = complex.Status,
+                ModerationComment = complex.ModerationComment,
                 UpdatedAt = complex.UpdatedAt ?? complex.CreatedAt
             }).ToList()
         });
