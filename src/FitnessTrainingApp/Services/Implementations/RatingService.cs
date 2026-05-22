@@ -63,6 +63,13 @@ public sealed class RatingService(FitnessTrainingDbContext context) : IRatingSer
         return await ratings.AverageAsync(rating => rating.Value);
     }
 
+    public async Task<int> CountAsync(int exerciseId)
+    {
+        return await context.Ratings
+            .AsNoTracking()
+            .CountAsync(rating => rating.ExerciseId == exerciseId && !rating.IsDeleted);
+    }
+
     public async Task<int?> GetUserRatingAsync(int userId, int exerciseId)
     {
         return await context.Ratings

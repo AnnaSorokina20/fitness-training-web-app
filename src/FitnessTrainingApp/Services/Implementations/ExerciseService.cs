@@ -88,6 +88,7 @@ public sealed class ExerciseService(FitnessTrainingDbContext context) : IExercis
     public async Task<Exercise?> GetDetailsAsync(int id)
     {
         return await PublishedExercises()
+            .Include(exercise => exercise.Trainer)
             .Include(exercise => exercise.MediaFiles)
             .Include(exercise => exercise.Comments)
             .Include(exercise => exercise.Ratings)

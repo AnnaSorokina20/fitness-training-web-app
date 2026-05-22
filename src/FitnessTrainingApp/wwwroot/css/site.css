@@ -81,6 +81,12 @@ body {
   color: #52606d;
 }
 
+.author-line {
+  margin: 6px 0 8px;
+  color: #334e68;
+  font-weight: 650;
+}
+
 .home-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.8fr);
@@ -388,6 +394,10 @@ body {
   text-align: center;
 }
 
+.details-rating span {
+  display: block;
+}
+
 .rating-value {
   display: block;
   font-size: 1.4rem;
@@ -523,14 +533,51 @@ body {
 }
 
 .rating-form {
-  grid-template-columns: minmax(120px, 1fr) minmax(120px, 160px) auto;
+  grid-template-columns: minmax(100px, auto) auto;
   align-items: end;
 }
 
+.rating-label,
 .rating-form label,
 .comment-form label {
   color: #334e68;
   font-weight: 650;
+}
+
+.star-rating {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 2px;
+}
+
+.star-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #cbd5e1;
+  cursor: pointer;
+  font-size: 1.8rem;
+  line-height: 1;
+  transition: color 0.12s ease, transform 0.12s ease;
+}
+
+.star-button-selected {
+  color: #f5b301;
+}
+
+.star-button:hover,
+.star-button:hover ~ .star-button {
+  color: #f5b301;
+}
+
+.star-button:hover {
+  transform: translateY(-1px);
+}
+
+.star-button:focus-visible {
+  outline: 2px solid #258cfb;
+  outline-offset: 2px;
 }
 
 .comment-list {

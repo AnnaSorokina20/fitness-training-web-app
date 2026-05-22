@@ -12,8 +12,10 @@ public sealed class ExerciseDetailsViewModel
     public string Equipment { get; set; } = string.Empty;
     public string MuscleGroup { get; set; } = string.Empty;
     public string SafetyNotes { get; set; } = string.Empty;
+    public string TrainerName { get; set; } = string.Empty;
     public IReadOnlyList<string> MediaUrls { get; set; } = [];
     public double AverageRating { get; set; }
+    public int RatingCount { get; set; }
     public int CommentCount { get; set; }
     public int? UserRating { get; set; }
     public int? PlaylistItemId { get; set; }
