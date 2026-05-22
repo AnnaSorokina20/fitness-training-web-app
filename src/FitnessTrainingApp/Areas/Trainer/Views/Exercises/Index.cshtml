@@ -25,9 +25,11 @@ else
     <section class="management-list" aria-label="Trainer exercise list">
         @foreach (var exercise in Model.Exercises)
         {
+            var statusClass = exercise.Status.ToString().ToLowerInvariant();
+
             <article class="management-row">
                 <div>
-                    <span class="playlist-type">@exercise.Status</span>
+                    <span class="status-badge status-badge-@statusClass">@exercise.Status</span>
                     <h2>@exercise.Name</h2>
                     <p>@exercise.WorkoutType · @exercise.Difficulty · @exercise.MuscleGroup</p>
                     <span class="playlist-meta">Updated @exercise.UpdatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>

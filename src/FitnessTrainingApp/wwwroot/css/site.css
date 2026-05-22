@@ -458,6 +458,36 @@ body {
   font-weight: 650;
 }
 
+.status-badge {
+  display: inline-flex;
+  margin-bottom: 8px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.status-badge-published {
+  color: #0f5132;
+  background: #d1e7dd;
+}
+
+.status-badge-pendingmoderation {
+  color: #664d03;
+  background: #fff3cd;
+}
+
+.status-badge-rejected {
+  color: #842029;
+  background: #f8d7da;
+}
+
+.status-badge-draft,
+.status-badge-archived {
+  color: #41464b;
+  background: #e2e3e5;
+}
+
 .playlist-item h2 {
   margin: 0 0 6px;
   font-size: 1.2rem;
