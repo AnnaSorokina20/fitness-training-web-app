@@ -21,11 +21,22 @@
 
     @if (User.Identity?.IsAuthenticated == true)
     {
-        <form asp-controller="Playlist" asp-action="AddWorkoutComplex" method="post" class="details-action-form">
-            <input type="hidden" name="workoutComplexId" value="@Model.Id" />
-            <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
-            <button type="submit" class="btn btn-primary">Save to playlist</button>
-        </form>
+        @if (Model.PlaylistItemId.HasValue)
+        {
+            <form asp-controller="Playlist" asp-action="Remove" method="post" class="details-action-form">
+                <input type="hidden" name="id" value="@Model.PlaylistItemId.Value" />
+                <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                <button type="submit" class="btn btn-outline-danger">Remove from playlist</button>
+            </form>
+        }
+        else
+        {
+            <form asp-controller="Playlist" asp-action="AddWorkoutComplex" method="post" class="details-action-form">
+                <input type="hidden" name="workoutComplexId" value="@Model.Id" />
+                <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                <button type="submit" class="btn btn-primary">Save to playlist</button>
+            </form>
+        }
     }
     else
     {

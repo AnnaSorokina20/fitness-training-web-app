@@ -11,7 +11,8 @@ namespace FitnessTrainingApp.Controllers;
 public sealed class ExercisesController(
     IExerciseService exerciseService,
     ICommentService commentService,
-    IRatingService ratingService) : Controller
+    IRatingService ratingService,
+    IPlaylistService playlistService) : Controller
 {
     public async Task<IActionResult> Index(
         string? search,
@@ -68,6 +69,7 @@ public sealed class ExercisesController(
             AverageRating = await ratingService.CalculateAverageAsync(id),
             CommentCount = comments.Count,
             UserRating = userId == 0 ? null : await ratingService.GetUserRatingAsync(userId, id),
+            PlaylistItemId = userId == 0 ? null : await playlistService.GetExercisePlaylistItemIdAsync(userId, id),
             Comments = comments.Select(comment => new ExerciseCommentViewModel
             {
                 AuthorName = comment.User?.FullName ?? "User",

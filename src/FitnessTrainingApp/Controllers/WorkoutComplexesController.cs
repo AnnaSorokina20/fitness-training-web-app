@@ -1,11 +1,14 @@
 using FitnessTrainingApp.Models.Entities;
 using FitnessTrainingApp.Models.ViewModels.WorkoutComplexes;
+using FitnessTrainingApp.Infrastructure.Extensions;
 using FitnessTrainingApp.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessTrainingApp.Controllers;
 
-public sealed class WorkoutComplexesController(IWorkoutComplexService workoutComplexService) : Controller
+public sealed class WorkoutComplexesController(
+    IWorkoutComplexService workoutComplexService,
+    IPlaylistService playlistService) : Controller
 {
     public async Task<IActionResult> Index()
     {
@@ -23,6 +26,8 @@ public sealed class WorkoutComplexesController(IWorkoutComplexService workoutCom
             return NotFound();
         }
 
+        var userId = User.Identity?.IsAuthenticated == true ? User.GetUserId() : 0;
+
         return View(new WorkoutComplexDetailsViewModel
         {
             Id = complex.Id,
@@ -31,6 +36,7 @@ public sealed class WorkoutComplexesController(IWorkoutComplexService workoutCom
             Difficulty = complex.Difficulty,
             WorkoutType = complex.WorkoutType,
             DurationMinutes = complex.DurationMinutes,
+            PlaylistItemId = userId == 0 ? null : await playlistService.GetWorkoutComplexPlaylistItemIdAsync(userId, id),
             Exercises = complex.WorkoutComplexExercises
                 .OrderBy(item => item.OrderNumber)
                 .Select(item => new WorkoutComplexExerciseViewModel

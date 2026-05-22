@@ -10,5 +10,6 @@ public sealed class WorkoutComplexDetailsViewModel
     public DifficultyLevel Difficulty { get; set; }
     public WorkoutType WorkoutType { get; set; }
     public int DurationMinutes { get; set; }
+    public int? PlaylistItemId { get; set; }
     public IReadOnlyList<WorkoutComplexExerciseViewModel> Exercises { get; set; } = [];
 }

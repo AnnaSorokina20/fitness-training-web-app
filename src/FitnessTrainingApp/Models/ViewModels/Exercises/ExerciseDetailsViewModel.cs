@@ -16,5 +16,6 @@ public sealed class ExerciseDetailsViewModel
     public double AverageRating { get; set; }
     public int CommentCount { get; set; }
     public int? UserRating { get; set; }
+    public int? PlaylistItemId { get; set; }
     public IReadOnlyList<ExerciseCommentViewModel> Comments { get; set; } = [];
 }

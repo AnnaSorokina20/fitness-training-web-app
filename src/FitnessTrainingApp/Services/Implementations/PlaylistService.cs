@@ -19,6 +19,32 @@ public sealed class PlaylistService(FitnessTrainingDbContext context) : IPlaylis
             .ToListAsync();
     }
 
+    public async Task<int?> GetExercisePlaylistItemIdAsync(int userId, int exerciseId)
+    {
+        return await context.PlaylistItems
+            .AsNoTracking()
+            .Where(item =>
+                item.UserId == userId &&
+                item.ItemType == PlaylistItemType.Exercise &&
+                item.ExerciseId == exerciseId &&
+                !item.IsDeleted)
+            .Select(item => (int?)item.Id)
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task<int?> GetWorkoutComplexPlaylistItemIdAsync(int userId, int workoutComplexId)
+    {
+        return await context.PlaylistItems
+            .AsNoTracking()
+            .Where(item =>
+                item.UserId == userId &&
+                item.ItemType == PlaylistItemType.WorkoutComplex &&
+                item.WorkoutComplexId == workoutComplexId &&
+                !item.IsDeleted)
+            .Select(item => (int?)item.Id)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<bool> AddExerciseAsync(int userId, int exerciseId)
     {
         var exists = await context.Exercises.AnyAsync(exercise =>

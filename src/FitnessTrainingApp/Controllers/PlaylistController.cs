@@ -40,10 +40,10 @@ public sealed class PlaylistController(IPlaylistService playlistService) : Contr
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Remove(int id)
+    public async Task<IActionResult> Remove(int id, string? returnUrl = null)
     {
         await playlistService.RemoveAsync(User.GetUserId(), id);
-        return RedirectToAction(nameof(Index));
+        return RedirectToSafeReturnUrl(returnUrl);
     }
 
     private IActionResult RedirectToSafeReturnUrl(string? returnUrl)
