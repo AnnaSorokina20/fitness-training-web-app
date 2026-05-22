@@ -24,6 +24,7 @@ builder.Services.AddScoped<IPlaylistService, PlaylistService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<IModerationService, ModerationService>();
+builder.Services.AddScoped<IUserManagementService, UserManagementService>();
 
 var app = builder.Build();
 

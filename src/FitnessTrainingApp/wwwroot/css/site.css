@@ -581,6 +581,13 @@ body {
   margin-top: 18px;
 }
 
+.role-form {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+
 .workout-steps {
   display: grid;
   gap: 12px;
@@ -647,6 +654,10 @@ body {
   .playlist-item,
   .management-row,
   .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .role-form {
     grid-template-columns: 1fr;
   }
 

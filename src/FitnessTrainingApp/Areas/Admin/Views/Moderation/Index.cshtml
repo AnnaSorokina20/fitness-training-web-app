@@ -1,4 +1,4 @@
-@model FitnessTrainingApp.Models.ViewModels.Admin.ModerationIndexViewModel
+﻿@model FitnessTrainingApp.Models.ViewModels.Admin.ModerationIndexViewModel
 
 @{
     ViewData["Title"] = "Content Moderation";
@@ -30,7 +30,7 @@ else
                     <h2>@exercise.Name</h2>
                     <p>@exercise.Description</p>
                     <span class="playlist-meta">
-                        @exercise.TrainerName · @exercise.WorkoutType · @exercise.Difficulty · @exercise.MuscleGroup · @exercise.Equipment
+                        @exercise.TrainerName Â· @exercise.WorkoutType Â· @exercise.Difficulty Â· @exercise.MuscleGroup Â· @exercise.Equipment
                     </span>
                     <span class="playlist-meta">Submitted @exercise.SubmittedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
                 </div>
@@ -48,3 +48,4 @@ else
         }
     </section>
 }
+

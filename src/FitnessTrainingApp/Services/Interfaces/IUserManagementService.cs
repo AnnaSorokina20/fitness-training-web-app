@@ -6,5 +6,5 @@ namespace FitnessTrainingApp.Services.Interfaces;
 public interface IUserManagementService
 {
     Task<IReadOnlyList<User>> GetAllAsync();
-    Task<bool> ChangeRoleAsync(int userId, UserRole role);
+    Task<bool> ChangeRoleAsync(int userId, UserRole role, int adminId);
 }
