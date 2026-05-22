@@ -13,6 +13,7 @@ public sealed class ModerationController(IModerationService moderationService) :
     public async Task<IActionResult> Index()
     {
         var pendingExercises = await moderationService.GetPendingExercisesAsync();
+        var pendingWorkoutComplexes = await moderationService.GetPendingWorkoutComplexesAsync();
 
         return View(new ModerationIndexViewModel
         {
@@ -27,6 +28,18 @@ public sealed class ModerationController(IModerationService moderationService) :
                 MuscleGroup = exercise.MuscleGroup,
                 Equipment = exercise.Equipment,
                 SubmittedAt = exercise.UpdatedAt ?? exercise.CreatedAt
+            }).ToList(),
+            PendingWorkoutComplexes = pendingWorkoutComplexes.Select(complex => new PendingWorkoutComplexViewModel
+            {
+                Id = complex.Id,
+                Name = complex.Name,
+                Description = complex.Description,
+                TrainerName = complex.Trainer?.FullName ?? "Trainer",
+                Difficulty = complex.Difficulty,
+                WorkoutType = complex.WorkoutType,
+                DurationMinutes = complex.DurationMinutes,
+                ExerciseCount = complex.WorkoutComplexExercises.Count,
+                SubmittedAt = complex.UpdatedAt ?? complex.CreatedAt
             }).ToList()
         });
     }
@@ -44,6 +57,22 @@ public sealed class ModerationController(IModerationService moderationService) :
     public async Task<IActionResult> RejectExercise(int id)
     {
         await moderationService.RejectExerciseAsync(id, User.GetUserId());
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> PublishWorkoutComplex(int id)
+    {
+        await moderationService.PublishWorkoutComplexAsync(id, User.GetUserId());
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> RejectWorkoutComplex(int id)
+    {
+        await moderationService.RejectWorkoutComplexAsync(id, User.GetUserId());
         return RedirectToAction(nameof(Index));
     }
 }

@@ -18,6 +18,17 @@ public sealed class ModerationService(FitnessTrainingDbContext context) : IModer
             .ToListAsync();
     }
 
+    public async Task<IReadOnlyList<WorkoutComplex>> GetPendingWorkoutComplexesAsync()
+    {
+        return await context.WorkoutComplexes
+            .AsNoTracking()
+            .Include(complex => complex.Trainer)
+            .Include(complex => complex.WorkoutComplexExercises)
+            .Where(complex => !complex.IsDeleted && complex.Status == ContentStatus.PendingModeration)
+            .OrderBy(complex => complex.UpdatedAt ?? complex.CreatedAt)
+            .ToListAsync();
+    }
+
     public async Task<bool> PublishExerciseAsync(int exerciseId, int adminId)
     {
         return await ChangeExerciseStatusAsync(exerciseId, adminId, ContentStatus.Published, "PublishExercise");
@@ -26,6 +37,16 @@ public sealed class ModerationService(FitnessTrainingDbContext context) : IModer
     public async Task<bool> RejectExerciseAsync(int exerciseId, int adminId)
     {
         return await ChangeExerciseStatusAsync(exerciseId, adminId, ContentStatus.Rejected, "RejectExercise");
+    }
+
+    public async Task<bool> PublishWorkoutComplexAsync(int workoutComplexId, int adminId)
+    {
+        return await ChangeWorkoutComplexStatusAsync(workoutComplexId, adminId, ContentStatus.Published, "PublishWorkoutComplex");
+    }
+
+    public async Task<bool> RejectWorkoutComplexAsync(int workoutComplexId, int adminId)
+    {
+        return await ChangeWorkoutComplexStatusAsync(workoutComplexId, adminId, ContentStatus.Rejected, "RejectWorkoutComplex");
     }
 
     private async Task<bool> ChangeExerciseStatusAsync(int exerciseId, int adminId, ContentStatus status, string action)
@@ -49,6 +70,33 @@ public sealed class ModerationService(FitnessTrainingDbContext context) : IModer
             Action = action,
             EntityName = nameof(Exercise),
             EntityId = exercise.Id
+        });
+
+        await context.SaveChangesAsync();
+        return true;
+    }
+
+    private async Task<bool> ChangeWorkoutComplexStatusAsync(int workoutComplexId, int adminId, ContentStatus status, string action)
+    {
+        var complex = await context.WorkoutComplexes.FirstOrDefaultAsync(existing =>
+            existing.Id == workoutComplexId &&
+            !existing.IsDeleted &&
+            existing.Status == ContentStatus.PendingModeration);
+
+        if (complex is null)
+        {
+            return false;
+        }
+
+        complex.Status = status;
+        complex.UpdatedAt = DateTime.UtcNow;
+
+        context.AdminLogs.Add(new AdminLog
+        {
+            AdminId = adminId,
+            Action = action,
+            EntityName = nameof(WorkoutComplex),
+            EntityId = complex.Id
         });
 
         await context.SaveChangesAsync();
