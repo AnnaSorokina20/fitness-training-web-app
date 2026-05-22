@@ -28,6 +28,8 @@ body {
 }
 
 .nav-form {
+  display: flex;
+  align-items: center;
   margin: 0;
 }
 
@@ -35,6 +37,19 @@ body {
   border: 0;
   background: transparent;
   color: #212529;
+  font: inherit;
+}
+
+.account-nav {
+  align-items: center;
+  gap: 4px;
+}
+
+.account-nav .navbar-text,
+.account-nav .nav-link {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
 }
 
 .page-header,
