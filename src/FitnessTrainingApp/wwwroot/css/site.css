@@ -588,6 +588,28 @@ body {
   align-items: center;
 }
 
+.log-table {
+  display: grid;
+  gap: 8px;
+}
+
+.log-row {
+  display: grid;
+  grid-template-columns: 170px minmax(160px, 1fr) minmax(140px, 0.8fr) minmax(120px, 0.7fr) minmax(110px, 0.6fr);
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  background: #ffffff;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+}
+
+.log-header {
+  color: #334e68;
+  background: #f0f4f8;
+  font-weight: 800;
+}
+
 .workout-steps {
   display: grid;
   gap: 12px;
@@ -658,6 +680,10 @@ body {
   }
 
   .role-form {
+    grid-template-columns: 1fr;
+  }
+
+  .log-row {
     grid-template-columns: 1fr;
   }
 
