@@ -1,0 +1,77 @@
+@model FitnessTrainingApp.Models.ViewModels.Trainer.TrainerExerciseFormViewModel
+@using FitnessTrainingApp.Models.Entities.Enums
+
+@{
+    ViewData["Title"] = "Create Exercise";
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Admin area</p>
+        <h1>Create Exercise</h1>
+        <p class="lead">Exercises created by an administrator are published immediately.</p>
+    </div>
+</section>
+
+<form method="post" class="management-form">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-grid">
+        <div class="form-field form-field-wide">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="Difficulty"></label>
+            <select asp-for="Difficulty" class="form-select" asp-items="Html.GetEnumSelectList<DifficultyLevel>()"></select>
+            <span asp-validation-for="Difficulty" class="text-danger"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="WorkoutType">Workout type</label>
+            <select asp-for="WorkoutType" class="form-select" asp-items="Html.GetEnumSelectList<WorkoutType>()"></select>
+            <span asp-validation-for="WorkoutType" class="text-danger"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="Equipment"></label>
+            <input asp-for="Equipment" class="form-control" />
+            <span asp-validation-for="Equipment" class="text-danger"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="MuscleGroup">Muscle group</label>
+            <input asp-for="MuscleGroup" class="form-control" />
+            <span asp-validation-for="MuscleGroup" class="text-danger"></span>
+        </div>
+
+        <div class="form-field form-field-wide">
+            <label asp-for="MediaUrl"></label>
+            <input asp-for="MediaUrl" class="form-control" placeholder="https://example.com/exercise.jpg" />
+            <span asp-validation-for="MediaUrl" class="text-danger"></span>
+        </div>
+
+        <div class="form-field form-field-wide">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-field form-field-wide">
+            <label asp-for="SafetyNotes">Safety notes</label>
+            <textarea asp-for="SafetyNotes" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="SafetyNotes" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Publish</button>
+        <a class="btn btn-outline-secondary" asp-area="Admin" asp-controller="Moderation" asp-action="Index">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

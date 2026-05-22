@@ -10,4 +10,5 @@ public interface IWorkoutComplexService
     Task<IReadOnlyList<WorkoutComplex>> GetForTrainerAsync(int trainerId);
     Task<IReadOnlyList<Exercise>> GetAvailableExercisesAsync();
     Task<bool> CreateForTrainerAsync(WorkoutComplex complex, IReadOnlyList<WorkoutComplexExercise> exercises);
+    Task<bool> CreatePublishedAsync(WorkoutComplex complex, IReadOnlyList<WorkoutComplexExercise> exercises);
 }

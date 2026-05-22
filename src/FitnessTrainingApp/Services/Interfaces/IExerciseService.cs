@@ -13,5 +13,6 @@ public interface IExerciseService
     Task<IReadOnlyList<Exercise>> GetForTrainerAsync(int trainerId);
     Task<Exercise?> GetTrainerExerciseAsync(int id, int trainerId);
     Task<bool> CreateForTrainerAsync(Exercise exercise, string mediaUrl);
+    Task<bool> CreatePublishedAsync(Exercise exercise, string mediaUrl);
     Task<bool> UpdateForTrainerAsync(int id, int trainerId, Exercise exercise, string mediaUrl);
 }

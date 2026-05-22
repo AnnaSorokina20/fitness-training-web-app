@@ -67,6 +67,13 @@ body {
   font-weight: 750;
 }
 
+.page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-self: start;
+}
+
 .eyebrow {
   margin-bottom: 6px;
   color: #516173;

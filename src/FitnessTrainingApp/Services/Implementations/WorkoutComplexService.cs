@@ -44,6 +44,16 @@ public sealed class WorkoutComplexService(FitnessTrainingDbContext context) : IW
 
     public async Task<bool> CreateForTrainerAsync(WorkoutComplex complex, IReadOnlyList<WorkoutComplexExercise> exercises)
     {
+        return await CreateAsync(complex, exercises, ContentStatus.PendingModeration);
+    }
+
+    public async Task<bool> CreatePublishedAsync(WorkoutComplex complex, IReadOnlyList<WorkoutComplexExercise> exercises)
+    {
+        return await CreateAsync(complex, exercises, ContentStatus.Published);
+    }
+
+    private async Task<bool> CreateAsync(WorkoutComplex complex, IReadOnlyList<WorkoutComplexExercise> exercises, ContentStatus status)
+    {
         if (!IsValidTrainerComplex(complex, exercises))
         {
             return false;
@@ -60,7 +70,8 @@ public sealed class WorkoutComplexService(FitnessTrainingDbContext context) : IW
             return false;
         }
 
-        complex.Status = ContentStatus.PendingModeration;
+        complex.Status = status;
+        complex.ModerationComment = null;
         complex.CreatedAt = DateTime.UtcNow;
         context.WorkoutComplexes.Add(complex);
         await context.SaveChangesAsync();

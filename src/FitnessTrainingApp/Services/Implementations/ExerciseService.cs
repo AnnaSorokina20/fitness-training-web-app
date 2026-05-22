@@ -114,12 +114,23 @@ public sealed class ExerciseService(FitnessTrainingDbContext context) : IExercis
 
     public async Task<bool> CreateForTrainerAsync(Exercise exercise, string mediaUrl)
     {
+        return await CreateAsync(exercise, mediaUrl, ContentStatus.PendingModeration);
+    }
+
+    public async Task<bool> CreatePublishedAsync(Exercise exercise, string mediaUrl)
+    {
+        return await CreateAsync(exercise, mediaUrl, ContentStatus.Published);
+    }
+
+    private async Task<bool> CreateAsync(Exercise exercise, string mediaUrl, ContentStatus status)
+    {
         if (!IsValidTrainerExercise(exercise, mediaUrl))
         {
             return false;
         }
 
-        exercise.Status = ContentStatus.PendingModeration;
+        exercise.Status = status;
+        exercise.ModerationComment = null;
         exercise.CreatedAt = DateTime.UtcNow;
 
         context.Exercises.Add(exercise);
