@@ -10,7 +10,7 @@
         <h1>Log in</h1>
         <p class="lead">Sign in to save exercises, manage your playlist, and leave ratings or comments.</p>
 
-        <form asp-controller="Account" asp-action="Login" method="post" class="auth-form">
+        <form asp-area="" asp-controller="Account" asp-action="Login" method="post" class="auth-form">
             <input asp-for="ReturnUrl" type="hidden" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -33,7 +33,7 @@
     <aside class="auth-side">
         <h2>New here?</h2>
         <p>Create a user account to unlock personal features described in the project requirements.</p>
-        <a class="btn btn-outline-primary" asp-controller="Account" asp-action="Register">Create account</a>
+        <a class="btn btn-outline-primary" asp-area="" asp-controller="Account" asp-action="Register">Create account</a>
     </aside>
 </section>
 

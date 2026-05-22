@@ -10,7 +10,7 @@
         <h1>Create account</h1>
         <p class="lead">Registered users can save content in a playlist and interact with exercises.</p>
 
-        <form asp-controller="Account" asp-action="Register" method="post" class="auth-form">
+        <form asp-area="" asp-controller="Account" asp-action="Register" method="post" class="auth-form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div>
@@ -44,7 +44,7 @@
     <aside class="auth-side">
         <h2>Already registered?</h2>
         <p>Use your account to continue working with personal training content.</p>
-        <a class="btn btn-outline-primary" asp-controller="Account" asp-action="Login">Log in</a>
+        <a class="btn btn-outline-primary" asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
     </aside>
 </section>
 

@@ -63,7 +63,7 @@
                                 <span class="navbar-text text-dark">@User.Identity.Name</span>
                             </li>
                             <li class="nav-item">
-                                <form asp-controller="Account" asp-action="Logout" method="post" class="nav-form">
+                                <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="nav-form">
                                     <button type="submit" class="nav-link nav-button">Logout</button>
                                 </form>
                             </li>
@@ -71,10 +71,10 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Log in</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Register</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
                             </li>
                         }
                     </ul>

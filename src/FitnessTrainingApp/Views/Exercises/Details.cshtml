@@ -30,7 +30,7 @@
     else
     {
         <div class="signin-note">
-            <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">Log in</a> to save this exercise to your playlist.
+            <a asp-area="" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">Log in</a> to save this exercise to your playlist.
         </div>
     }
 
@@ -81,7 +81,7 @@
                 else
                 {
                     <div class="signin-note">
-                        <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">Log in</a> to rate and comment on this exercise.
+                        <a asp-area="" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">Log in</a> to rate and comment on this exercise.
                     </div>
                 }
 
