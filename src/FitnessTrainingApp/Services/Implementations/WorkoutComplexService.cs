@@ -11,6 +11,7 @@ public sealed class WorkoutComplexService(FitnessTrainingDbContext context) : IW
     public async Task<IReadOnlyList<WorkoutComplex>> GetAllAsync()
     {
         return await PublishedComplexes()
+            .Include(complex => complex.WorkoutComplexExercises)
             .OrderBy(complex => complex.Name)
             .ToListAsync();
     }
