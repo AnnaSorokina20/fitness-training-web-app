@@ -19,26 +19,8 @@
         </div>
     </header>
 
-    <section class="moderation-actions">
-        <form asp-area="Admin" asp-controller="Moderation" asp-action="PublishExercise" method="post">
-            <input type="hidden" name="id" value="@Model.Id" />
-            <button type="submit" class="btn btn-primary">Publish</button>
-        </form>
-        <form asp-area="Admin" asp-controller="Moderation" asp-action="RejectExercise" method="post" class="moderation-reject-form">
-            <input type="hidden" name="id" value="@Model.Id" />
-            <label for="moderationComment">Rejection comment</label>
-            <textarea id="moderationComment" name="moderationComment" class="form-control" rows="3" maxlength="1000"></textarea>
-            <button type="submit" class="btn btn-outline-danger">Reject</button>
-        </form>
-        <form asp-area="Admin" asp-controller="Moderation" asp-action="DeleteExercise" method="post">
-            <input type="hidden" name="id" value="@Model.Id" />
-            <button type="submit" class="btn btn-outline-danger">Delete</button>
-        </form>
-    </section>
-
     <section class="details-layout">
         <div class="details-main">
-            <h2>Exercise media</h2>
             @if (Model.MediaUrls.Count == 0)
             {
                 <div class="media-placeholder">Media was not added by the trainer.</div>
@@ -52,26 +34,48 @@
             <p>@Model.SafetyNotes</p>
         </div>
 
-        <aside class="details-side">
-            <h2>Submission</h2>
-            <dl>
-                <div>
-                    <dt>Trainer</dt>
-                    <dd>@Model.TrainerName</dd>
+        <div class="details-side-stack">
+            <section class="moderation-actions">
+                <div class="moderation-primary-actions moderation-action-card">
+                    <form asp-area="Admin" asp-controller="Moderation" asp-action="PublishExercise" method="post">
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <button type="submit" class="btn btn-primary">Publish</button>
+                    </form>
+                    <form asp-area="Admin" asp-controller="Moderation" asp-action="DeleteExercise" method="post">
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <button type="submit" class="btn btn-outline-danger">Delete</button>
+                    </form>
                 </div>
-                <div>
-                    <dt>Submitted</dt>
-                    <dd>@Model.SubmittedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</dd>
-                </div>
-                <div>
-                    <dt>Equipment</dt>
-                    <dd>@Model.Equipment</dd>
-                </div>
-                <div>
-                    <dt>Muscle group</dt>
-                    <dd>@Model.MuscleGroup</dd>
-                </div>
-            </dl>
-        </aside>
+
+                <form asp-area="Admin" asp-controller="Moderation" asp-action="RejectExercise" method="post" class="moderation-reject-form">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <label for="moderationComment">Rejection comment</label>
+                    <textarea id="moderationComment" name="moderationComment" class="form-control" rows="3" maxlength="1000"></textarea>
+                    <button type="submit" class="btn btn-outline-danger">Reject</button>
+                </form>
+            </section>
+
+            <aside class="details-side">
+                <h2>Submission</h2>
+                <dl>
+                    <div>
+                        <dt>Trainer</dt>
+                        <dd>@Model.TrainerName</dd>
+                    </div>
+                    <div>
+                        <dt>Submitted</dt>
+                        <dd>@Model.SubmittedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</dd>
+                    </div>
+                    <div>
+                        <dt>Equipment</dt>
+                        <dd>@Model.Equipment</dd>
+                    </div>
+                    <div>
+                        <dt>Muscle group</dt>
+                        <dd>@Model.MuscleGroup</dd>
+                    </div>
+                </dl>
+            </aside>
+        </div>
     </section>
 </article>

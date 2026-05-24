@@ -545,6 +545,12 @@ main {
   gap: 18px;
 }
 
+.details-side-stack {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+
 .details-main,
 .details-side {
   padding: 20px;
@@ -859,23 +865,49 @@ main {
 
 .moderation-actions {
   display: grid;
-  grid-template-columns: auto minmax(280px, 520px);
-  gap: 12px;
-  align-items: end;
-  margin: -6px 0 18px;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  align-items: start;
+  margin: 0;
+}
+
+.moderation-primary-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.moderation-action-card {
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
 }
 
 .moderation-reject-form {
   display: grid;
-  grid-template-columns: minmax(220px, 1fr) auto;
+  grid-template-columns: 1fr;
   gap: 8px;
-  align-items: end;
+  width: 100%;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
 }
 
 .moderation-reject-form label {
-  grid-column: 1 / -1;
   color: #334e68;
   font-weight: 650;
+}
+
+.moderation-reject-form textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.moderation-reject-form .btn {
+  justify-self: end;
 }
 
 .management-form {
@@ -1049,6 +1081,17 @@ main {
 
   .moderation-reject-form {
     grid-template-columns: 1fr;
+    justify-self: stretch;
+    max-width: none;
+  }
+
+  .moderation-primary-actions {
+    align-items: stretch;
+  }
+
+  .moderation-primary-actions .btn,
+  .moderation-reject-form .btn {
+    width: 100%;
   }
 
   .role-form {
