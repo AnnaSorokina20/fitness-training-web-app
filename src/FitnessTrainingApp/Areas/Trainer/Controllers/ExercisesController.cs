@@ -49,7 +49,10 @@ public sealed class ExercisesController(
             return View(model);
         }
 
-        var created = await exerciseService.CreateForTrainerAsync(ToEntity(model, User.GetUserId()), model.MediaUrl);
+        var created = await exerciseService.CreateForTrainerAsync(
+            ToEntity(model, User.GetUserId()),
+            model.MediaUrls,
+            model.UploadedImages);
 
         if (!created)
         {
@@ -91,7 +94,12 @@ public sealed class ExercisesController(
             return View(model);
         }
 
-        var updated = await exerciseService.UpdateForTrainerAsync(id, User.GetUserId(), ToEntity(model, User.GetUserId()), model.MediaUrl);
+        var updated = await exerciseService.UpdateForTrainerAsync(
+            id,
+            User.GetUserId(),
+            ToEntity(model, User.GetUserId()),
+            model.MediaUrls,
+            model.UploadedImages);
 
         if (!updated)
         {
@@ -130,7 +138,7 @@ public sealed class ExercisesController(
             Equipment = exercise.Equipment,
             MuscleGroup = exercise.MuscleGroup,
             SafetyNotes = exercise.SafetyNotes,
-            MediaUrl = exercise.MediaFiles.FirstOrDefault()?.Url ?? string.Empty
+            MediaUrls = string.Join(Environment.NewLine, exercise.MediaFiles.Select(file => file.Url))
         };
     }
 }

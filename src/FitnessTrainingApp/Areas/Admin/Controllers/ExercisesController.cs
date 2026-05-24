@@ -26,7 +26,10 @@ public sealed class ExercisesController(IExerciseService exerciseService) : Cont
             return View(model);
         }
 
-        var created = await exerciseService.CreatePublishedAsync(ToEntity(model, User.GetUserId()), model.MediaUrl);
+        var created = await exerciseService.CreatePublishedAsync(
+            ToEntity(model, User.GetUserId()),
+            model.MediaUrls,
+            model.UploadedImages);
 
         if (!created)
         {

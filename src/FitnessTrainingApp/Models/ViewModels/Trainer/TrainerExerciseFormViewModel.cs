@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using FitnessTrainingApp.Models.Entities.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace FitnessTrainingApp.Models.ViewModels.Trainer;
 
-public sealed class TrainerExerciseFormViewModel
+public sealed class TrainerExerciseFormViewModel : IValidatableObject
 {
     public int? Id { get; set; }
 
@@ -33,8 +34,22 @@ public sealed class TrainerExerciseFormViewModel
     [StringLength(1000, MinimumLength = 10)]
     public string SafetyNotes { get; set; } = string.Empty;
 
-    [Required]
-    [Url]
-    [Display(Name = "Media URL")]
-    public string MediaUrl { get; set; } = string.Empty;
+    [Display(Name = "Media URLs")]
+    public string? MediaUrls { get; set; }
+
+    [Display(Name = "Upload images")]
+    public IReadOnlyList<IFormFile>? UploadedImages { get; set; }
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        var hasMediaUrls = !string.IsNullOrWhiteSpace(MediaUrls);
+        var hasUploadedImages = UploadedImages?.Any(file => file.Length > 0) == true;
+
+        if (!hasMediaUrls && !hasUploadedImages)
+        {
+            yield return new ValidationResult(
+                "Add at least one media URL or upload an image.",
+                [nameof(MediaUrls), nameof(UploadedImages)]);
+        }
+    }
 }

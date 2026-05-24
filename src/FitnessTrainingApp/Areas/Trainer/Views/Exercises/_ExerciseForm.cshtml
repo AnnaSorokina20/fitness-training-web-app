@@ -1,7 +1,7 @@
 @model FitnessTrainingApp.Models.ViewModels.Trainer.TrainerExerciseFormViewModel
 @using FitnessTrainingApp.Models.Entities.Enums
 
-<form method="post" class="management-form">
+<form method="post" class="management-form" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="form-grid">
@@ -36,9 +36,15 @@
         </div>
 
         <div class="form-field form-field-wide">
-            <label asp-for="MediaUrl"></label>
-            <input asp-for="MediaUrl" class="form-control" placeholder="https://example.com/exercise.jpg" />
-            <span asp-validation-for="MediaUrl" class="text-danger"></span>
+            <label asp-for="MediaUrls"></label>
+            <textarea asp-for="MediaUrls" class="form-control" rows="3" placeholder="https://youtube.com/watch?v=...&#10;https://example.com/exercise.jpg"></textarea>
+            <span asp-validation-for="MediaUrls" class="text-danger"></span>
+        </div>
+
+        <div class="form-field form-field-wide">
+            <label asp-for="UploadedImages"></label>
+            <input asp-for="UploadedImages" class="form-control" type="file" multiple accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" />
+            <span asp-validation-for="UploadedImages" class="text-danger"></span>
         </div>
 
         <div class="form-field form-field-wide">

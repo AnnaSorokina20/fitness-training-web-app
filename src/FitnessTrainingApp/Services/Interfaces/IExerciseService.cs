@@ -1,5 +1,6 @@
 using FitnessTrainingApp.Models.Entities;
 using FitnessTrainingApp.Models.Entities.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace FitnessTrainingApp.Services.Interfaces;
 
@@ -12,7 +13,7 @@ public interface IExerciseService
     Task<Exercise?> GetDetailsAsync(int id);
     Task<IReadOnlyList<Exercise>> GetForTrainerAsync(int trainerId);
     Task<Exercise?> GetTrainerExerciseAsync(int id, int trainerId);
-    Task<bool> CreateForTrainerAsync(Exercise exercise, string mediaUrl);
-    Task<bool> CreatePublishedAsync(Exercise exercise, string mediaUrl);
-    Task<bool> UpdateForTrainerAsync(int id, int trainerId, Exercise exercise, string mediaUrl);
+    Task<bool> CreateForTrainerAsync(Exercise exercise, string? mediaUrls, IReadOnlyList<IFormFile>? uploadedImages);
+    Task<bool> CreatePublishedAsync(Exercise exercise, string? mediaUrls, IReadOnlyList<IFormFile>? uploadedImages);
+    Task<bool> UpdateForTrainerAsync(int id, int trainerId, Exercise exercise, string? mediaUrls, IReadOnlyList<IFormFile>? uploadedImages);
 }

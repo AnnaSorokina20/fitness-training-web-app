@@ -90,6 +90,7 @@ artifacts/
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
+src/FitnessTrainingApp/wwwroot/uploads/*
 
 # StyleCop
 StyleCopReport.xml

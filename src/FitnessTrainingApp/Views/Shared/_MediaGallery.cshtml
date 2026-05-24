@@ -1,0 +1,94 @@
+@model IReadOnlyList<string>
+
+@if (Model.Count > 0)
+{
+    <div class="media-carousel">
+        <div class="media-gallery">
+            @for (var index = 0; index < Model.Count; index++)
+            {
+                var mediaUrl = Model[index];
+                var youtubeEmbedUrl = GetYouTubeEmbedUrl(mediaUrl);
+
+                <div class="media-frame" id="media-@index">
+                    @if (!string.IsNullOrWhiteSpace(youtubeEmbedUrl))
+                    {
+                        <iframe src="@youtubeEmbedUrl" title="Exercise video" allowfullscreen loading="lazy"></iframe>
+                    }
+                    else if (IsImageUrl(mediaUrl))
+                    {
+                        <img src="@mediaUrl" alt="Exercise media" loading="lazy" />
+                    }
+                    else if (IsVideoUrl(mediaUrl))
+                    {
+                        <video src="@mediaUrl" controls></video>
+                    }
+                    else
+                    {
+                        <a class="media-link" href="@mediaUrl" target="_blank" rel="noopener">Open media</a>
+                    }
+                </div>
+            }
+        </div>
+
+        @if (Model.Count > 1)
+        {
+            <div class="media-carousel-nav" aria-label="Media navigation">
+                @for (var index = 0; index < Model.Count; index++)
+                {
+                    <a href="#media-@index" aria-label="Show media @(index + 1)">@(index + 1)</a>
+                }
+            </div>
+        }
+    </div>
+}
+
+@functions {
+    private static string? GetYouTubeEmbedUrl(string url)
+    {
+        if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
+        {
+            return null;
+        }
+
+        if (uri.Host.Contains("youtu.be", StringComparison.OrdinalIgnoreCase))
+        {
+            var videoId = uri.AbsolutePath.Trim('/');
+            return string.IsNullOrWhiteSpace(videoId) ? null : $"https://www.youtube.com/embed/{videoId}";
+        }
+
+        if (!uri.Host.Contains("youtube.com", StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        var videoQuery = uri.Query
+            .TrimStart('?')
+            .Split('&', StringSplitOptions.RemoveEmptyEntries)
+            .Select(part => part.Split('=', 2))
+            .FirstOrDefault(part => part.Length == 2 && part[0] == "v");
+
+        return videoQuery is null ? null : $"https://www.youtube.com/embed/{videoQuery[1]}";
+    }
+
+    private static bool IsImageUrl(string url)
+    {
+        if (url.StartsWith("/uploads/exercises/", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return GetExtension(url) is ".jpg" or ".jpeg" or ".png" or ".webp" or ".gif";
+    }
+
+    private static bool IsVideoUrl(string url)
+    {
+        return GetExtension(url) is ".mp4" or ".webm";
+    }
+
+    private static string GetExtension(string url)
+    {
+        return Uri.TryCreate(url, UriKind.Absolute, out var uri)
+            ? System.IO.Path.GetExtension(uri.AbsolutePath).ToLowerInvariant()
+            : System.IO.Path.GetExtension(url).ToLowerInvariant();
+    }
+}

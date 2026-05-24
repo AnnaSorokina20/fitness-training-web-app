@@ -45,12 +45,7 @@
             }
             else
             {
-                <div class="media-list">
-                    @foreach (var mediaUrl in Model.MediaUrls)
-                    {
-                        <div class="media-placeholder">@mediaUrl</div>
-                    }
-                </div>
+                <partial name="_MediaGallery" model="Model.MediaUrls" />
             }
 
             <h2>Safety notes</h2>
