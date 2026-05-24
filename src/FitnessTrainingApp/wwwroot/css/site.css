@@ -302,6 +302,62 @@ body {
   font-weight: 650;
 }
 
+.pagination-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 20px 0 4px;
+  padding: 14px 16px;
+  background: #ffffff;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+}
+
+.page-size-form,
+.page-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-size-form span,
+.page-links span {
+  color: #52606d;
+  font-weight: 650;
+}
+
+.page-size-link,
+.page-link-button {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  color: #0d6efd;
+  border: 1px solid #9ec5fe;
+  border-radius: 8px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.page-size-link.active,
+.page-link-button:hover,
+.page-size-link:hover {
+  color: #ffffff;
+  background: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.page-link-button.disabled {
+  color: #9fb3c8;
+  pointer-events: none;
+  background: #f8fafc;
+  border-color: #d9e2ec;
+}
+
 .exercise-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

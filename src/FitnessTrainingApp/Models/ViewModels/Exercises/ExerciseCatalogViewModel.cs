@@ -1,4 +1,5 @@
 using FitnessTrainingApp.Models.Entities.Enums;
+using FitnessTrainingApp.Models.ViewModels.Shared;
 
 namespace FitnessTrainingApp.Models.ViewModels.Exercises;
 
@@ -9,5 +10,5 @@ public sealed class ExerciseCatalogViewModel
     public WorkoutType? WorkoutType { get; set; }
     public string? Equipment { get; set; }
     public string? MuscleGroup { get; set; }
-    public IReadOnlyList<ExerciseCardViewModel> Exercises { get; set; } = [];
+    public PagedListViewModel<ExerciseCardViewModel> Exercises { get; set; } = new();
 }

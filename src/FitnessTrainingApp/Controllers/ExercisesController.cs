@@ -1,6 +1,7 @@
 using FitnessTrainingApp.Models.Entities;
 using FitnessTrainingApp.Models.Entities.Enums;
 using FitnessTrainingApp.Models.ViewModels.Exercises;
+using FitnessTrainingApp.Models.ViewModels.Shared;
 using FitnessTrainingApp.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using FitnessTrainingApp.Services.Interfaces;
@@ -19,7 +20,9 @@ public sealed class ExercisesController(
         DifficultyLevel? difficulty,
         WorkoutType? workoutType,
         string? equipment,
-        string? muscleGroup)
+        string? muscleGroup,
+        int page = 1,
+        int pageSize = 12)
     {
         var exercises = string.IsNullOrWhiteSpace(search)
             ? await exerciseService.FilterAsync(difficulty, equipment, muscleGroup, workoutType)
@@ -30,6 +33,21 @@ public sealed class ExercisesController(
             exercises = ApplyFilters(exercises, difficulty, workoutType, equipment, muscleGroup);
         }
 
+        var cards = exercises.Select(ToCardViewModel).ToList();
+        var pagedExercises = CreatePagedList(
+            cards,
+            page,
+            pageSize,
+            "Exercises",
+            new Dictionary<string, string>
+            {
+                ["search"] = search ?? string.Empty,
+                ["difficulty"] = difficulty?.ToString() ?? string.Empty,
+                ["workoutType"] = workoutType?.ToString() ?? string.Empty,
+                ["equipment"] = equipment ?? string.Empty,
+                ["muscleGroup"] = muscleGroup ?? string.Empty
+            });
+
         var viewModel = new ExerciseCatalogViewModel
         {
             Search = search,
@@ -37,7 +55,7 @@ public sealed class ExercisesController(
             WorkoutType = workoutType,
             Equipment = equipment,
             MuscleGroup = muscleGroup,
-            Exercises = exercises.Select(ToCardViewModel).ToList()
+            Exercises = pagedExercises
         };
 
         return View(viewModel);
@@ -143,5 +161,40 @@ public sealed class ExercisesController(
             Equipment = exercise.Equipment,
             MuscleGroup = exercise.MuscleGroup
         };
+    }
+
+    private static PagedListViewModel<T> CreatePagedList<T>(
+        IReadOnlyList<T> items,
+        int page,
+        int pageSize,
+        string controllerName,
+        IDictionary<string, string> routeValues)
+    {
+        var normalizedPageSize = NormalizePageSize(pageSize);
+        var totalPages = Math.Max(1, (int)Math.Ceiling(items.Count / (double)normalizedPageSize));
+        var normalizedPage = Math.Clamp(page, 1, totalPages);
+
+        return new PagedListViewModel<T>
+        {
+            Items = items
+                .Skip((normalizedPage - 1) * normalizedPageSize)
+                .Take(normalizedPageSize)
+                .ToList(),
+            Pagination = new PaginationViewModel
+            {
+                CurrentPage = normalizedPage,
+                PageSize = normalizedPageSize,
+                TotalItems = items.Count,
+                ControllerName = controllerName,
+                RouteValues = routeValues
+                    .Where(item => !string.IsNullOrWhiteSpace(item.Value))
+                    .ToDictionary(item => item.Key, item => item.Value)
+            }
+        };
+    }
+
+    private static int NormalizePageSize(int pageSize)
+    {
+        return pageSize is 24 or 48 ? pageSize : 12;
     }
 }

@@ -1,4 +1,5 @@
 using FitnessTrainingApp.Models.Entities;
+using FitnessTrainingApp.Models.ViewModels.Shared;
 using FitnessTrainingApp.Models.ViewModels.WorkoutComplexes;
 using FitnessTrainingApp.Infrastructure.Extensions;
 using FitnessTrainingApp.Services.Interfaces;
@@ -10,11 +11,15 @@ public sealed class WorkoutComplexesController(
     IWorkoutComplexService workoutComplexService,
     IPlaylistService playlistService) : Controller
 {
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int page = 1, int pageSize = 12)
     {
         var complexes = await workoutComplexService.GetAllAsync();
+        var cards = complexes.Select(ToCardViewModel).ToList();
 
-        return View(complexes.Select(ToCardViewModel).ToList());
+        return View(new WorkoutComplexCatalogViewModel
+        {
+            WorkoutComplexes = CreatePagedList(cards, page, pageSize)
+        });
     }
 
     public async Task<IActionResult> Details(int id)
@@ -64,6 +69,28 @@ public sealed class WorkoutComplexesController(
             WorkoutType = complex.WorkoutType,
             DurationMinutes = complex.DurationMinutes,
             ExerciseCount = complex.WorkoutComplexExercises.Count
+        };
+    }
+
+    private static PagedListViewModel<T> CreatePagedList<T>(IReadOnlyList<T> items, int page, int pageSize)
+    {
+        var normalizedPageSize = pageSize is 24 or 48 ? pageSize : 12;
+        var totalPages = Math.Max(1, (int)Math.Ceiling(items.Count / (double)normalizedPageSize));
+        var normalizedPage = Math.Clamp(page, 1, totalPages);
+
+        return new PagedListViewModel<T>
+        {
+            Items = items
+                .Skip((normalizedPage - 1) * normalizedPageSize)
+                .Take(normalizedPageSize)
+                .ToList(),
+            Pagination = new PaginationViewModel
+            {
+                CurrentPage = normalizedPage,
+                PageSize = normalizedPageSize,
+                TotalItems = items.Count,
+                ControllerName = "WorkoutComplexes"
+            }
         };
     }
 }
