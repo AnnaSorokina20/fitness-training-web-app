@@ -26,6 +26,7 @@ builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<IModerationService, ModerationService>();
 builder.Services.AddScoped<IUserManagementService, UserManagementService>();
 builder.Services.AddScoped<IAdminLogService, AdminLogService>();
+builder.Services.AddScoped<IContentDeletionService, ContentDeletionService>();
 
 var app = builder.Build();
 

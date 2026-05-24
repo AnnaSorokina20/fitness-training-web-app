@@ -56,6 +56,10 @@
                             <input type="hidden" name="id" value="@exercise.Id" />
                             <button type="submit" class="btn btn-outline-danger">Reject</button>
                         </form>
+                        <form asp-area="Admin" asp-controller="Moderation" asp-action="DeleteExercise" method="post">
+                            <input type="hidden" name="id" value="@exercise.Id" />
+                            <button type="submit" class="btn btn-outline-danger">Delete</button>
+                        </form>
                     </div>
                 </article>
             }
@@ -102,6 +106,10 @@
                         <form asp-area="Admin" asp-controller="Moderation" asp-action="RejectWorkoutComplex" method="post">
                             <input type="hidden" name="id" value="@complex.Id" />
                             <button type="submit" class="btn btn-outline-danger">Reject</button>
+                        </form>
+                        <form asp-area="Admin" asp-controller="Moderation" asp-action="DeleteWorkoutComplex" method="post">
+                            <input type="hidden" name="id" value="@complex.Id" />
+                            <button type="submit" class="btn btn-outline-danger">Delete</button>
                         </form>
                     </div>
                 </article>

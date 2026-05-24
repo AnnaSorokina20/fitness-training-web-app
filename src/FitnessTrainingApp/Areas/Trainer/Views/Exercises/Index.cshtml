@@ -38,7 +38,13 @@ else
                     }
                     <span class="playlist-meta">Updated @exercise.UpdatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
                 </div>
-                <a class="btn btn-outline-primary" asp-area="Trainer" asp-controller="Exercises" asp-action="Edit" asp-route-id="@exercise.Id">Edit</a>
+                <div class="playlist-actions">
+                    <a class="btn btn-outline-primary" asp-area="Trainer" asp-controller="Exercises" asp-action="Edit" asp-route-id="@exercise.Id">Edit</a>
+                    <form asp-area="Trainer" asp-controller="Exercises" asp-action="Delete" method="post">
+                        <input type="hidden" name="id" value="@exercise.Id" />
+                        <button type="submit" class="btn btn-outline-danger">Delete</button>
+                    </form>
+                </div>
             </article>
         }
     </section>

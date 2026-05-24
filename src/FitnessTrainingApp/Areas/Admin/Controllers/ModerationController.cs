@@ -9,7 +9,9 @@ namespace FitnessTrainingApp.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize(Roles = "Administrator")]
-public sealed class ModerationController(IModerationService moderationService) : Controller
+public sealed class ModerationController(
+    IModerationService moderationService,
+    IContentDeletionService contentDeletionService) : Controller
 {
     public async Task<IActionResult> Index()
     {
@@ -108,6 +110,14 @@ public sealed class ModerationController(IModerationService moderationService) :
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteExercise(int id)
+    {
+        await contentDeletionService.DeleteExerciseAsync(id, User.GetUserId(), true);
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> PublishExercise(int id)
     {
         await moderationService.PublishExerciseAsync(id, User.GetUserId());
@@ -119,6 +129,14 @@ public sealed class ModerationController(IModerationService moderationService) :
     public async Task<IActionResult> RejectExercise(int id, string? moderationComment)
     {
         await moderationService.RejectExerciseAsync(id, User.GetUserId(), moderationComment);
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteWorkoutComplex(int id)
+    {
+        await contentDeletionService.DeleteWorkoutComplexAsync(id, User.GetUserId(), true);
         return RedirectToAction(nameof(Index));
     }
 

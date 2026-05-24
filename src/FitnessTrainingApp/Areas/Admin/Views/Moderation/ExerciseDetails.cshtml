@@ -30,6 +30,10 @@
             <textarea id="moderationComment" name="moderationComment" class="form-control" rows="3" maxlength="1000"></textarea>
             <button type="submit" class="btn btn-outline-danger">Reject</button>
         </form>
+        <form asp-area="Admin" asp-controller="Moderation" asp-action="DeleteExercise" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="btn btn-outline-danger">Delete</button>
+        </form>
     </section>
 
     <section class="details-layout">

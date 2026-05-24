@@ -11,7 +11,9 @@ namespace FitnessTrainingApp.Areas.Trainer.Controllers;
 
 [Area("Trainer")]
 [Authorize(Roles = "Trainer")]
-public sealed class WorkoutComplexesController(IWorkoutComplexService workoutComplexService) : Controller
+public sealed class WorkoutComplexesController(
+    IWorkoutComplexService workoutComplexService,
+    IContentDeletionService contentDeletionService) : Controller
 {
     public async Task<IActionResult> Index()
     {
@@ -72,6 +74,14 @@ public sealed class WorkoutComplexesController(IWorkoutComplexService workoutCom
     public async Task<IActionResult> Create()
     {
         return View(await PopulateExerciseOptionsAsync(new TrainerWorkoutComplexFormViewModel()));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await contentDeletionService.DeleteWorkoutComplexAsync(id, User.GetUserId(), false);
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpPost]

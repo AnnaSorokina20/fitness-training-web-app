@@ -9,7 +9,9 @@ namespace FitnessTrainingApp.Areas.Trainer.Controllers;
 
 [Area("Trainer")]
 [Authorize(Roles = "Trainer")]
-public sealed class ExercisesController(IExerciseService exerciseService) : Controller
+public sealed class ExercisesController(
+    IExerciseService exerciseService,
+    IContentDeletionService contentDeletionService) : Controller
 {
     public async Task<IActionResult> Index()
     {
@@ -69,6 +71,14 @@ public sealed class ExercisesController(IExerciseService exerciseService) : Cont
         }
 
         return View(ToFormViewModel(exercise));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await contentDeletionService.DeleteExerciseAsync(id, User.GetUserId(), false);
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpPost]
