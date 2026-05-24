@@ -38,6 +38,7 @@ else
                     }
                     <span class="playlist-meta">Updated @complex.UpdatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
                 </div>
+                <a class="btn btn-outline-primary" asp-area="Trainer" asp-controller="WorkoutComplexes" asp-action="Details" asp-route-id="@complex.Id">View exercises</a>
             </article>
         }
     </section>

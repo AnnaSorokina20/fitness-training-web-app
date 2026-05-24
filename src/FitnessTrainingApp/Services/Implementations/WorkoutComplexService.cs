@@ -34,6 +34,18 @@ public sealed class WorkoutComplexService(FitnessTrainingDbContext context) : IW
             .ToListAsync();
     }
 
+    public async Task<WorkoutComplex?> GetTrainerWorkoutComplexAsync(int id, int trainerId)
+    {
+        return await context.WorkoutComplexes
+            .AsNoTracking()
+            .Include(complex => complex.WorkoutComplexExercises.OrderBy(item => item.OrderNumber))
+            .ThenInclude(item => item.Exercise)
+            .FirstOrDefaultAsync(complex =>
+                complex.Id == id &&
+                complex.TrainerId == trainerId &&
+                !complex.IsDeleted);
+    }
+
     public async Task<IReadOnlyList<Exercise>> GetAvailableExercisesAsync()
     {
         return await context.Exercises
