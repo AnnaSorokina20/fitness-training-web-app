@@ -1,0 +1,117 @@
+@model FitnessTrainingApp.Models.ViewModels.Home.HomeIndexViewModel
+
+@{
+    ViewData["Title"] = "Fitness Training";
+}
+
+<section class="home-hero">
+    <div class="home-hero-content">
+        <p class="eyebrow">Fitness training web app</p>
+        <h1>Plan workouts for home and gym training</h1>
+        <p class="lead">Browse exercises, review structured workout complexes, and save useful training content in a personal playlist.</p>
+        <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" asp-controller="Exercises" asp-action="Index">Browse exercises</a>
+            <a class="btn btn-outline-primary btn-lg" asp-controller="WorkoutComplexes" asp-action="Index">View complexes</a>
+        </div>
+    </div>
+    <div class="home-hero-panel" aria-label="Project metrics">
+        <div>
+            <strong>@Model.ExerciseCount</strong>
+            <span>Exercises</span>
+        </div>
+        <div>
+            <strong>@Model.WorkoutComplexCount</strong>
+            <span>Complexes</span>
+        </div>
+        <div>
+            <strong>@Model.HomeWorkoutCount</strong>
+            <span>Home</span>
+        </div>
+        <div>
+            <strong>@Model.GymWorkoutCount</strong>
+            <span>Gym</span>
+        </div>
+    </div>
+</section>
+
+<section class="home-section">
+    <div class="section-title-row">
+        <div>
+            <p class="eyebrow">Exercise library</p>
+            <h2>Featured exercises</h2>
+        </div>
+        <a asp-controller="Exercises" asp-action="Index">Open catalog</a>
+    </div>
+
+    <div class="exercise-grid">
+        @foreach (var exercise in Model.FeaturedExercises)
+        {
+            <article class="exercise-card">
+                <div class="exercise-card-media">
+                    @if (!string.IsNullOrWhiteSpace(exercise.ThumbnailUrl))
+                    {
+                        <img src="@exercise.ThumbnailUrl" alt="@exercise.Name" loading="lazy" />
+                    }
+                    else
+                    {
+                        <span>@exercise.MuscleGroup</span>
+                    }
+                </div>
+                <div class="exercise-card-meta">
+                    <span>@exercise.WorkoutType</span>
+                    <span>@exercise.Difficulty</span>
+                </div>
+                <h2>@exercise.Name</h2>
+                <p>@exercise.Description</p>
+                <dl>
+                    <div>
+                        <dt>Muscle group</dt>
+                        <dd>@exercise.MuscleGroup</dd>
+                    </div>
+                    <div>
+                        <dt>Equipment</dt>
+                        <dd>@exercise.Equipment</dd>
+                    </div>
+                </dl>
+                <a class="btn btn-outline-primary" asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.Id">View details</a>
+            </article>
+        }
+    </div>
+</section>
+
+<section class="home-section">
+    <div class="section-title-row">
+        <div>
+            <p class="eyebrow">Training plans</p>
+            <h2>Ready workout complexes</h2>
+        </div>
+        <a asp-controller="WorkoutComplexes" asp-action="Index">Open complexes</a>
+    </div>
+
+    <div class="complex-preview-grid">
+        @foreach (var complex in Model.FeaturedComplexes)
+        {
+            <article class="complex-preview">
+                <div>
+                    <div class="exercise-card-meta">
+                        <span>@complex.WorkoutType</span>
+                        <span>@complex.Difficulty</span>
+                    </div>
+                    <h3>@complex.Name</h3>
+                    <p>@complex.Description</p>
+                </div>
+                <dl>
+                    <div>
+                        <dt>Duration</dt>
+                        <dd>@complex.DurationMinutes min</dd>
+                    </div>
+                    <div>
+                        <dt>Exercises</dt>
+                        <dd>@complex.ExerciseCount</dd>
+                    </div>
+                </dl>
+                <a class="btn btn-outline-primary" asp-controller="WorkoutComplexes" asp-action="Details" asp-route-id="@complex.Id">View plan</a>
+            </article>
+        }
+    </div>
+</section>

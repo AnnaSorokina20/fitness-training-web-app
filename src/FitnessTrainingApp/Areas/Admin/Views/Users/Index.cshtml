@@ -1,0 +1,44 @@
+@model FitnessTrainingApp.Models.ViewModels.Admin.UserManagementIndexViewModel
+
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Admin area</p>
+        <h1>User Management</h1>
+        <p class="lead">Assign user roles for access to trainer and administrator features.</p>
+    </div>
+</section>
+
+<section class="management-list" aria-label="Users">
+    @foreach (var user in Model.Users)
+    {
+        <article class="management-row">
+            <div>
+                <span class="playlist-type">@user.Role</span>
+                <h2>@user.FullName</h2>
+                <p>@user.Email</p>
+                <span class="playlist-meta">Registered @user.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
+            </div>
+            @if (user.Id == Model.CurrentUserId)
+            {
+                <span class="playlist-meta">Current admin account</span>
+            }
+            else
+            {
+                <form asp-area="Admin" asp-controller="Users" asp-action="ChangeRole" method="post" class="role-form">
+                    <input type="hidden" name="id" value="@user.Id" />
+                    <select name="role" class="form-select">
+                        @foreach (var role in Model.Roles)
+                        {
+                            <option value="@role" selected="@(role == user.Role)">@role</option>
+                        }
+                    </select>
+                    <button type="submit" class="btn btn-primary">Update role</button>
+                </form>
+            }
+        </article>
+    }
+</section>

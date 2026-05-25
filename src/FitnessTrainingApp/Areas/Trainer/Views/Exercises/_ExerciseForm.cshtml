@@ -1,0 +1,67 @@
+@model FitnessTrainingApp.Models.ViewModels.Trainer.TrainerExerciseFormViewModel
+@using FitnessTrainingApp.Models.Entities.Enums
+
+<form method="post" class="management-form" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-grid">
+        <div class="form-field form-field-wide">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="Difficulty"></label>
+            <select asp-for="Difficulty" class="form-select" asp-items="Html.GetEnumSelectList<DifficultyLevel>()"></select>
+            <span asp-validation-for="Difficulty" class="text-danger"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="WorkoutType">Workout type</label>
+            <select asp-for="WorkoutType" class="form-select" asp-items="Html.GetEnumSelectList<WorkoutType>()"></select>
+            <span asp-validation-for="WorkoutType" class="text-danger"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="Equipment"></label>
+            <input asp-for="Equipment" class="form-control" />
+            <span asp-validation-for="Equipment" class="text-danger"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="MuscleGroup">Muscle group</label>
+            <input asp-for="MuscleGroup" class="form-control" />
+            <span asp-validation-for="MuscleGroup" class="text-danger"></span>
+        </div>
+
+        <div class="form-field form-field-wide">
+            <label asp-for="MediaUrls"></label>
+            <textarea asp-for="MediaUrls" class="form-control" rows="3" placeholder="https://youtube.com/watch?v=...&#10;https://example.com/exercise.jpg"></textarea>
+            <span asp-validation-for="MediaUrls" class="text-danger"></span>
+        </div>
+
+        <div class="form-field form-field-wide">
+            <label asp-for="UploadedImages"></label>
+            <input asp-for="UploadedImages" class="form-control" type="file" multiple accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" />
+            <span asp-validation-for="UploadedImages" class="text-danger"></span>
+        </div>
+
+        <div class="form-field form-field-wide">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-field form-field-wide">
+            <label asp-for="SafetyNotes">Safety notes</label>
+            <textarea asp-for="SafetyNotes" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="SafetyNotes" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a class="btn btn-outline-secondary" asp-area="Trainer" asp-controller="Exercises" asp-action="Index">Cancel</a>
+    </div>
+</form>

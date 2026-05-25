@@ -1,0 +1,43 @@
+@model FitnessTrainingApp.Models.ViewModels.Admin.AdminLogIndexViewModel
+
+@{
+    ViewData["Title"] = "Admin Logs";
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Admin area</p>
+        <h1>Admin Logs</h1>
+        <p class="lead">Review moderation and role-management actions performed by administrators.</p>
+    </div>
+</section>
+
+@if (Model.Logs.Count == 0)
+{
+    <div class="empty-state">
+        <h2>No admin actions yet</h2>
+        <p>Moderation and user role changes will appear here.</p>
+    </div>
+}
+else
+{
+    <section class="log-table" aria-label="Admin action log">
+        <div class="log-row log-header">
+            <span>Date</span>
+            <span>Admin</span>
+            <span>Action</span>
+            <span>Entity</span>
+            <span>Target</span>
+        </div>
+        @foreach (var log in Model.Logs)
+        {
+            <article class="log-row">
+                <span>@log.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
+                <span>@log.AdminName</span>
+                <span>@log.Action</span>
+                <span>@log.EntityName #@log.EntityId</span>
+                <span>@(log.TargetUserId.HasValue ? $"User #{log.TargetUserId}" : "-")</span>
+            </article>
+        }
+    </section>
+}

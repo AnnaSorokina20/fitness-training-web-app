@@ -1,0 +1,51 @@
+@model FitnessTrainingApp.Models.ViewModels.Trainer.TrainerWorkoutComplexIndexViewModel
+
+@{
+    ViewData["Title"] = "Trainer Workout Complexes";
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Trainer area</p>
+        <h1>My Workout Complexes</h1>
+        <p class="lead">Create structured workout plans from published exercises.</p>
+    </div>
+    <a class="btn btn-primary align-self-start" asp-area="Trainer" asp-controller="WorkoutComplexes" asp-action="Create">Create complex</a>
+</section>
+
+@if (Model.WorkoutComplexes.Count == 0)
+{
+    <div class="empty-state">
+        <h2>No workout complexes yet</h2>
+        <p>Create a plan and submit it for moderation.</p>
+    </div>
+}
+else
+{
+    <section class="management-list" aria-label="Trainer workout complex list">
+        @foreach (var complex in Model.WorkoutComplexes)
+        {
+            var statusClass = complex.Status.ToString().ToLowerInvariant();
+
+            <article class="management-row">
+                <div>
+                    <span class="status-badge status-badge-@statusClass">@complex.Status</span>
+                    <h2>@complex.Name</h2>
+                    <p>@complex.WorkoutType · @complex.Difficulty · @complex.DurationMinutes min · @complex.ExerciseCount exercises</p>
+                    @if (complex.Status == FitnessTrainingApp.Models.Entities.Enums.ContentStatus.Rejected && !string.IsNullOrWhiteSpace(complex.ModerationComment))
+                    {
+                        <p class="moderation-comment"><strong>Admin comment:</strong> @complex.ModerationComment</p>
+                    }
+                    <span class="playlist-meta">Updated @complex.UpdatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
+                </div>
+                <div class="playlist-actions">
+                    <a class="btn btn-outline-primary" asp-area="Trainer" asp-controller="WorkoutComplexes" asp-action="Details" asp-route-id="@complex.Id">View exercises</a>
+                    <form asp-area="Trainer" asp-controller="WorkoutComplexes" asp-action="Delete" method="post">
+                        <input type="hidden" name="id" value="@complex.Id" />
+                        <button type="submit" class="btn btn-outline-danger">Delete</button>
+                    </form>
+                </div>
+            </article>
+        }
+    </section>
+}

@@ -1,0 +1,53 @@
+@model FitnessTrainingApp.Models.ViewModels.Account.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Create account";
+}
+
+<section class="auth-layout">
+    <div class="auth-panel">
+        <p class="eyebrow">Registration</p>
+        <h1>Create account</h1>
+        <p class="lead">Registered users can save content in a playlist and interact with exercises.</p>
+
+        <form asp-area="" asp-controller="Account" asp-action="Register" method="post" class="auth-form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div>
+                <label asp-for="FullName">Full name</label>
+                <input asp-for="FullName" class="form-control" autocomplete="name" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" autocomplete="email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" autocomplete="new-password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="ConfirmPassword">Confirm password</label>
+                <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create account</button>
+        </form>
+    </div>
+
+    <aside class="auth-side">
+        <h2>Already registered?</h2>
+        <p>Use your account to continue working with personal training content.</p>
+        <a class="btn btn-outline-primary" asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
+    </aside>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

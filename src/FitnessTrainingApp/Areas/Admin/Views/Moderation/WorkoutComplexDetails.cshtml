@@ -1,0 +1,89 @@
+@model FitnessTrainingApp.Models.ViewModels.Admin.PendingWorkoutComplexViewModel
+
+@{
+    ViewData["Title"] = $"Review {Model.Name}";
+}
+
+<article class="exercise-details">
+    <a class="back-link" asp-area="Admin" asp-controller="Moderation" asp-action="Index">Back to moderation</a>
+
+    <header class="details-header">
+        <div>
+            <p class="eyebrow">Pending workout complex</p>
+            <h1>@Model.Name</h1>
+            <p class="lead">@Model.Description</p>
+        </div>
+        <div class="details-rating">
+            <span class="rating-value">@Model.DurationMinutes min</span>
+            <span>@Model.Difficulty</span>
+        </div>
+    </header>
+
+    <section class="details-layout">
+        <div class="details-main">
+            <h2>Workout sequence</h2>
+            <div class="workout-steps">
+                @foreach (var item in Model.Exercises)
+                {
+                    <article class="workout-step">
+                        <div class="step-number">@item.OrderNumber</div>
+                        <div>
+                            <h3>@item.ExerciseName</h3>
+                            <p>@item.MuscleGroup - @item.Equipment</p>
+                        </div>
+                        <div class="step-load">
+                            <strong>@item.Sets</strong>
+                            <span>sets</span>
+                            <strong>@item.Repetitions</strong>
+                            <span>reps</span>
+                        </div>
+                    </article>
+                }
+            </div>
+        </div>
+
+        <div class="details-side-stack">
+            <section class="moderation-actions">
+                <div class="moderation-primary-actions moderation-action-card">
+                    <form asp-area="Admin" asp-controller="Moderation" asp-action="PublishWorkoutComplex" method="post">
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <button type="submit" class="btn btn-primary">Publish</button>
+                    </form>
+                    <form asp-area="Admin" asp-controller="Moderation" asp-action="DeleteWorkoutComplex" method="post">
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <button type="submit" class="btn btn-outline-danger">Delete</button>
+                    </form>
+                </div>
+
+                <form asp-area="Admin" asp-controller="Moderation" asp-action="RejectWorkoutComplex" method="post" class="moderation-reject-form">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <label for="moderationComment">Rejection comment</label>
+                    <textarea id="moderationComment" name="moderationComment" class="form-control" rows="3" maxlength="1000"></textarea>
+                    <button type="submit" class="btn btn-outline-danger">Reject</button>
+                </form>
+            </section>
+
+            <aside class="details-side">
+                <h2>Submission</h2>
+                <dl>
+                    <div>
+                        <dt>Trainer</dt>
+                        <dd>@Model.TrainerName</dd>
+                    </div>
+                    <div>
+                        <dt>Submitted</dt>
+                        <dd>@Model.SubmittedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</dd>
+                    </div>
+                    <div>
+                        <dt>Workout type</dt>
+                        <dd>@Model.WorkoutType</dd>
+                    </div>
+                    <div>
+                        <dt>Exercises</dt>
+                        <dd>@Model.ExerciseCount</dd>
+                    </div>
+                </dl>
+            </aside>
+        </div>
+    </section>
+</article>
