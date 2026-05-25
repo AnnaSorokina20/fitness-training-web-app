@@ -18,7 +18,10 @@
 
     <div class="filter-field filter-field-wide">
         <label asp-for="Search">Search</label>
-        <input asp-for="Search" class="form-control" placeholder="Name, muscle group, equipment" />
+        <div class="autocomplete-field" data-autocomplete-url="@Url.Action("Suggest", "Exercises")">
+            <input asp-for="Search" class="form-control" placeholder="Name, muscle group, equipment" autocomplete="off" data-autocomplete-input />
+            <div class="autocomplete-list" data-autocomplete-list hidden></div>
+        </div>
     </div>
 
     <div class="filter-field">

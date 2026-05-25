@@ -99,6 +99,17 @@ public sealed class ExercisesController(
         });
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Suggest(string? query)
+    {
+        if (string.IsNullOrWhiteSpace(query) || query.Trim().Length < 2)
+        {
+            return Json(Array.Empty<string>());
+        }
+
+        return Json(await exerciseService.GetSuggestionsAsync(query));
+    }
+
     [Authorize]
     [HttpPost]
     [ValidateAntiForgeryToken]

@@ -82,12 +82,27 @@ public sealed class ExerciseService(FitnessTrainingDbContext context, IWebHostEn
 
         var normalizedQuery = query.Trim().ToLower();
 
-        return await PublishedExercises()
-            .Where(exercise => exercise.Name.ToLower().Contains(normalizedQuery))
+        var exercises = await PublishedExercises()
+            .Where(exercise =>
+                exercise.Name.ToLower().Contains(normalizedQuery) ||
+                exercise.MuscleGroup.ToLower().Contains(normalizedQuery) ||
+                exercise.Equipment.ToLower().Contains(normalizedQuery))
             .OrderBy(exercise => exercise.Name)
-            .Select(exercise => exercise.Name)
-            .Take(8)
+            .Select(exercise => new
+            {
+                exercise.Name,
+                exercise.MuscleGroup,
+                exercise.Equipment
+            })
+            .Take(12)
             .ToListAsync();
+
+        return exercises
+            .SelectMany(exercise => new[] { exercise.Name, exercise.MuscleGroup, exercise.Equipment })
+            .Where(value => value.Contains(query.Trim(), StringComparison.OrdinalIgnoreCase))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .Take(8)
+            .ToList();
     }
 
     public async Task<Exercise?> GetDetailsAsync(int id)

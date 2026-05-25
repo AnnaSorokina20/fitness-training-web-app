@@ -363,6 +363,38 @@ main {
   font-weight: 650;
 }
 
+.autocomplete-field {
+  position: relative;
+}
+
+.autocomplete-list {
+  position: absolute;
+  z-index: 20;
+  right: 0;
+  left: 0;
+  top: calc(100% + 6px);
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #bcccdc;
+  border-radius: 8px;
+  box-shadow: 0 12px 28px rgba(15, 29, 43, 0.14);
+}
+
+.autocomplete-list button {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  color: #1f2933;
+  background: transparent;
+  border: 0;
+  text-align: left;
+}
+
+.autocomplete-list button:hover,
+.autocomplete-list button.active {
+  background: #edf2f7;
+}
+
 .filter-actions {
   display: flex;
   gap: 8px;
