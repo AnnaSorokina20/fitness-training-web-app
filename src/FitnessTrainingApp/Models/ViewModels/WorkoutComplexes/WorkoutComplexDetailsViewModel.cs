@@ -1,4 +1,5 @@
 using FitnessTrainingApp.Models.Entities.Enums;
+using FitnessTrainingApp.Models.ViewModels.Exercises;
 
 namespace FitnessTrainingApp.Models.ViewModels.WorkoutComplexes;
 
@@ -13,6 +14,8 @@ public sealed class WorkoutComplexDetailsViewModel
     public int? PlaylistItemId { get; set; }
     public double AverageRating { get; set; }
     public int RatingCount { get; set; }
+    public int CommentCount { get; set; }
     public int? UserRating { get; set; }
+    public IReadOnlyList<ExerciseCommentViewModel> Comments { get; set; } = [];
     public IReadOnlyList<WorkoutComplexExerciseViewModel> Exercises { get; set; } = [];
 }

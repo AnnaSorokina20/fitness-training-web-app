@@ -23,6 +23,8 @@ public static class DatabaseInitializer
 
         await context.Database.ExecuteSqlRawAsync("""ALTER TABLE "Exercises" ADD COLUMN IF NOT EXISTS "ModerationComment" character varying(1000);""");
         await context.Database.ExecuteSqlRawAsync("""ALTER TABLE "WorkoutComplexes" ADD COLUMN IF NOT EXISTS "ModerationComment" character varying(1000);""");
+        await context.Database.ExecuteSqlRawAsync("""ALTER TABLE "Comments" ADD COLUMN IF NOT EXISTS "WorkoutComplexId" integer;""");
+        await context.Database.ExecuteSqlRawAsync("""ALTER TABLE "Comments" ALTER COLUMN "ExerciseId" DROP NOT NULL;""");
         await context.Database.ExecuteSqlRawAsync("""ALTER TABLE "Ratings" ADD COLUMN IF NOT EXISTS "WorkoutComplexId" integer;""");
         await context.Database.ExecuteSqlRawAsync("""ALTER TABLE "Ratings" ALTER COLUMN "ExerciseId" DROP NOT NULL;""");
         await context.Database.ExecuteSqlRawAsync("""CREATE UNIQUE INDEX IF NOT EXISTS "IX_Ratings_UserId_WorkoutComplexId" ON "Ratings" ("UserId", "WorkoutComplexId");""");

@@ -18,6 +18,7 @@
             <span>@Model.Difficulty</span>
             <span>@(Model.RatingCount == 0 ? "No ratings" : $"{Model.AverageRating:0.0} rating")</span>
             <span>@Model.RatingCount vote@(Model.RatingCount == 1 ? "" : "s")</span>
+            <span>@Model.CommentCount comment@(Model.CommentCount == 1 ? "" : "s")</span>
         </div>
     </header>
 
@@ -85,6 +86,46 @@
                     </article>
                 }
             </div>
+
+            <section class="interaction-section">
+                <h2>Comments</h2>
+
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <form asp-controller="WorkoutComplexes" asp-action="AddComment" method="post" class="comment-form">
+                        <input type="hidden" name="workoutComplexId" value="@Model.Id" />
+                        <label for="complexCommentText">Comment</label>
+                        <textarea id="complexCommentText" name="text" class="form-control" rows="4" maxlength="1000" required></textarea>
+                        <button type="submit" class="btn btn-primary">Add comment</button>
+                    </form>
+                }
+                else
+                {
+                    <div class="signin-note">
+                        <a asp-area="" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">Log in</a> to comment on this workout complex.
+                    </div>
+                }
+
+                @if (Model.Comments.Count == 0)
+                {
+                    <p class="muted-text">No comments yet.</p>
+                }
+                else
+                {
+                    <div class="comment-list">
+                        @foreach (var comment in Model.Comments)
+                        {
+                            <article class="comment-item">
+                                <div>
+                                    <strong>@comment.AuthorName</strong>
+                                    <span>@comment.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
+                                </div>
+                                <p>@comment.Text</p>
+                            </article>
+                        }
+                    </div>
+                }
+            </section>
         </div>
 
         <aside class="details-side">

@@ -94,6 +94,9 @@ public sealed class FitnessTrainingDbContext(DbContextOptions<FitnessTrainingDbC
             entity.HasOne(comment => comment.Exercise)
                 .WithMany(exercise => exercise.Comments)
                 .HasForeignKey(comment => comment.ExerciseId);
+            entity.HasOne(comment => comment.WorkoutComplex)
+                .WithMany(complex => complex.Comments)
+                .HasForeignKey(comment => comment.WorkoutComplexId);
         });
 
         modelBuilder.Entity<Rating>(entity =>

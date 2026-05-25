@@ -1,8 +1,10 @@
 using FitnessTrainingApp.Models.Entities;
+using FitnessTrainingApp.Models.ViewModels.Exercises;
 using FitnessTrainingApp.Models.ViewModels.Shared;
 using FitnessTrainingApp.Models.ViewModels.WorkoutComplexes;
 using FitnessTrainingApp.Infrastructure.Extensions;
 using FitnessTrainingApp.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessTrainingApp.Controllers;
@@ -10,7 +12,8 @@ namespace FitnessTrainingApp.Controllers;
 public sealed class WorkoutComplexesController(
     IWorkoutComplexService workoutComplexService,
     IPlaylistService playlistService,
-    IRatingService ratingService) : Controller
+    IRatingService ratingService,
+    ICommentService commentService) : Controller
 {
     public async Task<IActionResult> Index(int page = 1, int pageSize = 12)
     {
@@ -33,6 +36,7 @@ public sealed class WorkoutComplexesController(
         }
 
         var userId = User.Identity?.IsAuthenticated == true ? User.GetUserId() : 0;
+        var comments = await commentService.GetForWorkoutComplexAsync(id);
 
         return View(new WorkoutComplexDetailsViewModel
         {
@@ -45,7 +49,14 @@ public sealed class WorkoutComplexesController(
             PlaylistItemId = userId == 0 ? null : await playlistService.GetWorkoutComplexPlaylistItemIdAsync(userId, id),
             AverageRating = await ratingService.CalculateWorkoutComplexAverageAsync(id),
             RatingCount = await ratingService.CountWorkoutComplexAsync(id),
+            CommentCount = comments.Count,
             UserRating = userId == 0 ? null : await ratingService.GetUserWorkoutComplexRatingAsync(userId, id),
+            Comments = comments.Select(comment => new ExerciseCommentViewModel
+            {
+                AuthorName = comment.User?.FullName ?? "User",
+                Text = comment.Text,
+                CreatedAt = comment.CreatedAt
+            }).ToList(),
             Exercises = complex.WorkoutComplexExercises
                 .OrderBy(item => item.OrderNumber)
                 .Select(item => new WorkoutComplexExerciseViewModel
@@ -72,6 +83,15 @@ public sealed class WorkoutComplexesController(
         }
 
         await ratingService.AddOrUpdateWorkoutComplexAsync(User.GetUserId(), workoutComplexId, value);
+        return RedirectToAction(nameof(Details), new { id = workoutComplexId });
+    }
+
+    [Authorize]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddComment(int workoutComplexId, string text)
+    {
+        await commentService.AddToWorkoutComplexAsync(User.GetUserId(), workoutComplexId, text);
         return RedirectToAction(nameof(Details), new { id = workoutComplexId });
     }
 
