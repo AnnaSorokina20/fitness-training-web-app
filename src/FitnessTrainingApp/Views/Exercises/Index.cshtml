@@ -68,6 +68,16 @@ else
         @foreach (var exercise in Model.Exercises.Items)
         {
             <article class="exercise-card">
+                <div class="exercise-card-media">
+                    @if (!string.IsNullOrWhiteSpace(exercise.ThumbnailUrl))
+                    {
+                        <img src="@exercise.ThumbnailUrl" alt="@exercise.Name" loading="lazy" />
+                    }
+                    else
+                    {
+                        <span>@exercise.MuscleGroup</span>
+                    }
+                </div>
                 <div class="exercise-card-meta">
                     <span>@exercise.WorkoutType</span>
                     <span>@exercise.Difficulty</span>

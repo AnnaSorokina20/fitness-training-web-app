@@ -452,6 +452,31 @@ main {
   padding: 18px;
 }
 
+.exercise-card-media {
+  display: grid;
+  height: 150px;
+  place-items: center;
+  overflow: hidden;
+  margin: -18px -18px 16px;
+  color: #334e68;
+  background: #e6f2ee;
+  border-bottom: 1px solid #d9e2ec;
+  border-radius: 8px 8px 0 0;
+  font-weight: 750;
+}
+
+.exercise-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.exercise-card-media span {
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+}
+
 .exercise-card h2,
 .details-main h2,
 .details-side h2,

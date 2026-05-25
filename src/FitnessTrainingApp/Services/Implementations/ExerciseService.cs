@@ -203,6 +203,7 @@ public sealed class ExerciseService(FitnessTrainingDbContext context, IWebHostEn
     {
         return context.Exercises
             .AsNoTracking()
+            .Include(exercise => exercise.MediaFiles)
             .Where(exercise => !exercise.IsDeleted && exercise.Status == ContentStatus.Published);
     }
 

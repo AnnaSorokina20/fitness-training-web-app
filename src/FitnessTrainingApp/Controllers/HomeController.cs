@@ -46,8 +46,22 @@ public sealed class HomeController(
             Difficulty = exercise.Difficulty,
             WorkoutType = exercise.WorkoutType,
             Equipment = exercise.Equipment,
-            MuscleGroup = exercise.MuscleGroup
+            MuscleGroup = exercise.MuscleGroup,
+            ThumbnailUrl = GetThumbnailUrl(exercise)
         };
+    }
+
+    private static string? GetThumbnailUrl(Exercise exercise)
+    {
+        return exercise.MediaFiles
+            .FirstOrDefault(file => IsImageMedia(file))
+            ?.Url;
+    }
+
+    private static bool IsImageMedia(MediaFile mediaFile)
+    {
+        return mediaFile.ContentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase) ||
+               mediaFile.Url.StartsWith("/uploads/exercises/", StringComparison.OrdinalIgnoreCase);
     }
 
     private static WorkoutComplexCardViewModel ToWorkoutComplexCardViewModel(WorkoutComplex complex)

@@ -11,4 +11,5 @@ public sealed class ExerciseCardViewModel
     public WorkoutType WorkoutType { get; set; }
     public string Equipment { get; set; } = string.Empty;
     public string MuscleGroup { get; set; } = string.Empty;
+    public string? ThumbnailUrl { get; set; }
 }
