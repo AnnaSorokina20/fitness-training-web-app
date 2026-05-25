@@ -1,18 +1,23 @@
 using FitnessTrainingApp.Models.Entities;
 using FitnessTrainingApp.Models.Entities.Enums;
+using FitnessTrainingApp.Infrastructure.Security;
 
 namespace FitnessTrainingApp.Tests.Support;
 
 public static class TestDataFactory
 {
-    public static User CreateUser(int id = 1, string fullName = "Test User", UserRole role = UserRole.User)
+    public static User CreateUser(
+        int id = 1,
+        string fullName = "Test User",
+        UserRole role = UserRole.User,
+        string password = "Password1")
     {
         return new User
         {
             Id = id,
             FullName = fullName,
             Email = $"user{id}@test.local",
-            PasswordHash = "hash",
+            PasswordHash = PasswordHasher.HashPassword(password),
             Role = role
         };
     }
