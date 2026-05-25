@@ -11,5 +11,8 @@ public sealed class WorkoutComplexDetailsViewModel
     public WorkoutType WorkoutType { get; set; }
     public int DurationMinutes { get; set; }
     public int? PlaylistItemId { get; set; }
+    public double AverageRating { get; set; }
+    public int RatingCount { get; set; }
+    public int? UserRating { get; set; }
     public IReadOnlyList<WorkoutComplexExerciseViewModel> Exercises { get; set; } = [];
 }

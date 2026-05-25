@@ -99,12 +99,16 @@ public sealed class FitnessTrainingDbContext(DbContextOptions<FitnessTrainingDbC
         modelBuilder.Entity<Rating>(entity =>
         {
             entity.HasIndex(rating => new { rating.UserId, rating.ExerciseId }).IsUnique();
+            entity.HasIndex(rating => new { rating.UserId, rating.WorkoutComplexId }).IsUnique();
             entity.HasOne(rating => rating.User)
                 .WithMany(user => user.Ratings)
                 .HasForeignKey(rating => rating.UserId);
             entity.HasOne(rating => rating.Exercise)
                 .WithMany(exercise => exercise.Ratings)
                 .HasForeignKey(rating => rating.ExerciseId);
+            entity.HasOne(rating => rating.WorkoutComplex)
+                .WithMany(complex => complex.Ratings)
+                .HasForeignKey(rating => rating.WorkoutComplexId);
         });
 
         modelBuilder.Entity<MediaFile>(entity =>

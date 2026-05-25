@@ -9,7 +9,8 @@ namespace FitnessTrainingApp.Controllers;
 
 public sealed class WorkoutComplexesController(
     IWorkoutComplexService workoutComplexService,
-    IPlaylistService playlistService) : Controller
+    IPlaylistService playlistService,
+    IRatingService ratingService) : Controller
 {
     public async Task<IActionResult> Index(int page = 1, int pageSize = 12)
     {
@@ -42,6 +43,9 @@ public sealed class WorkoutComplexesController(
             WorkoutType = complex.WorkoutType,
             DurationMinutes = complex.DurationMinutes,
             PlaylistItemId = userId == 0 ? null : await playlistService.GetWorkoutComplexPlaylistItemIdAsync(userId, id),
+            AverageRating = await ratingService.CalculateWorkoutComplexAverageAsync(id),
+            RatingCount = await ratingService.CountWorkoutComplexAsync(id),
+            UserRating = userId == 0 ? null : await ratingService.GetUserWorkoutComplexRatingAsync(userId, id),
             Exercises = complex.WorkoutComplexExercises
                 .OrderBy(item => item.OrderNumber)
                 .Select(item => new WorkoutComplexExerciseViewModel
@@ -56,6 +60,19 @@ public sealed class WorkoutComplexesController(
                 })
                 .ToList()
         });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Rate(int workoutComplexId, int value)
+    {
+        if (User.Identity?.IsAuthenticated != true)
+        {
+            return RedirectToAction("Login", "Account", new { returnUrl = Url.Action(nameof(Details), new { id = workoutComplexId }) });
+        }
+
+        await ratingService.AddOrUpdateWorkoutComplexAsync(User.GetUserId(), workoutComplexId, value);
+        return RedirectToAction(nameof(Details), new { id = workoutComplexId });
     }
 
     private static WorkoutComplexCardViewModel ToCardViewModel(WorkoutComplex complex)

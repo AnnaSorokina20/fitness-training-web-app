@@ -15,4 +15,5 @@ public sealed class WorkoutComplex : BaseEntity
 
     public User? Trainer { get; set; }
     public ICollection<WorkoutComplexExercise> WorkoutComplexExercises { get; set; } = [];
+    public ICollection<Rating> Ratings { get; set; } = [];
 }

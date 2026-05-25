@@ -16,6 +16,8 @@
         <div class="details-rating">
             <span class="rating-value">@Model.DurationMinutes min</span>
             <span>@Model.Difficulty</span>
+            <span>@(Model.RatingCount == 0 ? "No ratings" : $"{Model.AverageRating:0.0} rating")</span>
+            <span>@Model.RatingCount vote@(Model.RatingCount == 1 ? "" : "s")</span>
         </div>
     </header>
 
@@ -41,8 +43,23 @@
     else
     {
         <div class="signin-note">
-            <a asp-area="" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">Log in</a> to save this workout complex to your playlist.
+            <a asp-area="" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">Log in</a> to save and rate this workout complex.
         </div>
+    }
+
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <form asp-controller="WorkoutComplexes" asp-action="Rate" method="post" class="rating-form">
+            <input type="hidden" name="workoutComplexId" value="@Model.Id" />
+            <span class="rating-label">Your rating</span>
+            <div class="star-rating" aria-label="Your rating">
+                @for (var value = 5; value >= 1; value--)
+                {
+                    var isSelected = Model.UserRating.HasValue && value <= Model.UserRating.Value;
+                    <button type="submit" name="value" value="@value" class="star-button @(isSelected ? "star-button-selected" : string.Empty)" title="@value star@(value == 1 ? "" : "s")" aria-label="Rate @value star@(value == 1 ? "" : "s")">&#9733;</button>
+                }
+            </div>
+        </form>
     }
 
     <section class="details-layout">
