@@ -902,6 +902,14 @@ main {
   color: #52606d;
 }
 
+.role-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 .moderation-row {
   align-items: start;
 }
@@ -1153,6 +1161,16 @@ main {
 
   .role-form {
     grid-template-columns: 1fr;
+  }
+
+  .role-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .role-actions .btn,
+  .role-actions .form-select {
+    width: 100%;
   }
 
   .log-row {

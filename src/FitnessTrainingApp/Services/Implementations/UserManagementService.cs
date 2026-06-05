@@ -45,4 +45,33 @@ public sealed class UserManagementService(FitnessTrainingDbContext context) : IU
         await context.SaveChangesAsync();
         return true;
     }
+
+    public async Task<bool> DeleteUserAsync(int userId, int adminId)
+    {
+        if (userId == adminId)
+        {
+            return false;
+        }
+
+        var user = await context.Users.FirstOrDefaultAsync(existing => existing.Id == userId && !existing.IsDeleted);
+
+        if (user is null)
+        {
+            return false;
+        }
+
+        user.IsDeleted = true;
+        user.UpdatedAt = DateTime.UtcNow;
+        context.AdminLogs.Add(new AdminLog
+        {
+            AdminId = adminId,
+            Action = "DeleteUser",
+            EntityName = nameof(User),
+            EntityId = user.Id,
+            TargetUserId = user.Id
+        });
+
+        await context.SaveChangesAsync();
+        return true;
+    }
 }

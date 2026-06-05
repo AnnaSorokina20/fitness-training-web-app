@@ -47,6 +47,11 @@ public sealed class PlaylistService(FitnessTrainingDbContext context) : IPlaylis
 
     public async Task<bool> AddExerciseAsync(int userId, int exerciseId)
     {
+        if (!await UserExistsAsync(userId))
+        {
+            return false;
+        }
+
         var exists = await context.Exercises.AnyAsync(exercise =>
             exercise.Id == exerciseId &&
             !exercise.IsDeleted &&
@@ -62,6 +67,11 @@ public sealed class PlaylistService(FitnessTrainingDbContext context) : IPlaylis
 
     public async Task<bool> AddWorkoutComplexAsync(int userId, int workoutComplexId)
     {
+        if (!await UserExistsAsync(userId))
+        {
+            return false;
+        }
+
         var exists = await context.WorkoutComplexes.AnyAsync(complex =>
             complex.Id == workoutComplexId &&
             !complex.IsDeleted &&
@@ -117,5 +127,10 @@ public sealed class PlaylistService(FitnessTrainingDbContext context) : IPlaylis
 
         await context.SaveChangesAsync();
         return true;
+    }
+
+    private async Task<bool> UserExistsAsync(int userId)
+    {
+        return await context.Users.AnyAsync(user => user.Id == userId && !user.IsDeleted);
     }
 }
