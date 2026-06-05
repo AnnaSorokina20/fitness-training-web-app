@@ -2,6 +2,7 @@ using FitnessTrainingApp.Models.Entities;
 using FitnessTrainingApp.Models.Entities.Enums;
 using FitnessTrainingApp.Services.Implementations;
 using FitnessTrainingApp.Tests.Support;
+using System.Diagnostics;
 
 namespace FitnessTrainingApp.Tests.SystemTests;
 
@@ -49,6 +50,21 @@ public sealed class FunctionalSystemTests : SystemTestBase
         Assert.That(details, Is.Not.Null);
         Assert.That(details!.Description, Does.Contain("Plank"));
         Assert.That(details.MediaFiles, Is.Not.Empty);
+    }
+
+    [Test]
+    public async Task FR105_TC01_GetExerciseDetails_ShouldCompleteWithinTwoSeconds()
+    {
+        using var context = CreateContext();
+        var trainer = await AddUserAsync(context, role: UserRole.Trainer);
+        var exercise = await AddExerciseAsync(context, "Fast Details", equipment: "No equipment", muscleGroup: "Core", trainerId: trainer.Id);
+
+        var stopwatch = Stopwatch.StartNew();
+        var details = await CreateExerciseService(context).GetDetailsAsync(exercise.Id);
+        stopwatch.Stop();
+
+        Assert.That(details, Is.Not.Null);
+        Assert.That(stopwatch.Elapsed, Is.LessThan(TimeSpan.FromSeconds(2)));
     }
 
     [Test]
@@ -182,6 +198,20 @@ public sealed class FunctionalSystemTests : SystemTestBase
         Assert.That(changed, Is.True);
         Assert.That(context.Users.Find(user.Id)?.Role, Is.EqualTo(UserRole.Trainer));
         Assert.That(context.AdminLogs.Single().Action, Is.EqualTo("ChangeUserRole"));
+    }
+
+    [Test]
+    public async Task FR403_TC01_DeleteUserByAdmin_ShouldDeactivateUserAndLogAction()
+    {
+        using var context = CreateContext();
+        var user = await AddUserAsync(context, 1, UserRole.User);
+        var admin = await AddUserAsync(context, 2, UserRole.Administrator);
+
+        var deleted = await new UserManagementService(context).DeleteUserAsync(user.Id, admin.Id);
+
+        Assert.That(deleted, Is.True);
+        Assert.That(context.Users.Find(user.Id)?.IsDeleted, Is.True);
+        Assert.That(context.AdminLogs.Single().Action, Is.EqualTo("DeleteUser"));
     }
 
     [Test]

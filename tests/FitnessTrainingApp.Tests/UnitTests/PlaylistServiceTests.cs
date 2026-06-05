@@ -14,6 +14,7 @@ public sealed class PlaylistServiceTests
     {
         using var context = TestDbContextFactory.CreateContext();
         var exercise = TestDataFactory.CreatePublishedExercise();
+        context.Users.Add(TestDataFactory.CreateUser());
         context.Exercises.Add(exercise);
         await context.SaveChangesAsync();
 
@@ -28,6 +29,7 @@ public sealed class PlaylistServiceTests
     {
         using var context = TestDbContextFactory.CreateContext();
         var exercise = TestDataFactory.CreatePublishedExercise();
+        context.Users.Add(TestDataFactory.CreateUser());
         context.Exercises.Add(exercise);
         await context.SaveChangesAsync();
 
@@ -44,6 +46,7 @@ public sealed class PlaylistServiceTests
     {
         using var context = TestDbContextFactory.CreateContext();
         var exercise = TestDataFactory.CreatePublishedExercise();
+        context.Users.Add(TestDataFactory.CreateUser());
         context.Exercises.Add(exercise);
         await context.SaveChangesAsync();
 
@@ -62,6 +65,7 @@ public sealed class PlaylistServiceTests
     {
         using var context = TestDbContextFactory.CreateContext();
         var complex = TestDataFactory.CreatePublishedWorkoutComplex();
+        context.Users.Add(TestDataFactory.CreateUser());
         context.WorkoutComplexes.Add(complex);
         await context.SaveChangesAsync();
 

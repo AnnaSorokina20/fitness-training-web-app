@@ -36,4 +36,12 @@ public sealed class UsersController(IUserManagementService userManagementService
         await userManagementService.ChangeRoleAsync(id, role, User.GetUserId());
         return RedirectToAction(nameof(Index));
     }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await userManagementService.DeleteUserAsync(id, User.GetUserId());
+        return RedirectToAction(nameof(Index));
+    }
 }

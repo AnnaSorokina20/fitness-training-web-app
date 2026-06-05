@@ -440,15 +440,20 @@ public sealed class AcceptanceScenarioTests : AcceptanceTestBase
     }
 
     [Test]
-    public async Task TC34_AdminCanDeleteUserContent()
+    public async Task TC34_AdminCanDeleteUserAndContent()
     {
         using var context = CreateContext();
-        var exercise = await AddExerciseAsync(context, trainerId: 1);
+        var user = await AddUserAsync(context, 1, UserRole.User);
+        var admin = await AddUserAsync(context, 2, UserRole.Administrator);
+        var exercise = await AddExerciseAsync(context, trainerId: user.Id);
 
-        var deleted = await new ContentDeletionService(context).DeleteExerciseAsync(exercise.Id, 99, true);
+        var contentDeleted = await new ContentDeletionService(context).DeleteExerciseAsync(exercise.Id, admin.Id, true);
+        var userDeleted = await new UserManagementService(context).DeleteUserAsync(user.Id, admin.Id);
 
-        Assert.That(deleted, Is.True);
+        Assert.That(contentDeleted, Is.True);
         Assert.That(context.Exercises.Find(exercise.Id)?.IsDeleted, Is.True);
+        Assert.That(userDeleted, Is.True);
+        Assert.That(context.Users.Find(user.Id)?.IsDeleted, Is.True);
     }
 
     [Test]
@@ -509,13 +514,20 @@ public sealed class AcceptanceScenarioTests : AcceptanceTestBase
     }
 
     [Test]
-    public async Task TC39_PrivatePlaylist_IsBlockedWithoutAuthorization()
+    public async Task TC39_GuestAccessToPrivateActions_IsBlocked()
     {
         using var context = CreateContext();
+        var exercise = await AddExerciseAsync(context);
 
         var playlist = await new PlaylistService(context).GetPlaylistAsync(999);
+        var playlistAdded = await new PlaylistService(context).AddExerciseAsync(0, exercise.Id);
+        var commentAdded = await new CommentService(context).AddAsync(0, exercise.Id, "Guest comment");
 
         Assert.That(playlist, Is.Empty);
+        Assert.That(playlistAdded, Is.False);
+        Assert.That(commentAdded, Is.False);
+        Assert.That(context.PlaylistItems.Count(), Is.Zero);
+        Assert.That(context.Comments.Count(), Is.Zero);
     }
 
     [Test]

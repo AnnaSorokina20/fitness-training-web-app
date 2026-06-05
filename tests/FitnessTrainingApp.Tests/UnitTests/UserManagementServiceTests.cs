@@ -71,4 +71,34 @@ public sealed class UserManagementServiceTests
         Assert.That(result, Is.False);
         Assert.That(await context.AdminLogs.CountAsync(), Is.Zero);
     }
+
+    [Test]
+    public async Task DeleteUserAsync_ValidUser_MarksUserAsDeletedAndCreatesAdminLog()
+    {
+        using var context = TestDbContextFactory.CreateContext();
+        context.Users.AddRange(
+            TestDataFactory.CreateUser(1, role: UserRole.User),
+            TestDataFactory.CreateUser(2, role: UserRole.Administrator));
+        await context.SaveChangesAsync();
+
+        var result = await new UserManagementService(context).DeleteUserAsync(1, 2);
+
+        Assert.That(result, Is.True);
+        Assert.That((await context.Users.FindAsync(1))!.IsDeleted, Is.True);
+        Assert.That((await context.AdminLogs.SingleAsync()).Action, Is.EqualTo("DeleteUser"));
+    }
+
+    [Test]
+    public async Task DeleteUserAsync_SelfDelete_ReturnsFalse()
+    {
+        using var context = TestDbContextFactory.CreateContext();
+        context.Users.Add(TestDataFactory.CreateUser(1, role: UserRole.Administrator));
+        await context.SaveChangesAsync();
+
+        var result = await new UserManagementService(context).DeleteUserAsync(1, 1);
+
+        Assert.That(result, Is.False);
+        Assert.That((await context.Users.FindAsync(1))!.IsDeleted, Is.False);
+        Assert.That(await context.AdminLogs.CountAsync(), Is.Zero);
+    }
 }

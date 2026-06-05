@@ -66,6 +66,30 @@ public sealed class ExerciseServiceTests
         Assert.That(result, Does.Contain("Chest"));
     }
 
+    [Test]
+    public async Task CreateForTrainerAsync_HomeExerciseWithAllowedEquipment_CreatesExercise()
+    {
+        using var context = TestDbContextFactory.CreateContext();
+        var exercise = TestDataFactory.CreatePublishedExercise("Home exercise", equipment: "Bodyweight");
+
+        var created = await CreateService(context).CreateForTrainerAsync(exercise, "https://example.com/home.jpg", null);
+
+        Assert.That(created, Is.True);
+        Assert.That(context.Exercises.Single().Equipment, Is.EqualTo("Bodyweight"));
+    }
+
+    [Test]
+    public async Task CreateForTrainerAsync_HomeExerciseWithForbiddenEquipment_ReturnsFalse()
+    {
+        using var context = TestDbContextFactory.CreateContext();
+        var exercise = TestDataFactory.CreatePublishedExercise("Invalid home exercise", equipment: "Barbell");
+
+        var created = await CreateService(context).CreateForTrainerAsync(exercise, "https://example.com/home.jpg", null);
+
+        Assert.That(created, Is.False);
+        Assert.That(context.Exercises.Count(), Is.Zero);
+    }
+
     private static ExerciseService CreateService(FitnessTrainingApp.Data.FitnessTrainingDbContext context)
     {
         return new ExerciseService(context, new TestWebHostEnvironment());
