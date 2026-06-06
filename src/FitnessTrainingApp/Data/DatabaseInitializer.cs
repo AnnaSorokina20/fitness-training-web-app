@@ -9,28 +9,22 @@ public static class DatabaseInitializer
         using var scope = services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<FitnessTrainingDbContext>();
 
-        await context.Database.EnsureCreatedAsync();
-        await ApplySchemaUpdatesAsync(context);
+        await context.Database.MigrateAsync();
         await SeedMissingDataAsync(context);
     }
 
-    private static async Task ApplySchemaUpdatesAsync(FitnessTrainingDbContext context)
+    private static async Task SeedMissingDataAsync(FitnessTrainingDbContext context)
     {
-        if (!context.Database.IsNpgsql())
-        {
-            return;
-        }
-
-        await context.Database.ExecuteSqlRawAsync("""ALTER TABLE "Exercises" ADD COLUMN IF NOT EXISTS "ModerationComment" character varying(1000);""");
-        await context.Database.ExecuteSqlRawAsync("""ALTER TABLE "WorkoutComplexes" ADD COLUMN IF NOT EXISTS "ModerationComment" character varying(1000);""");
-        await context.Database.ExecuteSqlRawAsync("""ALTER TABLE "Comments" ADD COLUMN IF NOT EXISTS "WorkoutComplexId" integer;""");
-        await context.Database.ExecuteSqlRawAsync("""ALTER TABLE "Comments" ALTER COLUMN "ExerciseId" DROP NOT NULL;""");
-        await context.Database.ExecuteSqlRawAsync("""ALTER TABLE "Ratings" ADD COLUMN IF NOT EXISTS "WorkoutComplexId" integer;""");
-        await context.Database.ExecuteSqlRawAsync("""ALTER TABLE "Ratings" ALTER COLUMN "ExerciseId" DROP NOT NULL;""");
-        await context.Database.ExecuteSqlRawAsync("""CREATE UNIQUE INDEX IF NOT EXISTS "IX_Ratings_UserId_WorkoutComplexId" ON "Ratings" ("UserId", "WorkoutComplexId");""");
+        await SeedUsersAsync(context);
+        await SeedExercisesAsync(context);
+        await SeedMediaFilesAsync(context);
+        await SeedWorkoutComplexesAsync(context);
+        await SeedWorkoutComplexExercisesAsync(context);
+        await context.SaveChangesAsync();
+        await ResetPostgresSequencesAsync(context);
     }
 
-    private static async Task SeedMissingDataAsync(FitnessTrainingDbContext context)
+    private static async Task SeedUsersAsync(FitnessTrainingDbContext context)
     {
         foreach (var user in SeedData.Users)
         {
@@ -48,7 +42,10 @@ public static class DatabaseInitializer
                 }
             }
         }
+    }
 
+    private static async Task SeedExercisesAsync(FitnessTrainingDbContext context)
+    {
         foreach (var exercise in SeedData.Exercises)
         {
             if (!await context.Exercises.AnyAsync(existing => existing.Id == exercise.Id))
@@ -56,7 +53,10 @@ public static class DatabaseInitializer
                 context.Exercises.Add(exercise);
             }
         }
+    }
 
+    private static async Task SeedMediaFilesAsync(FitnessTrainingDbContext context)
+    {
         foreach (var mediaFile in SeedData.MediaFiles)
         {
             if (!await context.MediaFiles.AnyAsync(existing => existing.Id == mediaFile.Id))
@@ -64,7 +64,10 @@ public static class DatabaseInitializer
                 context.MediaFiles.Add(mediaFile);
             }
         }
+    }
 
+    private static async Task SeedWorkoutComplexesAsync(FitnessTrainingDbContext context)
+    {
         foreach (var workoutComplex in SeedData.WorkoutComplexes)
         {
             if (!await context.WorkoutComplexes.AnyAsync(existing => existing.Id == workoutComplex.Id))
@@ -72,7 +75,10 @@ public static class DatabaseInitializer
                 context.WorkoutComplexes.Add(workoutComplex);
             }
         }
+    }
 
+    private static async Task SeedWorkoutComplexExercisesAsync(FitnessTrainingDbContext context)
+    {
         foreach (var item in SeedData.WorkoutComplexExercises)
         {
             var exists = await context.WorkoutComplexExercises.AnyAsync(existing =>
@@ -84,9 +90,6 @@ public static class DatabaseInitializer
                 context.WorkoutComplexExercises.Add(item);
             }
         }
-
-        await context.SaveChangesAsync();
-        await ResetPostgresSequencesAsync(context);
     }
 
     private static async Task ResetPostgresSequencesAsync(FitnessTrainingDbContext context)
