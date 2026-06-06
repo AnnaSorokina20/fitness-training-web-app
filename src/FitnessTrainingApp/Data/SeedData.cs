@@ -147,7 +147,9 @@ public static class SeedData
         Media(47, 47, "medicine-ball-slam", "fitness,medicine,ball"),
         Media(48, 48, "single-arm-dumbbell-snatch", "fitness,dumbbell,snatch"),
         Media(49, 49, "bulgarian-split-squat", "fitness,split,squat"),
-        Media(50, 50, "barbell-hip-thrust", "fitness,hip,thrust")
+        Media(50, 50, "barbell-hip-thrust", "fitness,hip,thrust"),
+        YouTubeMedia(51, 35, "https://www.youtube.com/watch?v=wFj808u2HWU&pp=ygUQQXNzaXN0ZWQgUHVsbC11cA%3D%3D"),
+        YouTubeMedia(53, 27, "https://www.youtube.com/watch?v=rrJIyZGlK8c&pp=ygUSYmFyYmVsbCBiYWNrIHNxdWF0")
     ];
 
     public static IReadOnlyList<WorkoutComplex> WorkoutComplexes =>
@@ -217,9 +219,76 @@ public static class SeedData
         {
             Id = id,
             ExerciseId = exerciseId,
-            FileName = $"{fileName}.jpg",
-            Url = $"https://loremflickr.com/1200/800/{query}/all?lock={id}",
-            ContentType = "image/jpeg",
+            FileName = LocalImageNames.Contains(fileName) ? $"{fileName}.png" : $"{fileName}.jpg",
+            Url = LocalImageNames.Contains(fileName)
+                ? $"/images/exercises/{fileName}.png"
+                : $"https://placehold.co/1200x800/e8f2ee/19324d?text={Uri.EscapeDataString(fileName.Replace('-', ' '))}",
+            ContentType = LocalImageNames.Contains(fileName) ? "image/png" : "image/jpeg",
+            CreatedAt = CreatedAt
+        };
+
+    private static readonly HashSet<string> LocalImageNames =
+    [
+        "bodyweight-squat",
+        "plank",
+        "dumbbell-row",
+        "bench-press",
+        "deadlift",
+        "push-up",
+        "glute-bridge",
+        "reverse-lunge",
+        "mountain-climber",
+        "side-plank",
+        "bird-dog",
+        "standing-calf-raise",
+        "step-up",
+        "hip-hinge-drill",
+        "wall-sit",
+        "jumping-jack",
+        "superman-hold",
+        "hollow-body-hold",
+        "incline-push-up",
+        "single-leg-romanian-deadlift",
+        "goblet-squat",
+        "dumbbell-shoulder-press",
+        "lat-pulldown",
+        "seated-cable-row",
+        "leg-press",
+        "romanian-deadlift",
+        "barbell-back-squat",
+        "walking-lunge",
+        "chest-fly",
+        "triceps-rope-pushdown",
+        "biceps-curl",
+        "face-pull",
+        "kettlebell-swing",
+        "pull-up",
+        "assisted-pull-up",
+        "leg-curl",
+        "leg-extension",
+        "cable-woodchop",
+        "russian-twist",
+        "hanging-knee-raise",
+        "box-jump",
+        "battle-rope-waves",
+        "farmers-carry",
+        "treadmill-incline-walk",
+        "stationary-bike-intervals",
+        "burpee",
+        "medicine-ball-slam",
+        "single-arm-dumbbell-snatch",
+        "bulgarian-split-squat",
+        "barbell-hip-thrust"
+    ];
+
+    private static MediaFile YouTubeMedia(int id, int exerciseId, string url) =>
+        new()
+        {
+            Id = id,
+            ExerciseId = exerciseId,
+            FileName = "watch",
+            Url = url,
+            ContentType = "video/youtube",
             CreatedAt = CreatedAt
         };
 

@@ -288,7 +288,7 @@ public sealed class ExerciseService(FitnessTrainingDbContext context, IWebHostEn
         return mediaUrls
             .Split(["\r\n", "\n"], StringSplitOptions.RemoveEmptyEntries)
             .Select(url => url.Trim())
-            .Where(url => Uri.TryCreate(url, UriKind.Absolute, out var parsedUrl) && parsedUrl.Scheme is "http" or "https")
+            .Where(IsAllowedMediaUrl)
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToList();
     }
@@ -298,9 +298,30 @@ public sealed class ExerciseService(FitnessTrainingDbContext context, IWebHostEn
         return new MediaFile
         {
             Url = mediaUrl,
-            FileName = Path.GetFileName(new Uri(mediaUrl).AbsolutePath),
+            FileName = GetMediaFileName(mediaUrl),
             ContentType = InferContentType(mediaUrl)
         };
+    }
+
+    private static bool IsAllowedMediaUrl(string mediaUrl)
+    {
+        if (Uri.TryCreate(mediaUrl, UriKind.Absolute, out var parsedUrl))
+        {
+            return parsedUrl.Scheme is "http" or "https";
+        }
+
+        return mediaUrl.StartsWith("/images/exercises/", StringComparison.OrdinalIgnoreCase) ||
+               mediaUrl.StartsWith("/uploads/exercises/", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static string GetMediaFileName(string mediaUrl)
+    {
+        if (Uri.TryCreate(mediaUrl, UriKind.Absolute, out var parsedUrl))
+        {
+            return Path.GetFileName(parsedUrl.AbsolutePath);
+        }
+
+        return Path.GetFileName(mediaUrl);
     }
 
     private static bool IsValidUploadedImage(IFormFile uploadedImage)
@@ -360,7 +381,11 @@ public sealed class ExerciseService(FitnessTrainingDbContext context, IWebHostEn
             return "video/youtube";
         }
 
-        return Path.GetExtension(new Uri(mediaUrl).AbsolutePath).ToLowerInvariant() switch
+        var extensionSource = Uri.TryCreate(mediaUrl, UriKind.Absolute, out var parsedUrl)
+            ? parsedUrl.AbsolutePath
+            : mediaUrl;
+
+        return Path.GetExtension(extensionSource).ToLowerInvariant() switch
         {
             ".jpg" or ".jpeg" => "image/jpeg",
             ".png" => "image/png",
