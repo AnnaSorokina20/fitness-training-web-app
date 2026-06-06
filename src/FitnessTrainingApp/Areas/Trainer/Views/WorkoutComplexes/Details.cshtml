@@ -30,7 +30,7 @@
                         <div class="step-number">@item.OrderNumber</div>
                         <div>
                             <h3>
-                                <a asp-area="" asp-controller="Exercises" asp-action="Details" asp-route-id="@item.ExerciseId">@item.ExerciseName</a>
+                                <a asp-area="" asp-controller="Exercises" asp-action="Details" asp-route-id="@item.ExerciseId" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString">@item.ExerciseName</a>
                             </h3>
                             <p>@item.MuscleGroup - @item.Equipment</p>
                         </div>

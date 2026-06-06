@@ -78,6 +78,7 @@
   <data name="Already registered?" xml:space="preserve"><value>Вже зареєстровані?</value></data>
   <data name="Use your account to continue working with personal training content." xml:space="preserve"><value>Використайте акаунт, щоб продовжити роботу з персональним тренувальним контентом.</value></data>
   <data name="Back to catalog" xml:space="preserve"><value>Назад до каталогу</value></data>
+  <data name="Back to complex" xml:space="preserve"><value>Назад до комплексу</value></data>
   <data name="workout" xml:space="preserve"><value>тренування</value></data>
   <data name="Trainer" xml:space="preserve"><value>Тренер</value></data>
   <data name="No ratings" xml:space="preserve"><value>Немає оцінок</value></data>

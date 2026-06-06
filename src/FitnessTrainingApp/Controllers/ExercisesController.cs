@@ -61,7 +61,7 @@ public sealed class ExercisesController(
         return View(viewModel);
     }
 
-    public async Task<IActionResult> Details(int id)
+    public async Task<IActionResult> Details(int id, string? returnUrl)
     {
         var exercise = await exerciseService.GetDetailsAsync(id);
 
@@ -72,6 +72,7 @@ public sealed class ExercisesController(
 
         var userId = User.Identity?.IsAuthenticated == true ? User.GetUserId() : 0;
         var comments = await commentService.GetForExerciseAsync(id);
+        var normalizedReturnUrl = NormalizeReturnUrl(returnUrl);
 
         return View(new ExerciseDetailsViewModel
         {
@@ -90,6 +91,9 @@ public sealed class ExercisesController(
             CommentCount = comments.Count,
             UserRating = userId == 0 ? null : await ratingService.GetUserRatingAsync(userId, id),
             PlaylistItemId = userId == 0 ? null : await playlistService.GetExercisePlaylistItemIdAsync(userId, id),
+            BackUrl = normalizedReturnUrl ?? Url.Action(nameof(Index), "Exercises") ?? "/Exercises",
+            BackLabel = normalizedReturnUrl is null ? "Back to catalog" : "Back to complex",
+            HasCustomBackUrl = normalizedReturnUrl is not null,
             Comments = comments.Select(comment => new ExerciseCommentViewModel
             {
                 AuthorName = comment.User?.FullName ?? "User",
@@ -113,19 +117,34 @@ public sealed class ExercisesController(
     [Authorize]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> AddComment(int exerciseId, string text)
+    public async Task<IActionResult> AddComment(int exerciseId, string text, string? returnUrl)
     {
         await commentService.AddAsync(User.GetUserId(), exerciseId, text);
-        return RedirectToAction(nameof(Details), new { id = exerciseId });
+        return RedirectToAction(nameof(Details), CreateDetailsRoute(exerciseId, returnUrl));
     }
 
     [Authorize]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Rate(int exerciseId, int value)
+    public async Task<IActionResult> Rate(int exerciseId, int value, string? returnUrl)
     {
         await ratingService.AddOrUpdateAsync(User.GetUserId(), exerciseId, value);
-        return RedirectToAction(nameof(Details), new { id = exerciseId });
+        return RedirectToAction(nameof(Details), CreateDetailsRoute(exerciseId, returnUrl));
+    }
+
+    private object CreateDetailsRoute(int exerciseId, string? returnUrl)
+    {
+        var normalizedReturnUrl = NormalizeReturnUrl(returnUrl);
+        return normalizedReturnUrl is null
+            ? new { id = exerciseId }
+            : new { id = exerciseId, returnUrl = normalizedReturnUrl };
+    }
+
+    private string? NormalizeReturnUrl(string? returnUrl)
+    {
+        return !string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl)
+            ? returnUrl
+            : null;
     }
 
     private static IReadOnlyList<Exercise> ApplyFilters(
