@@ -30,7 +30,7 @@ public sealed class CommentService(FitnessTrainingDbContext context) : ICommentS
 
     public async Task<bool> AddAsync(int userId, int exerciseId, string text)
     {
-        if (!IsValidText(text))
+        if (!IsValidText(text) || !await UserExistsAsync(userId))
         {
             return false;
         }
@@ -58,7 +58,7 @@ public sealed class CommentService(FitnessTrainingDbContext context) : ICommentS
 
     public async Task<bool> AddToWorkoutComplexAsync(int userId, int workoutComplexId, string text)
     {
-        if (!IsValidText(text))
+        if (!IsValidText(text) || !await UserExistsAsync(userId))
         {
             return false;
         }
@@ -87,5 +87,10 @@ public sealed class CommentService(FitnessTrainingDbContext context) : ICommentS
     private static bool IsValidText(string text)
     {
         return !string.IsNullOrWhiteSpace(text) && text.Trim().Length <= 1000;
+    }
+
+    private async Task<bool> UserExistsAsync(int userId)
+    {
+        return await context.Users.AnyAsync(user => user.Id == userId && !user.IsDeleted);
     }
 }

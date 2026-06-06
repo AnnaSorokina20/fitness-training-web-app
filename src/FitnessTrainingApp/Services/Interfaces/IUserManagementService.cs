@@ -7,4 +7,5 @@ public interface IUserManagementService
 {
     Task<IReadOnlyList<User>> GetAllAsync();
     Task<bool> ChangeRoleAsync(int userId, UserRole role, int adminId);
+    Task<bool> DeleteUserAsync(int userId, int adminId);
 }

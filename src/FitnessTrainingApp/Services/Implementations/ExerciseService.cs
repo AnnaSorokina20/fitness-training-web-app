@@ -12,6 +12,15 @@ public sealed class ExerciseService(FitnessTrainingDbContext context, IWebHostEn
 {
     private const long MaxImageSizeBytes = 5 * 1024 * 1024;
     private static readonly string[] AllowedImageContentTypes = ["image/jpeg", "image/png", "image/webp"];
+    private static readonly string[] AllowedHomeEquipment =
+    [
+        "no equipment",
+        "none",
+        "bodyweight",
+        "resistance band",
+        "dumbbell <= 10 kg",
+        "dumbbell ≤ 10 кг"
+    ];
 
     public async Task<IReadOnlyList<Exercise>> GetAllAsync()
     {
@@ -228,7 +237,20 @@ public sealed class ExerciseService(FitnessTrainingDbContext context, IWebHostEn
                !string.IsNullOrWhiteSpace(exercise.Description) &&
                !string.IsNullOrWhiteSpace(exercise.Equipment) &&
                !string.IsNullOrWhiteSpace(exercise.MuscleGroup) &&
-               !string.IsNullOrWhiteSpace(exercise.SafetyNotes);
+               !string.IsNullOrWhiteSpace(exercise.SafetyNotes) &&
+               IsAllowedEquipmentForWorkoutType(exercise.WorkoutType, exercise.Equipment);
+    }
+
+    private static bool IsAllowedEquipmentForWorkoutType(WorkoutType workoutType, string equipment)
+    {
+        if (workoutType != WorkoutType.Home)
+        {
+            return true;
+        }
+
+        var normalizedEquipment = equipment.Trim().ToLowerInvariant();
+
+        return AllowedHomeEquipment.Contains(normalizedEquipment);
     }
 
     private async Task<IReadOnlyList<MediaFile>> BuildMediaFilesAsync(string? mediaUrls, IReadOnlyList<IFormFile>? uploadedImages)
