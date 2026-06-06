@@ -59,9 +59,18 @@ public static class DatabaseInitializer
     {
         foreach (var mediaFile in SeedData.MediaFiles)
         {
-            if (!await context.MediaFiles.AnyAsync(existing => existing.Id == mediaFile.Id))
+            var existingMediaFile = await context.MediaFiles.FirstOrDefaultAsync(existing => existing.Id == mediaFile.Id);
+
+            if (existingMediaFile is null)
             {
                 context.MediaFiles.Add(mediaFile);
+            }
+            else
+            {
+                existingMediaFile.ExerciseId = mediaFile.ExerciseId;
+                existingMediaFile.FileName = mediaFile.FileName;
+                existingMediaFile.Url = mediaFile.Url;
+                existingMediaFile.ContentType = mediaFile.ContentType;
             }
         }
     }
