@@ -77,6 +77,12 @@
             return true;
         }
 
+        if (Uri.TryCreate(url, UriKind.Absolute, out var uri) &&
+            uri.Host.Contains("loremflickr.com", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
         return GetExtension(url) is ".jpg" or ".jpeg" or ".png" or ".webp" or ".gif";
     }
 
