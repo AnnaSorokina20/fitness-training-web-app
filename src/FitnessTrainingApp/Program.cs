@@ -2,11 +2,16 @@ using FitnessTrainingApp.Data;
 using FitnessTrainingApp.Services.Implementations;
 using FitnessTrainingApp.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddControllersWithViews()
+    .AddViewLocalization()
+    .AddDataAnnotationsLocalization();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -29,6 +34,19 @@ builder.Services.AddScoped<IAdminLogService, AdminLogService>();
 builder.Services.AddScoped<IContentDeletionService, ContentDeletionService>();
 
 var app = builder.Build();
+
+var supportedCultures = new[]
+{
+    new CultureInfo("en"),
+    new CultureInfo("uk")
+};
+
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+});
 
 if (app.Environment.IsDevelopment())
 {

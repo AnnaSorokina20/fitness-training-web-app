@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Fitness Training" xml:space="preserve"><value>Fitness Training</value></data>
+  <data name="Home" xml:space="preserve"><value>Головна</value></data>
+  <data name="Exercises" xml:space="preserve"><value>Вправи</value></data>
+  <data name="Workout Complexes" xml:space="preserve"><value>Тренувальні комплекси</value></data>
+  <data name="My Playlist" xml:space="preserve"><value>Мій плейлист</value></data>
+  <data name="Trainer Exercises" xml:space="preserve"><value>Вправи тренера</value></data>
+  <data name="Trainer Complexes" xml:space="preserve"><value>Комплекси тренера</value></data>
+  <data name="Moderation" xml:space="preserve"><value>Модерація</value></data>
+  <data name="Users" xml:space="preserve"><value>Користувачі</value></data>
+  <data name="Logs" xml:space="preserve"><value>Журнал</value></data>
+  <data name="Logout" xml:space="preserve"><value>Вийти</value></data>
+  <data name="Log in" xml:space="preserve"><value>Увійти</value></data>
+  <data name="Register" xml:space="preserve"><value>Реєстрація</value></data>
+  <data name="Exercise catalog and structured workout plans for home and gym training." xml:space="preserve"><value>Каталог вправ і структуровані тренувальні плани для дому та тренажерного залу.</value></data>
+  <data name="Catalog" xml:space="preserve"><value>Каталог</value></data>
+  <data name="Account" xml:space="preserve"><value>Акаунт</value></data>
+  <data name="Trainer Area" xml:space="preserve"><value>Кабінет тренера</value></data>
+  <data name="Admin Area" xml:space="preserve"><value>Кабінет адміністратора</value></data>
+  <data name="Fitness training web app" xml:space="preserve"><value>Веб-застосунок для фітнес-тренувань</value></data>
+  <data name="Plan workouts for home and gym training" xml:space="preserve"><value>Плануйте тренування для дому та залу</value></data>
+  <data name="Browse exercises, review structured workout complexes, and save useful training content in a personal playlist." xml:space="preserve"><value>Переглядайте вправи, вивчайте тренувальні комплекси та зберігайте корисний контент у персональному плейлисті.</value></data>
+  <data name="Browse exercises" xml:space="preserve"><value>Переглянути вправи</value></data>
+  <data name="View complexes" xml:space="preserve"><value>Переглянути комплекси</value></data>
+  <data name="Complexes" xml:space="preserve"><value>Комплекси</value></data>
+  <data name="Gym" xml:space="preserve"><value>Зал</value></data>
+  <data name="Exercise library" xml:space="preserve"><value>Бібліотека вправ</value></data>
+  <data name="Featured exercises" xml:space="preserve"><value>Рекомендовані вправи</value></data>
+  <data name="Open catalog" xml:space="preserve"><value>Відкрити каталог</value></data>
+  <data name="Muscle group" xml:space="preserve"><value>М'язова група</value></data>
+  <data name="Equipment" xml:space="preserve"><value>Обладнання</value></data>
+  <data name="View details" xml:space="preserve"><value>Детальніше</value></data>
+  <data name="Training plans" xml:space="preserve"><value>Тренувальні плани</value></data>
+  <data name="Ready workout complexes" xml:space="preserve"><value>Готові тренувальні комплекси</value></data>
+  <data name="Open complexes" xml:space="preserve"><value>Відкрити комплекси</value></data>
+  <data name="Duration" xml:space="preserve"><value>Тривалість</value></data>
+  <data name="min" xml:space="preserve"><value>хв</value></data>
+  <data name="View plan" xml:space="preserve"><value>Переглянути план</value></data>
+  <data name="Exercise Catalog" xml:space="preserve"><value>Каталог вправ</value></data>
+  <data name="Training content" xml:space="preserve"><value>Тренувальний контент</value></data>
+  <data name="Find exercises for home and gym workouts by difficulty, equipment, and muscle group." xml:space="preserve"><value>Знаходьте вправи для домашніх і залових тренувань за складністю, обладнанням і м'язовою групою.</value></data>
+  <data name="Search" xml:space="preserve"><value>Пошук</value></data>
+  <data name="Name, muscle group, equipment" xml:space="preserve"><value>Назва, м'язова група, обладнання</value></data>
+  <data name="Difficulty" xml:space="preserve"><value>Складність</value></data>
+  <data name="Any" xml:space="preserve"><value>Будь-який</value></data>
+  <data name="Workout type" xml:space="preserve"><value>Тип тренування</value></data>
+  <data name="Barbell, mat..." xml:space="preserve"><value>Штанга, килимок...</value></data>
+  <data name="Chest, legs..." xml:space="preserve"><value>Груди, ноги...</value></data>
+  <data name="Apply" xml:space="preserve"><value>Застосувати</value></data>
+  <data name="Reset" xml:space="preserve"><value>Скинути</value></data>
+  <data name="Exercises found" xml:space="preserve"><value>Знайдено вправ: {0}</value></data>
+  <data name="No exercises found" xml:space="preserve"><value>Вправ не знайдено</value></data>
+  <data name="Try changing the search query or removing one of the filters." xml:space="preserve"><value>Спробуйте змінити пошуковий запит або прибрати один із фільтрів.</value></data>
+  <data name="Choose a structured plan for home or gym training and review the exercises before starting." xml:space="preserve"><value>Оберіть структурований план для домашнього або залового тренування та перегляньте вправи перед початком.</value></data>
+  <data name="Complexes available" xml:space="preserve"><value>Доступно комплексів: {0}</value></data>
+  <data name="No workout complexes found" xml:space="preserve"><value>Тренувальні комплекси не знайдено</value></data>
+  <data name="Published training plans will appear here after moderation." xml:space="preserve"><value>Опубліковані тренувальні плани з'являться тут після модерації.</value></data>
+  <data name="Personal content" xml:space="preserve"><value>Персональний контент</value></data>
+  <data name="Saved exercises and workout complexes are collected here for quick access." xml:space="preserve"><value>Збережені вправи та тренувальні комплекси зібрані тут для швидкого доступу.</value></data>
+  <data name="Your playlist is empty" xml:space="preserve"><value>Ваш плейлист порожній</value></data>
+  <data name="Save exercises or workout complexes to build your personal training list." xml:space="preserve"><value>Зберігайте вправи або тренувальні комплекси, щоб сформувати персональний список тренувань.</value></data>
+  <data name="Open" xml:space="preserve"><value>Відкрити</value></data>
+  <data name="Remove" xml:space="preserve"><value>Видалити</value></data>
+  <data name="Account access" xml:space="preserve"><value>Доступ до акаунта</value></data>
+  <data name="Sign in to save exercises, manage your playlist, and leave ratings or comments." xml:space="preserve"><value>Увійдіть, щоб зберігати вправи, керувати плейлистом, залишати оцінки та коментарі.</value></data>
+  <data name="New here?" xml:space="preserve"><value>Вперше тут?</value></data>
+  <data name="Create a user account to unlock personal features described in the project requirements." xml:space="preserve"><value>Створіть акаунт, щоб отримати доступ до персональних можливостей, описаних у вимогах проєкту.</value></data>
+  <data name="Create account" xml:space="preserve"><value>Створити акаунт</value></data>
+  <data name="Registration" xml:space="preserve"><value>Реєстрація</value></data>
+  <data name="Registered users can save content in a playlist and interact with exercises." xml:space="preserve"><value>Зареєстровані користувачі можуть зберігати контент у плейлисті та взаємодіяти з вправами.</value></data>
+  <data name="Full name" xml:space="preserve"><value>Повне ім'я</value></data>
+  <data name="Confirm password" xml:space="preserve"><value>Підтвердження пароля</value></data>
+  <data name="Already registered?" xml:space="preserve"><value>Вже зареєстровані?</value></data>
+  <data name="Use your account to continue working with personal training content." xml:space="preserve"><value>Використайте акаунт, щоб продовжити роботу з персональним тренувальним контентом.</value></data>
+  <data name="Back to catalog" xml:space="preserve"><value>Назад до каталогу</value></data>
+  <data name="workout" xml:space="preserve"><value>тренування</value></data>
+  <data name="Trainer" xml:space="preserve"><value>Тренер</value></data>
+  <data name="No ratings" xml:space="preserve"><value>Немає оцінок</value></data>
+  <data name="Ratings count" xml:space="preserve"><value>Оцінок: {0}</value></data>
+  <data name="Comments count" xml:space="preserve"><value>Коментарів: {0}</value></data>
+  <data name="Remove from playlist" xml:space="preserve"><value>Видалити з плейлиста</value></data>
+  <data name="Save to playlist" xml:space="preserve"><value>Зберегти в плейлист</value></data>
+  <data name="to save this exercise to your playlist." xml:space="preserve"><value>щоб зберегти цю вправу до плейлиста.</value></data>
+  <data name="Media will be added by the trainer." xml:space="preserve"><value>Медіаматеріали будуть додані тренером.</value></data>
+  <data name="Safety notes" xml:space="preserve"><value>Примітки з безпеки</value></data>
+  <data name="Ratings and comments" xml:space="preserve"><value>Оцінки та коментарі</value></data>
+  <data name="Your rating" xml:space="preserve"><value>Ваша оцінка</value></data>
+  <data name="Stars title" xml:space="preserve"><value>{0} зірок</value></data>
+  <data name="Rate stars" xml:space="preserve"><value>Оцінити на {0} зірок</value></data>
+  <data name="Comment" xml:space="preserve"><value>Коментар</value></data>
+  <data name="Add comment" xml:space="preserve"><value>Додати коментар</value></data>
+  <data name="to rate and comment on this exercise." xml:space="preserve"><value>щоб оцінити та прокоментувати цю вправу.</value></data>
+  <data name="No comments yet." xml:space="preserve"><value>Коментарів поки немає.</value></data>
+  <data name="Parameters" xml:space="preserve"><value>Параметри</value></data>
+  <data name="Back to complexes" xml:space="preserve"><value>Назад до комплексів</value></data>
+  <data name="Average rating" xml:space="preserve"><value>{0} рейтинг</value></data>
+  <data name="Votes count" xml:space="preserve"><value>Голосів: {0}</value></data>
+  <data name="to save and rate this workout complex." xml:space="preserve"><value>щоб зберегти й оцінити цей тренувальний комплекс.</value></data>
+  <data name="Workout sequence" xml:space="preserve"><value>Послідовність тренування</value></data>
+  <data name="sets" xml:space="preserve"><value>підходи</value></data>
+  <data name="reps" xml:space="preserve"><value>повтори</value></data>
+  <data name="Comments" xml:space="preserve"><value>Коментарі</value></data>
+  <data name="to comment on this workout complex." xml:space="preserve"><value>щоб прокоментувати цей тренувальний комплекс.</value></data>
+  <data name="Plan parameters" xml:space="preserve"><value>Параметри плану</value></data>
+  <data name="Pagination" xml:space="preserve"><value>Пагінація</value></data>
+  <data name="Show" xml:space="preserve"><value>Показати</value></data>
+  <data name="Previous" xml:space="preserve"><value>Назад</value></data>
+  <data name="Next" xml:space="preserve"><value>Далі</value></data>
+  <data name="Page of" xml:space="preserve"><value>Сторінка {0} з {1}</value></data>
+  <data name="Exercise video" xml:space="preserve"><value>Відео вправи</value></data>
+  <data name="Exercise media" xml:space="preserve"><value>Медіа вправи</value></data>
+  <data name="Open media" xml:space="preserve"><value>Відкрити медіа</value></data>
+  <data name="Media navigation" xml:space="preserve"><value>Навігація медіа</value></data>
+  <data name="Show media" xml:space="preserve"><value>Показати медіа {0}</value></data>
+  <data name="My Exercises" xml:space="preserve"><value>Мої вправи</value></data>
+  <data name="Create and update exercise content before administrator moderation." xml:space="preserve"><value>Створюйте та оновлюйте вправи перед модерацією адміністратором.</value></data>
+  <data name="Create exercise" xml:space="preserve"><value>Створити вправу</value></data>
+  <data name="No exercises yet" xml:space="preserve"><value>Вправ поки немає</value></data>
+  <data name="Create the first exercise and submit it for moderation." xml:space="preserve"><value>Створіть першу вправу та надішліть її на модерацію.</value></data>
+  <data name="Trainer exercise list" xml:space="preserve"><value>Список вправ тренера</value></data>
+  <data name="Admin comment" xml:space="preserve"><value>Коментар адміністратора</value></data>
+  <data name="Updated" xml:space="preserve"><value>Оновлено</value></data>
+  <data name="Edit" xml:space="preserve"><value>Редагувати</value></data>
+  <data name="Delete" xml:space="preserve"><value>Видалити</value></data>
+  <data name="New exercises are submitted with PendingModeration status." xml:space="preserve"><value>Нові вправи надсилаються зі статусом PendingModeration.</value></data>
+  <data name="Edit Exercise" xml:space="preserve"><value>Редагувати вправу</value></data>
+  <data name="After editing, the exercise is returned to PendingModeration." xml:space="preserve"><value>Після редагування вправа повертається до статусу PendingModeration.</value></data>
+  <data name="Save" xml:space="preserve"><value>Зберегти</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Скасувати</value></data>
+  <data name="Trainer Workout Complexes" xml:space="preserve"><value>Комплекси тренера</value></data>
+  <data name="My Workout Complexes" xml:space="preserve"><value>Мої тренувальні комплекси</value></data>
+  <data name="Create structured workout plans from published exercises." xml:space="preserve"><value>Створюйте структуровані плани тренувань з опублікованих вправ.</value></data>
+  <data name="Create complex" xml:space="preserve"><value>Створити комплекс</value></data>
+  <data name="No workout complexes yet" xml:space="preserve"><value>Тренувальних комплексів поки немає</value></data>
+  <data name="Create a plan and submit it for moderation." xml:space="preserve"><value>Створіть план і надішліть його на модерацію.</value></data>
+  <data name="Trainer workout complex list" xml:space="preserve"><value>Список комплексів тренера</value></data>
+  <data name="Exercise count short" xml:space="preserve"><value>Вправ: {0}</value></data>
+  <data name="View exercises" xml:space="preserve"><value>Переглянути вправи</value></data>
+  <data name="Create Workout Complex" xml:space="preserve"><value>Створити тренувальний комплекс</value></data>
+  <data name="New complexes are submitted with PendingModeration status." xml:space="preserve"><value>Нові комплекси надсилаються зі статусом PendingModeration.</value></data>
+  <data name="Add exercise" xml:space="preserve"><value>Додати вправу</value></data>
+  <data name="Exercise" xml:space="preserve"><value>Вправа</value></data>
+  <data name="Not selected" xml:space="preserve"><value>Не вибрано</value></data>
+  <data name="Repetitions" xml:space="preserve"><value>Повторення</value></data>
+  <data name="Content Moderation" xml:space="preserve"><value>Модерація контенту</value></data>
+  <data name="Review trainer-created exercises and workout complexes before publication." xml:space="preserve"><value>Перевіряйте вправи та комплекси, створені тренерами, перед публікацією.</value></data>
+  <data name="Pending content" xml:space="preserve"><value>Контент на розгляді</value></data>
+  <data name="No pending exercises" xml:space="preserve"><value>Вправ на розгляді немає</value></data>
+  <data name="Exercises submitted by trainers will appear here." xml:space="preserve"><value>Вправи, надіслані тренерами, з'являться тут.</value></data>
+  <data name="Pending exercises" xml:space="preserve"><value>Вправи на розгляді</value></data>
+  <data name="PendingModeration" xml:space="preserve"><value>На розгляді</value></data>
+  <data name="Submitted" xml:space="preserve"><value>Надіслано</value></data>
+  <data name="Review" xml:space="preserve"><value>Переглянути</value></data>
+  <data name="Publish" xml:space="preserve"><value>Опублікувати</value></data>
+  <data name="Reject" xml:space="preserve"><value>Відхилити</value></data>
+  <data name="No pending workout complexes" xml:space="preserve"><value>Комплексів на розгляді немає</value></data>
+  <data name="Workout complexes submitted by trainers will appear here." xml:space="preserve"><value>Комплекси, надіслані тренерами, з'являться тут.</value></data>
+  <data name="Pending workout complexes" xml:space="preserve"><value>Комплекси на розгляді</value></data>
+  <data name="Review item" xml:space="preserve"><value>Перегляд: {0}</value></data>
+  <data name="Back to moderation" xml:space="preserve"><value>Назад до модерації</value></data>
+  <data name="Pending exercise" xml:space="preserve"><value>Вправа на розгляді</value></data>
+  <data name="Media was not added by the trainer." xml:space="preserve"><value>Тренер не додав медіа.</value></data>
+  <data name="Rejection comment" xml:space="preserve"><value>Коментар відхилення</value></data>
+  <data name="Submission" xml:space="preserve"><value>Подання</value></data>
+  <data name="Pending workout complex" xml:space="preserve"><value>Комплекс на розгляді</value></data>
+  <data name="User Management" xml:space="preserve"><value>Керування користувачами</value></data>
+  <data name="Assign user roles for access to trainer and administrator features." xml:space="preserve"><value>Призначайте ролі користувачам для доступу до функцій тренера й адміністратора.</value></data>
+  <data name="Registered" xml:space="preserve"><value>Зареєстровано</value></data>
+  <data name="Current admin account" xml:space="preserve"><value>Поточний акаунт адміністратора</value></data>
+  <data name="Update role" xml:space="preserve"><value>Оновити роль</value></data>
+  <data name="Admin Logs" xml:space="preserve"><value>Журнал адміністратора</value></data>
+  <data name="Review moderation and role-management actions performed by administrators." xml:space="preserve"><value>Переглядайте дії модерації та керування ролями, виконані адміністраторами.</value></data>
+  <data name="No admin actions yet" xml:space="preserve"><value>Дій адміністратора поки немає</value></data>
+  <data name="Moderation and user role changes will appear here." xml:space="preserve"><value>Модерація та зміни ролей користувачів з'являться тут.</value></data>
+  <data name="Admin action log" xml:space="preserve"><value>Журнал дій адміністратора</value></data>
+  <data name="Date" xml:space="preserve"><value>Дата</value></data>
+  <data name="Admin" xml:space="preserve"><value>Адміністратор</value></data>
+  <data name="Action" xml:space="preserve"><value>Дія</value></data>
+  <data name="Entity" xml:space="preserve"><value>Сутність</value></data>
+  <data name="Target" xml:space="preserve"><value>Ціль</value></data>
+  <data name="Exercises created by an administrator are published immediately." xml:space="preserve"><value>Вправи, створені адміністратором, публікуються одразу.</value></data>
+  <data name="Workout complexes created by an administrator are published immediately." xml:space="preserve"><value>Комплекси, створені адміністратором, публікуються одразу.</value></data>
+</root>

@@ -1,27 +1,27 @@
 @model FitnessTrainingApp.Models.ViewModels.Admin.PendingWorkoutComplexViewModel
 
 @{
-    ViewData["Title"] = $"Review {Model.Name}";
+    ViewData["Title"] = L["Review item", Model.Name];
 }
 
 <article class="exercise-details">
-    <a class="back-link" asp-area="Admin" asp-controller="Moderation" asp-action="Index">Back to moderation</a>
+    <a class="back-link" asp-area="Admin" asp-controller="Moderation" asp-action="Index">@L["Back to moderation"]</a>
 
     <header class="details-header">
         <div>
-            <p class="eyebrow">Pending workout complex</p>
+            <p class="eyebrow">@L["Pending workout complex"]</p>
             <h1>@Model.Name</h1>
             <p class="lead">@Model.Description</p>
         </div>
         <div class="details-rating">
-            <span class="rating-value">@Model.DurationMinutes min</span>
+            <span class="rating-value">@Model.DurationMinutes @L["min"]</span>
             <span>@Model.Difficulty</span>
         </div>
     </header>
 
     <section class="details-layout">
         <div class="details-main">
-            <h2>Workout sequence</h2>
+            <h2>@L["Workout sequence"]</h2>
             <div class="workout-steps">
                 @foreach (var item in Model.Exercises)
                 {
@@ -33,9 +33,9 @@
                         </div>
                         <div class="step-load">
                             <strong>@item.Sets</strong>
-                            <span>sets</span>
+                            <span>@L["sets"]</span>
                             <strong>@item.Repetitions</strong>
-                            <span>reps</span>
+                            <span>@L["reps"]</span>
                         </div>
                     </article>
                 }
@@ -47,39 +47,39 @@
                 <div class="moderation-primary-actions moderation-action-card">
                     <form asp-area="Admin" asp-controller="Moderation" asp-action="PublishWorkoutComplex" method="post">
                         <input type="hidden" name="id" value="@Model.Id" />
-                        <button type="submit" class="btn btn-primary">Publish</button>
+                        <button type="submit" class="btn btn-primary">@L["Publish"]</button>
                     </form>
                     <form asp-area="Admin" asp-controller="Moderation" asp-action="DeleteWorkoutComplex" method="post">
                         <input type="hidden" name="id" value="@Model.Id" />
-                        <button type="submit" class="btn btn-outline-danger">Delete</button>
+                        <button type="submit" class="btn btn-outline-danger">@L["Delete"]</button>
                     </form>
                 </div>
 
                 <form asp-area="Admin" asp-controller="Moderation" asp-action="RejectWorkoutComplex" method="post" class="moderation-reject-form">
                     <input type="hidden" name="id" value="@Model.Id" />
-                    <label for="moderationComment">Rejection comment</label>
+                    <label for="moderationComment">@L["Rejection comment"]</label>
                     <textarea id="moderationComment" name="moderationComment" class="form-control" rows="3" maxlength="1000"></textarea>
-                    <button type="submit" class="btn btn-outline-danger">Reject</button>
+                    <button type="submit" class="btn btn-outline-danger">@L["Reject"]</button>
                 </form>
             </section>
 
             <aside class="details-side">
-                <h2>Submission</h2>
+                <h2>@L["Submission"]</h2>
                 <dl>
                     <div>
-                        <dt>Trainer</dt>
+                        <dt>@L["Trainer"]</dt>
                         <dd>@Model.TrainerName</dd>
                     </div>
                     <div>
-                        <dt>Submitted</dt>
+                        <dt>@L["Submitted"]</dt>
                         <dd>@Model.SubmittedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</dd>
                     </div>
                     <div>
-                        <dt>Workout type</dt>
+                        <dt>@L["Workout type"]</dt>
                         <dd>@Model.WorkoutType</dd>
                     </div>
                     <div>
-                        <dt>Exercises</dt>
+                        <dt>@L["Exercises"]</dt>
                         <dd>@Model.ExerciseCount</dd>
                     </div>
                 </dl>

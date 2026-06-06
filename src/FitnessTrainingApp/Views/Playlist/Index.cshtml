@@ -2,23 +2,23 @@
 @using FitnessTrainingApp.Models.Entities.Enums
 
 @{
-    ViewData["Title"] = "My Playlist";
+    ViewData["Title"] = L["My Playlist"];
 }
 
 <section class="page-header">
     <div>
-        <p class="eyebrow">Personal content</p>
-        <h1>My Playlist</h1>
-        <p class="lead">Saved exercises and workout complexes are collected here for quick access.</p>
+        <p class="eyebrow">@L["Personal content"]</p>
+        <h1>@L["My Playlist"]</h1>
+        <p class="lead">@L["Saved exercises and workout complexes are collected here for quick access."]</p>
     </div>
 </section>
 
 @if (Model.Items.Count == 0)
 {
     <div class="empty-state">
-        <h2>Your playlist is empty</h2>
-        <p>Save exercises or workout complexes to build your personal training list.</p>
-        <a class="btn btn-primary" asp-controller="Exercises" asp-action="Index">Browse exercises</a>
+        <h2>@L["Your playlist is empty"]</h2>
+        <p>@L["Save exercises or workout complexes to build your personal training list."]</p>
+        <a class="btn btn-primary" asp-controller="Exercises" asp-action="Index">@L["Browse exercises"]</a>
     </div>
 }
 else
@@ -36,15 +36,15 @@ else
                 <div class="playlist-actions">
                     @if (item.ItemType == PlaylistItemType.Exercise)
                     {
-                        <a class="btn btn-outline-primary" asp-controller="Exercises" asp-action="Details" asp-route-id="@item.ItemId">Open</a>
+                        <a class="btn btn-outline-primary" asp-controller="Exercises" asp-action="Details" asp-route-id="@item.ItemId">@L["Open"]</a>
                     }
                     else
                     {
-                        <a class="btn btn-outline-primary" asp-controller="WorkoutComplexes" asp-action="Details" asp-route-id="@item.ItemId">Open</a>
+                        <a class="btn btn-outline-primary" asp-controller="WorkoutComplexes" asp-action="Details" asp-route-id="@item.ItemId">@L["Open"]</a>
                     }
                     <form asp-controller="Playlist" asp-action="Remove" method="post">
                         <input type="hidden" name="id" value="@item.Id" />
-                        <button type="submit" class="btn btn-outline-danger">Remove</button>
+                        <button type="submit" class="btn btn-outline-danger">@L["Remove"]</button>
                     </form>
                 </div>
             </article>

@@ -1,14 +1,14 @@
 @model FitnessTrainingApp.Models.ViewModels.Account.LoginViewModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = L["Log in"];
 }
 
 <section class="auth-layout">
     <div class="auth-panel">
-        <p class="eyebrow">Account access</p>
-        <h1>Log in</h1>
-        <p class="lead">Sign in to save exercises, manage your playlist, and leave ratings or comments.</p>
+        <p class="eyebrow">@L["Account access"]</p>
+        <h1>@L["Log in"]</h1>
+        <p class="lead">@L["Sign in to save exercises, manage your playlist, and leave ratings or comments."]</p>
 
         <form asp-area="" asp-controller="Account" asp-action="Login" method="post" class="auth-form">
             <input asp-for="ReturnUrl" type="hidden" />
@@ -26,14 +26,14 @@
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
-            <button type="submit" class="btn btn-primary">Log in</button>
+            <button type="submit" class="btn btn-primary">@L["Log in"]</button>
         </form>
     </div>
 
     <aside class="auth-side">
-        <h2>New here?</h2>
-        <p>Create a user account to unlock personal features described in the project requirements.</p>
-        <a class="btn btn-outline-primary" asp-area="" asp-controller="Account" asp-action="Register">Create account</a>
+        <h2>@L["New here?"]</h2>
+        <p>@L["Create a user account to unlock personal features described in the project requirements."]</p>
+        <a class="btn btn-outline-primary" asp-area="" asp-controller="Account" asp-action="Register">@L["Create account"]</a>
     </aside>
 </section>
 

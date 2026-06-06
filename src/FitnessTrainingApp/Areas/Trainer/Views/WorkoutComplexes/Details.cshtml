@@ -5,24 +5,24 @@
 }
 
 <article class="exercise-details">
-    <a class="back-link" asp-area="Trainer" asp-controller="WorkoutComplexes" asp-action="Index">Back to complexes</a>
+    <a class="back-link" asp-area="Trainer" asp-controller="WorkoutComplexes" asp-action="Index">@L["Back to complexes"]</a>
 
     <header class="details-header">
         <div>
-            <p class="eyebrow">@Model.WorkoutType workout</p>
+            <p class="eyebrow">@Model.WorkoutType @L["workout"]</p>
             <h1>@Model.Name</h1>
             <p class="lead">@Model.Description</p>
         </div>
         <div class="details-rating">
-            <span class="rating-value">@Model.DurationMinutes min</span>
+            <span class="rating-value">@Model.DurationMinutes @L["min"]</span>
             <span>@Model.Difficulty</span>
-            <span>@Model.Exercises.Count exercise@(Model.Exercises.Count == 1 ? "" : "s")</span>
+            <span>@L["Exercise count short", Model.Exercises.Count]</span>
         </div>
     </header>
 
     <section class="details-layout">
         <div class="details-main">
-            <h2>Workout sequence</h2>
+            <h2>@L["Workout sequence"]</h2>
             <div class="workout-steps">
                 @foreach (var item in Model.Exercises)
                 {
@@ -36,9 +36,9 @@
                         </div>
                         <div class="step-load">
                             <strong>@item.Sets</strong>
-                            <span>sets</span>
+                            <span>@L["sets"]</span>
                             <strong>@item.Repetitions</strong>
-                            <span>reps</span>
+                            <span>@L["reps"]</span>
                         </div>
                     </article>
                 }
@@ -46,22 +46,22 @@
         </div>
 
         <aside class="details-side">
-            <h2>Plan parameters</h2>
+            <h2>@L["Plan parameters"]</h2>
             <dl>
                 <div>
-                    <dt>Difficulty</dt>
+                    <dt>@L["Difficulty"]</dt>
                     <dd>@Model.Difficulty</dd>
                 </div>
                 <div>
-                    <dt>Workout type</dt>
+                    <dt>@L["Workout type"]</dt>
                     <dd>@Model.WorkoutType</dd>
                 </div>
                 <div>
-                    <dt>Duration</dt>
-                    <dd>@Model.DurationMinutes min</dd>
+                    <dt>@L["Duration"]</dt>
+                    <dd>@Model.DurationMinutes @L["min"]</dd>
                 </div>
                 <div>
-                    <dt>Exercises</dt>
+                    <dt>@L["Exercises"]</dt>
                     <dd>@Model.Exercises.Count</dd>
                 </div>
             </dl>

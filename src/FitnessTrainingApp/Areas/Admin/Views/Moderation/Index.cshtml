@@ -1,64 +1,64 @@
 @model FitnessTrainingApp.Models.ViewModels.Admin.ModerationIndexViewModel
 
 @{
-    ViewData["Title"] = "Content Moderation";
+    ViewData["Title"] = L["Content Moderation"];
 }
 
 <section class="page-header">
     <div>
-        <p class="eyebrow">Admin area</p>
-        <h1>Content Moderation</h1>
-        <p class="lead">Review trainer-created exercises and workout complexes before publication.</p>
+        <p class="eyebrow">@L["Admin Area"]</p>
+        <h1>@L["Content Moderation"]</h1>
+        <p class="lead">@L["Review trainer-created exercises and workout complexes before publication."]</p>
     </div>
     <div class="page-actions">
-        <a class="btn btn-primary" asp-area="Admin" asp-controller="Exercises" asp-action="Create">Create exercise</a>
-        <a class="btn btn-outline-primary" asp-area="Admin" asp-controller="WorkoutComplexes" asp-action="Create">Create complex</a>
+        <a class="btn btn-primary" asp-area="Admin" asp-controller="Exercises" asp-action="Create">@L["Create exercise"]</a>
+        <a class="btn btn-outline-primary" asp-area="Admin" asp-controller="WorkoutComplexes" asp-action="Create">@L["Create complex"]</a>
     </div>
 </section>
 
 <section class="home-section">
     <div class="section-title-row">
         <div>
-            <p class="eyebrow">Pending content</p>
-            <h2>Exercises</h2>
+            <p class="eyebrow">@L["Pending content"]</p>
+            <h2>@L["Exercises"]</h2>
         </div>
     </div>
 
     @if (Model.PendingExercises.Count == 0)
     {
         <div class="empty-state">
-            <h2>No pending exercises</h2>
-            <p>Exercises submitted by trainers will appear here.</p>
+            <h2>@L["No pending exercises"]</h2>
+            <p>@L["Exercises submitted by trainers will appear here."]</p>
         </div>
     }
     else
     {
-        <section class="management-list" aria-label="Pending exercises">
+        <section class="management-list" aria-label="@L["Pending exercises"]">
             @foreach (var exercise in Model.PendingExercises)
             {
                 <article class="management-row moderation-row">
                     <div>
-                        <span class="playlist-type">PendingModeration</span>
+                        <span class="playlist-type">@L["PendingModeration"]</span>
                         <h2>@exercise.Name</h2>
                         <p>@exercise.Description</p>
                         <span class="playlist-meta">
                             @exercise.TrainerName - @exercise.WorkoutType - @exercise.Difficulty - @exercise.MuscleGroup - @exercise.Equipment
                         </span>
-                        <span class="playlist-meta">Submitted @exercise.SubmittedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
+                        <span class="playlist-meta">@L["Submitted"] @exercise.SubmittedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
                     </div>
                     <div class="playlist-actions">
-                        <a class="btn btn-outline-primary" asp-area="Admin" asp-controller="Moderation" asp-action="ExerciseDetails" asp-route-id="@exercise.Id">Review</a>
+                        <a class="btn btn-outline-primary" asp-area="Admin" asp-controller="Moderation" asp-action="ExerciseDetails" asp-route-id="@exercise.Id">@L["Review"]</a>
                         <form asp-area="Admin" asp-controller="Moderation" asp-action="PublishExercise" method="post">
                             <input type="hidden" name="id" value="@exercise.Id" />
-                            <button type="submit" class="btn btn-primary">Publish</button>
+                            <button type="submit" class="btn btn-primary">@L["Publish"]</button>
                         </form>
                         <form asp-area="Admin" asp-controller="Moderation" asp-action="RejectExercise" method="post">
                             <input type="hidden" name="id" value="@exercise.Id" />
-                            <button type="submit" class="btn btn-outline-danger">Reject</button>
+                            <button type="submit" class="btn btn-outline-danger">@L["Reject"]</button>
                         </form>
                         <form asp-area="Admin" asp-controller="Moderation" asp-action="DeleteExercise" method="post">
                             <input type="hidden" name="id" value="@exercise.Id" />
-                            <button type="submit" class="btn btn-outline-danger">Delete</button>
+                            <button type="submit" class="btn btn-outline-danger">@L["Delete"]</button>
                         </form>
                     </div>
                 </article>
@@ -70,46 +70,46 @@
 <section class="home-section">
     <div class="section-title-row">
         <div>
-            <p class="eyebrow">Pending content</p>
-            <h2>Workout complexes</h2>
+            <p class="eyebrow">@L["Pending content"]</p>
+            <h2>@L["Workout Complexes"]</h2>
         </div>
     </div>
 
     @if (Model.PendingWorkoutComplexes.Count == 0)
     {
         <div class="empty-state">
-            <h2>No pending workout complexes</h2>
-            <p>Workout complexes submitted by trainers will appear here.</p>
+            <h2>@L["No pending workout complexes"]</h2>
+            <p>@L["Workout complexes submitted by trainers will appear here."]</p>
         </div>
     }
     else
     {
-        <section class="management-list" aria-label="Pending workout complexes">
+        <section class="management-list" aria-label="@L["Pending workout complexes"]">
             @foreach (var complex in Model.PendingWorkoutComplexes)
             {
                 <article class="management-row moderation-row">
                     <div>
-                        <span class="playlist-type">PendingModeration</span>
+                        <span class="playlist-type">@L["PendingModeration"]</span>
                         <h2>@complex.Name</h2>
                         <p>@complex.Description</p>
                         <span class="playlist-meta">
-                            @complex.TrainerName - @complex.WorkoutType - @complex.Difficulty - @complex.DurationMinutes min - @complex.ExerciseCount exercises
+                            @complex.TrainerName - @complex.WorkoutType - @complex.Difficulty - @complex.DurationMinutes @L["min"] - @L["Exercise count short", complex.ExerciseCount]
                         </span>
-                        <span class="playlist-meta">Submitted @complex.SubmittedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
+                        <span class="playlist-meta">@L["Submitted"] @complex.SubmittedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
                     </div>
                     <div class="playlist-actions">
-                        <a class="btn btn-outline-primary" asp-area="Admin" asp-controller="Moderation" asp-action="WorkoutComplexDetails" asp-route-id="@complex.Id">Review</a>
+                        <a class="btn btn-outline-primary" asp-area="Admin" asp-controller="Moderation" asp-action="WorkoutComplexDetails" asp-route-id="@complex.Id">@L["Review"]</a>
                         <form asp-area="Admin" asp-controller="Moderation" asp-action="PublishWorkoutComplex" method="post">
                             <input type="hidden" name="id" value="@complex.Id" />
-                            <button type="submit" class="btn btn-primary">Publish</button>
+                            <button type="submit" class="btn btn-primary">@L["Publish"]</button>
                         </form>
                         <form asp-area="Admin" asp-controller="Moderation" asp-action="RejectWorkoutComplex" method="post">
                             <input type="hidden" name="id" value="@complex.Id" />
-                            <button type="submit" class="btn btn-outline-danger">Reject</button>
+                            <button type="submit" class="btn btn-outline-danger">@L["Reject"]</button>
                         </form>
                         <form asp-area="Admin" asp-controller="Moderation" asp-action="DeleteWorkoutComplex" method="post">
                             <input type="hidden" name="id" value="@complex.Id" />
-                            <button type="submit" class="btn btn-outline-danger">Delete</button>
+                            <button type="submit" class="btn btn-outline-danger">@L["Delete"]</button>
                         </form>
                     </div>
                 </article>

@@ -2,14 +2,14 @@
 @using FitnessTrainingApp.Models.Entities.Enums
 
 @{
-    ViewData["Title"] = "Exercise Catalog";
+    ViewData["Title"] = L["Exercise Catalog"];
 }
 
 <section class="page-header">
     <div>
-        <p class="eyebrow">Training content</p>
-        <h1>Exercise Catalog</h1>
-        <p class="lead">Find exercises for home and gym workouts by difficulty, equipment, and muscle group.</p>
+        <p class="eyebrow">@L["Training content"]</p>
+        <h1>@L["Exercise Catalog"]</h1>
+        <p class="lead">@L["Find exercises for home and gym workouts by difficulty, equipment, and muscle group."]</p>
     </div>
 </section>
 
@@ -17,52 +17,52 @@
     <input type="hidden" name="pageSize" value="@Model.Exercises.Pagination.PageSize" />
 
     <div class="filter-field filter-field-wide">
-        <label asp-for="Search">Search</label>
+        <label asp-for="Search">@L["Search"]</label>
         <div class="autocomplete-field" data-autocomplete-url="@Url.Action("Suggest", "Exercises")">
-            <input asp-for="Search" class="form-control" placeholder="Name, muscle group, equipment" autocomplete="off" data-autocomplete-input />
+            <input asp-for="Search" class="form-control" placeholder="@L["Name, muscle group, equipment"]" autocomplete="off" data-autocomplete-input />
             <div class="autocomplete-list" data-autocomplete-list hidden></div>
         </div>
     </div>
 
     <div class="filter-field">
-        <label asp-for="Difficulty">Difficulty</label>
+        <label asp-for="Difficulty">@L["Difficulty"]</label>
         <select asp-for="Difficulty" class="form-select" asp-items="Html.GetEnumSelectList<DifficultyLevel>()">
-            <option value="">Any</option>
+            <option value="">@L["Any"]</option>
         </select>
     </div>
 
     <div class="filter-field">
-        <label asp-for="WorkoutType">Workout type</label>
+        <label asp-for="WorkoutType">@L["Workout type"]</label>
         <select asp-for="WorkoutType" class="form-select" asp-items="Html.GetEnumSelectList<WorkoutType>()">
-            <option value="">Any</option>
+            <option value="">@L["Any"]</option>
         </select>
     </div>
 
     <div class="filter-field">
-        <label asp-for="Equipment">Equipment</label>
-        <input asp-for="Equipment" class="form-control" placeholder="Barbell, mat..." />
+        <label asp-for="Equipment">@L["Equipment"]</label>
+        <input asp-for="Equipment" class="form-control" placeholder="@L["Barbell, mat..."]" />
     </div>
 
     <div class="filter-field">
-        <label asp-for="MuscleGroup">Muscle group</label>
-        <input asp-for="MuscleGroup" class="form-control" placeholder="Chest, legs..." />
+        <label asp-for="MuscleGroup">@L["Muscle group"]</label>
+        <input asp-for="MuscleGroup" class="form-control" placeholder="@L["Chest, legs..."]" />
     </div>
 
     <div class="filter-actions">
-        <button type="submit" class="btn btn-primary">Apply</button>
-        <a class="btn btn-outline-secondary" asp-controller="Exercises" asp-action="Index">Reset</a>
+        <button type="submit" class="btn btn-primary">@L["Apply"]</button>
+        <a class="btn btn-outline-secondary" asp-controller="Exercises" asp-action="Index">@L["Reset"]</a>
     </div>
 </form>
 
 <section class="catalog-summary" aria-label="Catalog summary">
-    <span>@Model.Exercises.Pagination.TotalItems exercise@(Model.Exercises.Pagination.TotalItems == 1 ? "" : "s") found</span>
+    <span>@L["Exercises found", Model.Exercises.Pagination.TotalItems]</span>
 </section>
 
 @if (Model.Exercises.Pagination.TotalItems == 0)
 {
     <div class="empty-state">
-        <h2>No exercises found</h2>
-        <p>Try changing the search query or removing one of the filters.</p>
+        <h2>@L["No exercises found"]</h2>
+        <p>@L["Try changing the search query or removing one of the filters."]</p>
     </div>
 }
 else
@@ -89,15 +89,15 @@ else
                 <p>@exercise.Description</p>
                 <dl>
                     <div>
-                        <dt>Muscle group</dt>
+                        <dt>@L["Muscle group"]</dt>
                         <dd>@exercise.MuscleGroup</dd>
                     </div>
                     <div>
-                        <dt>Equipment</dt>
+                        <dt>@L["Equipment"]</dt>
                         <dd>@exercise.Equipment</dd>
                     </div>
                 </dl>
-                <a class="btn btn-outline-primary" asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.Id">View details</a>
+                <a class="btn btn-outline-primary" asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.Id">@L["View details"]</a>
             </article>
         }
     </section>
