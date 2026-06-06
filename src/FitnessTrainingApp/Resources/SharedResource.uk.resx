@@ -185,4 +185,15 @@
   <data name="Target" xml:space="preserve"><value>Ціль</value></data>
   <data name="Exercises created by an administrator are published immediately." xml:space="preserve"><value>Вправи, створені адміністратором, публікуються одразу.</value></data>
   <data name="Workout complexes created by an administrator are published immediately." xml:space="preserve"><value>Комплекси, створені адміністратором, публікуються одразу.</value></data>
+  <data name="Profile" xml:space="preserve"><value>Профіль</value></data>
+  <data name="User Profile" xml:space="preserve"><value>Профіль користувача</value></data>
+  <data name="Manage your account details and password." xml:space="preserve"><value>Керуйте даними акаунта та паролем.</value></data>
+  <data name="Save changes" xml:space="preserve"><value>Зберегти зміни</value></data>
+  <data name="Change password" xml:space="preserve"><value>Змінити пароль</value></data>
+  <data name="Use a password with at least 8 characters and one digit." xml:space="preserve"><value>Використовуйте пароль щонайменше з 8 символів і однією цифрою.</value></data>
+  <data name="Current password" xml:space="preserve"><value>Поточний пароль</value></data>
+  <data name="New password" xml:space="preserve"><value>Новий пароль</value></data>
+  <data name="Update password" xml:space="preserve"><value>Оновити пароль</value></data>
+  <data name="Profile updated." xml:space="preserve"><value>Профіль оновлено.</value></data>
+  <data name="Password changed." xml:space="preserve"><value>Пароль змінено.</value></data>
 </root>

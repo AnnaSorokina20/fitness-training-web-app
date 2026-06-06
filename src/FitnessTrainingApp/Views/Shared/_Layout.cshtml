@@ -37,6 +37,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Playlist" asp-action="Index">@L["My Playlist"]</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Profile">@L["Profile"]</a>
+                            </li>
                         }
                         @if (User.IsInRole("Trainer"))
                         {
@@ -123,6 +126,7 @@
                     @if (User.Identity?.IsAuthenticated == true)
                     {
                         <span>@User.Identity.Name</span>
+                        <a asp-area="" asp-controller="Account" asp-action="Profile">@L["Profile"]</a>
                         @if (User.IsInRole("Trainer"))
                         {
                             <a asp-area="Trainer" asp-controller="Exercises" asp-action="Index">@L["Trainer Area"]</a>

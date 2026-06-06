@@ -1,0 +1,86 @@
+@model FitnessTrainingApp.Models.ViewModels.Account.ProfileViewModel
+
+@{
+    ViewData["Title"] = L["Profile"];
+    var initials = string.Join(
+        string.Empty,
+        Model.FullName.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Take(2)
+            .Select(part => part[0]))
+        .ToUpperInvariant();
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">@L["Account"]</p>
+        <h1>@L["User Profile"]</h1>
+        <p class="lead">@L["Manage your account details and password."]</p>
+    </div>
+</section>
+
+<section class="profile-layout">
+    <div class="profile-card">
+        @if (TempData["ProfileStatus"] is string profileStatus)
+        {
+            <div class="alert alert-success">@L[profileStatus]</div>
+        }
+
+        <div class="profile-summary">
+            <div class="profile-avatar">@initials</div>
+            <div>
+                <h2>@Model.FullName</h2>
+                <p>@Model.Email</p>
+                <span class="playlist-type">@Model.Role</span>
+            </div>
+        </div>
+
+        <form asp-controller="Account" asp-action="UpdateProfile" method="post" class="profile-form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-field">
+                <label asp-for="FullName">@L["Full name"]</label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+
+            <div class="form-field">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">@L["Save changes"]</button>
+        </form>
+    </div>
+
+    <aside class="profile-card">
+        <h2>@L["Change password"]</h2>
+        <p class="muted-text">@L["Use a password with at least 8 characters and one digit."]</p>
+
+        <form asp-controller="Account" asp-action="ChangePassword" method="post" class="profile-form">
+            <div class="form-field">
+                <label asp-for="CurrentPassword">@L["Current password"]</label>
+                <input asp-for="CurrentPassword" class="form-control" />
+                <span asp-validation-for="CurrentPassword" class="text-danger"></span>
+            </div>
+
+            <div class="form-field">
+                <label asp-for="NewPassword">@L["New password"]</label>
+                <input asp-for="NewPassword" class="form-control" />
+                <span asp-validation-for="NewPassword" class="text-danger"></span>
+            </div>
+
+            <div class="form-field">
+                <label asp-for="ConfirmNewPassword">@L["Confirm password"]</label>
+                <input asp-for="ConfirmNewPassword" class="form-control" />
+                <span asp-validation-for="ConfirmNewPassword" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-outline-primary">@L["Update password"]</button>
+        </form>
+    </aside>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

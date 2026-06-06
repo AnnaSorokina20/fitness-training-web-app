@@ -24,6 +24,13 @@ public sealed class AuthService(FitnessTrainingDbContext context) : IAuthService
         return user;
     }
 
+    public async Task<User?> GetUserAsync(int userId)
+    {
+        return await context.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(user => user.Id == userId && !user.IsDeleted);
+    }
+
     public async Task<bool> RegisterAsync(string fullName, string email, string password)
     {
         if (!IsValidEmail(email) || !IsValidPassword(password) || string.IsNullOrWhiteSpace(fullName))
@@ -43,6 +50,60 @@ public sealed class AuthService(FitnessTrainingDbContext context) : IAuthService
             PasswordHash = PasswordHasher.HashPassword(password),
             Role = UserRole.User
         });
+
+        await context.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<bool> UpdateProfileAsync(int userId, string fullName, string email)
+    {
+        if (string.IsNullOrWhiteSpace(fullName) || !IsValidEmail(email))
+        {
+            return false;
+        }
+
+        var normalizedEmail = NormalizeEmail(email);
+        var emailTaken = await context.Users.AnyAsync(user =>
+            user.Id != userId &&
+            user.Email.ToLower() == normalizedEmail &&
+            !user.IsDeleted);
+
+        if (emailTaken)
+        {
+            return false;
+        }
+
+        var user = await context.Users.FirstOrDefaultAsync(existing => existing.Id == userId && !existing.IsDeleted);
+
+        if (user is null)
+        {
+            return false;
+        }
+
+        user.FullName = fullName.Trim();
+        user.Email = email.Trim();
+        user.UpdatedAt = DateTime.UtcNow;
+
+        await context.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<bool> ChangePasswordAsync(int userId, string currentPassword, string newPassword)
+    {
+        if (!IsValidPassword(newPassword))
+        {
+            return false;
+        }
+
+        var user = await context.Users.FirstOrDefaultAsync(existing => existing.Id == userId && !existing.IsDeleted);
+
+        if (user is null || !PasswordHasher.VerifyPassword(currentPassword, user.PasswordHash))
+        {
+            return false;
+        }
+
+        user.PasswordHash = PasswordHasher.HashPassword(newPassword);
+        user.UpdatedAt = DateTime.UtcNow;
 
         await context.SaveChangesAsync();
         return true;

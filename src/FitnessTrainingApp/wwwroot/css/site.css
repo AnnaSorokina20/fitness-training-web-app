@@ -340,6 +340,62 @@ main {
   color: #52606d;
 }
 
+.profile-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+  gap: 18px;
+  align-items: start;
+  max-width: 1080px;
+  margin: 0 auto 34px;
+}
+
+.profile-card {
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+}
+
+.profile-summary {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 22px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.profile-avatar {
+  display: grid;
+  width: 96px;
+  height: 96px;
+  flex: 0 0 auto;
+  place-items: center;
+  color: #334e68;
+  background: #edf2f7;
+  border: 1px solid #d9e2ec;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.profile-summary h2,
+.profile-card h2 {
+  margin: 0 0 6px;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.profile-summary p {
+  margin: 0 0 10px;
+  color: #52606d;
+}
+
+.profile-form {
+  display: grid;
+  gap: 14px;
+}
+
 .catalog-filter {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1160,6 +1216,7 @@ main {
   .complex-preview-grid,
   .complex-preview,
   .auth-layout,
+  .profile-layout,
   .playlist-item,
   .management-row,
   .moderation-actions,
