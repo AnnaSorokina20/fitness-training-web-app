@@ -1,20 +1,20 @@
 @model FitnessTrainingApp.Models.ViewModels.Account.RegisterViewModel
 
 @{
-    ViewData["Title"] = "Create account";
+    ViewData["Title"] = L["Create account"];
 }
 
 <section class="auth-layout">
     <div class="auth-panel">
-        <p class="eyebrow">Registration</p>
-        <h1>Create account</h1>
-        <p class="lead">Registered users can save content in a playlist and interact with exercises.</p>
+        <p class="eyebrow">@L["Registration"]</p>
+        <h1>@L["Create account"]</h1>
+        <p class="lead">@L["Registered users can save content in a playlist and interact with exercises."]</p>
 
         <form asp-area="" asp-controller="Account" asp-action="Register" method="post" class="auth-form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div>
-                <label asp-for="FullName">Full name</label>
+                <label asp-for="FullName">@L["Full name"]</label>
                 <input asp-for="FullName" class="form-control" autocomplete="name" />
                 <span asp-validation-for="FullName" class="text-danger"></span>
             </div>
@@ -32,19 +32,19 @@
             </div>
 
             <div>
-                <label asp-for="ConfirmPassword">Confirm password</label>
+                <label asp-for="ConfirmPassword">@L["Confirm password"]</label>
                 <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
 
-            <button type="submit" class="btn btn-primary">Create account</button>
+            <button type="submit" class="btn btn-primary">@L["Create account"]</button>
         </form>
     </div>
 
     <aside class="auth-side">
-        <h2>Already registered?</h2>
-        <p>Use your account to continue working with personal training content.</p>
-        <a class="btn btn-outline-primary" asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
+        <h2>@L["Already registered?"]</h2>
+        <p>@L["Use your account to continue working with personal training content."]</p>
+        <a class="btn btn-outline-primary" asp-area="" asp-controller="Account" asp-action="Login">@L["Log in"]</a>
     </aside>
 </section>
 

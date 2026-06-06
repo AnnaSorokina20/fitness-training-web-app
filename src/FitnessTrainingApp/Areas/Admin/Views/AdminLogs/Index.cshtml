@@ -1,33 +1,33 @@
 @model FitnessTrainingApp.Models.ViewModels.Admin.AdminLogIndexViewModel
 
 @{
-    ViewData["Title"] = "Admin Logs";
+    ViewData["Title"] = L["Admin Logs"];
 }
 
 <section class="page-header">
     <div>
-        <p class="eyebrow">Admin area</p>
-        <h1>Admin Logs</h1>
-        <p class="lead">Review moderation and role-management actions performed by administrators.</p>
+        <p class="eyebrow">@L["Admin Area"]</p>
+        <h1>@L["Admin Logs"]</h1>
+        <p class="lead">@L["Review moderation and role-management actions performed by administrators."]</p>
     </div>
 </section>
 
 @if (Model.Logs.Count == 0)
 {
     <div class="empty-state">
-        <h2>No admin actions yet</h2>
-        <p>Moderation and user role changes will appear here.</p>
+        <h2>@L["No admin actions yet"]</h2>
+        <p>@L["Moderation and user role changes will appear here."]</p>
     </div>
 }
 else
 {
-    <section class="log-table" aria-label="Admin action log">
+    <section class="log-table" aria-label="@L["Admin action log"]">
         <div class="log-row log-header">
-            <span>Date</span>
-            <span>Admin</span>
-            <span>Action</span>
-            <span>Entity</span>
-            <span>Target</span>
+            <span>@L["Date"]</span>
+            <span>@L["Admin"]</span>
+            <span>@L["Action"]</span>
+            <span>@L["Entity"]</span>
+            <span>@L["Target"]</span>
         </div>
         @foreach (var log in Model.Logs)
         {

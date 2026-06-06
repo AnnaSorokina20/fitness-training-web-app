@@ -1,35 +1,35 @@
 @model FitnessTrainingApp.Models.ViewModels.Home.HomeIndexViewModel
 
 @{
-    ViewData["Title"] = "Fitness Training";
+    ViewData["Title"] = L["Fitness Training"];
 }
 
 <section class="home-hero">
     <div class="home-hero-content">
-        <p class="eyebrow">Fitness training web app</p>
-        <h1>Plan workouts for home and gym training</h1>
-        <p class="lead">Browse exercises, review structured workout complexes, and save useful training content in a personal playlist.</p>
+        <p class="eyebrow">@L["Fitness training web app"]</p>
+        <h1>@L["Plan workouts for home and gym training"]</h1>
+        <p class="lead">@L["Browse exercises, review structured workout complexes, and save useful training content in a personal playlist."]</p>
         <div class="hero-actions">
-            <a class="btn btn-primary btn-lg" asp-controller="Exercises" asp-action="Index">Browse exercises</a>
-            <a class="btn btn-outline-primary btn-lg" asp-controller="WorkoutComplexes" asp-action="Index">View complexes</a>
+            <a class="btn btn-primary btn-lg" asp-controller="Exercises" asp-action="Index">@L["Browse exercises"]</a>
+            <a class="btn btn-outline-primary btn-lg" asp-controller="WorkoutComplexes" asp-action="Index">@L["View complexes"]</a>
         </div>
     </div>
     <div class="home-hero-panel" aria-label="Project metrics">
         <div>
             <strong>@Model.ExerciseCount</strong>
-            <span>Exercises</span>
+            <span>@L["Exercises"]</span>
         </div>
         <div>
             <strong>@Model.WorkoutComplexCount</strong>
-            <span>Complexes</span>
+            <span>@L["Complexes"]</span>
         </div>
         <div>
             <strong>@Model.HomeWorkoutCount</strong>
-            <span>Home</span>
+            <span>@L["Home"]</span>
         </div>
         <div>
             <strong>@Model.GymWorkoutCount</strong>
-            <span>Gym</span>
+            <span>@L["Gym"]</span>
         </div>
     </div>
 </section>
@@ -37,10 +37,10 @@
 <section class="home-section">
     <div class="section-title-row">
         <div>
-            <p class="eyebrow">Exercise library</p>
-            <h2>Featured exercises</h2>
+            <p class="eyebrow">@L["Exercise library"]</p>
+            <h2>@L["Featured exercises"]</h2>
         </div>
-        <a asp-controller="Exercises" asp-action="Index">Open catalog</a>
+        <a asp-controller="Exercises" asp-action="Index">@L["Open catalog"]</a>
     </div>
 
     <div class="exercise-grid">
@@ -65,15 +65,15 @@
                 <p>@exercise.Description</p>
                 <dl>
                     <div>
-                        <dt>Muscle group</dt>
+                        <dt>@L["Muscle group"]</dt>
                         <dd>@exercise.MuscleGroup</dd>
                     </div>
                     <div>
-                        <dt>Equipment</dt>
+                        <dt>@L["Equipment"]</dt>
                         <dd>@exercise.Equipment</dd>
                     </div>
                 </dl>
-                <a class="btn btn-outline-primary" asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.Id">View details</a>
+                <a class="btn btn-outline-primary" asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.Id">@L["View details"]</a>
             </article>
         }
     </div>
@@ -82,10 +82,10 @@
 <section class="home-section">
     <div class="section-title-row">
         <div>
-            <p class="eyebrow">Training plans</p>
-            <h2>Ready workout complexes</h2>
+            <p class="eyebrow">@L["Training plans"]</p>
+            <h2>@L["Ready workout complexes"]</h2>
         </div>
-        <a asp-controller="WorkoutComplexes" asp-action="Index">Open complexes</a>
+        <a asp-controller="WorkoutComplexes" asp-action="Index">@L["Open complexes"]</a>
     </div>
 
     <div class="complex-preview-grid">
@@ -102,15 +102,15 @@
                 </div>
                 <dl>
                     <div>
-                        <dt>Duration</dt>
-                        <dd>@complex.DurationMinutes min</dd>
+                        <dt>@L["Duration"]</dt>
+                        <dd>@complex.DurationMinutes @L["min"]</dd>
                     </div>
                     <div>
-                        <dt>Exercises</dt>
+                        <dt>@L["Exercises"]</dt>
                         <dd>@complex.ExerciseCount</dd>
                     </div>
                 </dl>
-                <a class="btn btn-outline-primary" asp-controller="WorkoutComplexes" asp-action="Details" asp-route-id="@complex.Id">View plan</a>
+                <a class="btn btn-outline-primary" asp-controller="WorkoutComplexes" asp-action="Details" asp-route-id="@complex.Id">@L["View plan"]</a>
             </article>
         }
     </div>

@@ -1,18 +1,18 @@
 @model FitnessTrainingApp.Models.ViewModels.Admin.UserManagementIndexViewModel
 
 @{
-    ViewData["Title"] = "User Management";
+    ViewData["Title"] = L["User Management"];
 }
 
 <section class="page-header">
     <div>
-        <p class="eyebrow">Admin area</p>
-        <h1>User Management</h1>
-        <p class="lead">Assign user roles for access to trainer and administrator features.</p>
+        <p class="eyebrow">@L["Admin Area"]</p>
+        <h1>@L["User Management"]</h1>
+        <p class="lead">@L["Assign user roles for access to trainer and administrator features."]</p>
     </div>
 </section>
 
-<section class="management-list" aria-label="Users">
+<section class="management-list" aria-label="@L["Users"]">
     @foreach (var user in Model.Users)
     {
         <article class="management-row">
@@ -20,11 +20,11 @@
                 <span class="playlist-type">@user.Role</span>
                 <h2>@user.FullName</h2>
                 <p>@user.Email</p>
-                <span class="playlist-meta">Registered @user.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
+                <span class="playlist-meta">@L["Registered"] @user.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span>
             </div>
             @if (user.Id == Model.CurrentUserId)
             {
-                <span class="playlist-meta">Current admin account</span>
+                <span class="playlist-meta">@L["Current admin account"]</span>
             }
             else
             {
@@ -36,7 +36,7 @@
                             <option value="@role" selected="@(role == user.Role)">@role</option>
                         }
                     </select>
-                    <button type="submit" class="btn btn-primary">Update role</button>
+                    <button type="submit" class="btn btn-primary">@L["Update role"]</button>
                 </form>
             }
         </article>

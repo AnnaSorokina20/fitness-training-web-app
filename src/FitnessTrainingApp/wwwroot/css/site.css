@@ -1120,6 +1120,29 @@ main {
   color: #1f2933;
 }
 
+.language-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 10px;
+}
+
+.language-option {
+  border: 0;
+  background: transparent;
+  color: #627d98;
+  font-weight: 700;
+  padding: 0;
+}
+
+.language-option.active {
+  color: #1f2933;
+}
+
+.language-divider {
+  color: #9fb3c8;
+}
+
 @media (max-width: 991px) {
   .catalog-filter,
   .exercise-grid,

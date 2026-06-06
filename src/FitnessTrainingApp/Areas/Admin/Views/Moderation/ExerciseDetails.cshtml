@@ -1,15 +1,15 @@
 @model FitnessTrainingApp.Models.ViewModels.Admin.PendingExerciseViewModel
 
 @{
-    ViewData["Title"] = $"Review {Model.Name}";
+    ViewData["Title"] = L["Review item", Model.Name];
 }
 
 <article class="exercise-details">
-    <a class="back-link" asp-area="Admin" asp-controller="Moderation" asp-action="Index">Back to moderation</a>
+    <a class="back-link" asp-area="Admin" asp-controller="Moderation" asp-action="Index">@L["Back to moderation"]</a>
 
     <header class="details-header">
         <div>
-            <p class="eyebrow">Pending exercise</p>
+            <p class="eyebrow">@L["Pending exercise"]</p>
             <h1>@Model.Name</h1>
             <p class="lead">@Model.Description</p>
         </div>
@@ -23,14 +23,14 @@
         <div class="details-main">
             @if (Model.MediaUrls.Count == 0)
             {
-                <div class="media-placeholder">Media was not added by the trainer.</div>
+                <div class="media-placeholder">@L["Media was not added by the trainer."]</div>
             }
             else
             {
                 <partial name="_MediaGallery" model="Model.MediaUrls" />
             }
 
-            <h2>Safety notes</h2>
+            <h2>@L["Safety notes"]</h2>
             <p>@Model.SafetyNotes</p>
         </div>
 
@@ -39,39 +39,39 @@
                 <div class="moderation-primary-actions moderation-action-card">
                     <form asp-area="Admin" asp-controller="Moderation" asp-action="PublishExercise" method="post">
                         <input type="hidden" name="id" value="@Model.Id" />
-                        <button type="submit" class="btn btn-primary">Publish</button>
+                        <button type="submit" class="btn btn-primary">@L["Publish"]</button>
                     </form>
                     <form asp-area="Admin" asp-controller="Moderation" asp-action="DeleteExercise" method="post">
                         <input type="hidden" name="id" value="@Model.Id" />
-                        <button type="submit" class="btn btn-outline-danger">Delete</button>
+                        <button type="submit" class="btn btn-outline-danger">@L["Delete"]</button>
                     </form>
                 </div>
 
                 <form asp-area="Admin" asp-controller="Moderation" asp-action="RejectExercise" method="post" class="moderation-reject-form">
                     <input type="hidden" name="id" value="@Model.Id" />
-                    <label for="moderationComment">Rejection comment</label>
+                    <label for="moderationComment">@L["Rejection comment"]</label>
                     <textarea id="moderationComment" name="moderationComment" class="form-control" rows="3" maxlength="1000"></textarea>
-                    <button type="submit" class="btn btn-outline-danger">Reject</button>
+                    <button type="submit" class="btn btn-outline-danger">@L["Reject"]</button>
                 </form>
             </section>
 
             <aside class="details-side">
-                <h2>Submission</h2>
+                <h2>@L["Submission"]</h2>
                 <dl>
                     <div>
-                        <dt>Trainer</dt>
+                        <dt>@L["Trainer"]</dt>
                         <dd>@Model.TrainerName</dd>
                     </div>
                     <div>
-                        <dt>Submitted</dt>
+                        <dt>@L["Submitted"]</dt>
                         <dd>@Model.SubmittedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</dd>
                     </div>
                     <div>
-                        <dt>Equipment</dt>
+                        <dt>@L["Equipment"]</dt>
                         <dd>@Model.Equipment</dd>
                     </div>
                     <div>
-                        <dt>Muscle group</dt>
+                        <dt>@L["Muscle group"]</dt>
                         <dd>@Model.MuscleGroup</dd>
                     </div>
                 </dl>

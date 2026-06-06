@@ -1,26 +1,26 @@
 @model FitnessTrainingApp.Models.ViewModels.WorkoutComplexes.WorkoutComplexCatalogViewModel
 
 @{
-    ViewData["Title"] = "Workout Complexes";
+    ViewData["Title"] = L["Workout Complexes"];
 }
 
 <section class="page-header">
     <div>
-        <p class="eyebrow">Training plans</p>
-        <h1>Workout Complexes</h1>
-        <p class="lead">Choose a structured plan for home or gym training and review the exercises before starting.</p>
+        <p class="eyebrow">@L["Training plans"]</p>
+        <h1>@L["Workout Complexes"]</h1>
+        <p class="lead">@L["Choose a structured plan for home or gym training and review the exercises before starting."]</p>
     </div>
 </section>
 
 <section class="catalog-summary" aria-label="Complex catalog summary">
-    <span>@Model.WorkoutComplexes.Pagination.TotalItems complex@(Model.WorkoutComplexes.Pagination.TotalItems == 1 ? "" : "es") available</span>
+    <span>@L["Complexes available", Model.WorkoutComplexes.Pagination.TotalItems]</span>
 </section>
 
 @if (Model.WorkoutComplexes.Pagination.TotalItems == 0)
 {
     <div class="empty-state">
-        <h2>No workout complexes found</h2>
-        <p>Published training plans will appear here after moderation.</p>
+        <h2>@L["No workout complexes found"]</h2>
+        <p>@L["Published training plans will appear here after moderation."]</p>
     </div>
 }
 else
@@ -37,15 +37,15 @@ else
                 <p>@complex.Description</p>
                 <dl>
                     <div>
-                        <dt>Duration</dt>
-                        <dd>@complex.DurationMinutes min</dd>
+                        <dt>@L["Duration"]</dt>
+                        <dd>@complex.DurationMinutes @L["min"]</dd>
                     </div>
                     <div>
-                        <dt>Exercises</dt>
+                        <dt>@L["Exercises"]</dt>
                         <dd>@complex.ExerciseCount</dd>
                     </div>
                 </dl>
-                <a class="btn btn-outline-primary" asp-controller="WorkoutComplexes" asp-action="Details" asp-route-id="@complex.Id">View plan</a>
+                <a class="btn btn-outline-primary" asp-controller="WorkoutComplexes" asp-action="Details" asp-route-id="@complex.Id">@L["View plan"]</a>
             </article>
         }
     </section>

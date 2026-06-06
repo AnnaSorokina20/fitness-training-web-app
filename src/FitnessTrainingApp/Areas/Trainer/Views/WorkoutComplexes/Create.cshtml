@@ -2,14 +2,14 @@
 @using FitnessTrainingApp.Models.Entities.Enums
 
 @{
-    ViewData["Title"] = "Create Workout Complex";
+    ViewData["Title"] = L["Create Workout Complex"];
 }
 
 <section class="page-header">
     <div>
-        <p class="eyebrow">Trainer area</p>
-        <h1>Create Workout Complex</h1>
-        <p class="lead">New complexes are submitted with PendingModeration status.</p>
+        <p class="eyebrow">@L["Trainer Area"]</p>
+        <h1>@L["Create Workout Complex"]</h1>
+        <p class="lead">@L["New complexes are submitted with PendingModeration status."]</p>
     </div>
 </section>
 
@@ -30,7 +30,7 @@
         </div>
 
         <div class="form-field">
-            <label asp-for="WorkoutType">Workout type</label>
+            <label asp-for="WorkoutType">@L["Workout type"]</label>
             <select asp-for="WorkoutType" class="form-select" asp-items="Html.GetEnumSelectList<WorkoutType>()"></select>
             <span asp-validation-for="WorkoutType" class="text-danger"></span>
         </div>
@@ -50,20 +50,20 @@
 
     <section class="exercise-picker" data-exercise-picker>
         <div class="exercise-picker-header">
-            <h2>Exercises</h2>
-            <button type="button" class="btn btn-outline-primary" data-add-exercise>Add exercise</button>
+            <h2>@L["Exercises"]</h2>
+            <button type="button" class="btn btn-outline-primary" data-add-exercise>@L["Add exercise"]</button>
         </div>
         <div data-exercise-list>
             @for (var i = 0; i < Model.Exercises.Count; i++)
             {
                 <div class="exercise-picker-row" data-exercise-row>
-                    <div class="exercise-picker-title">Exercise @(i + 1)</div>
-                    <button type="button" class="btn btn-outline-danger exercise-remove" data-remove-exercise>Remove</button>
+                    <div class="exercise-picker-title">@L["Exercise"] @(i + 1)</div>
+                    <button type="button" class="btn btn-outline-danger exercise-remove" data-remove-exercise>@L["Remove"]</button>
 
                     <div class="form-field">
-                        <label asp-for="Exercises[i].ExerciseId">Exercise</label>
+                        <label asp-for="Exercises[i].ExerciseId">@L["Exercise"]</label>
                         <select asp-for="Exercises[i].ExerciseId" class="form-select" asp-items="Model.ExerciseOptions">
-                            <option value="0">Not selected</option>
+                            <option value="0">@L["Not selected"]</option>
                         </select>
                     </div>
                     <div class="form-field">
@@ -82,13 +82,13 @@
 
         <template data-exercise-template>
             <div class="exercise-picker-row" data-exercise-row>
-                <div class="exercise-picker-title">Exercise __NUMBER__</div>
-                <button type="button" class="btn btn-outline-danger exercise-remove" data-remove-exercise>Remove</button>
+                <div class="exercise-picker-title">@L["Exercise"] __NUMBER__</div>
+                <button type="button" class="btn btn-outline-danger exercise-remove" data-remove-exercise>@L["Remove"]</button>
 
                 <div class="form-field">
-                    <label for="Exercises___INDEX____ExerciseId">Exercise</label>
+                    <label for="Exercises___INDEX____ExerciseId">@L["Exercise"]</label>
                     <select id="Exercises___INDEX____ExerciseId" name="Exercises[__INDEX__].ExerciseId" class="form-select">
-                        <option value="0">Not selected</option>
+                        <option value="0">@L["Not selected"]</option>
                         @foreach (var option in Model.ExerciseOptions)
                         {
                             <option value="@option.Value">@option.Text</option>
@@ -96,11 +96,11 @@
                     </select>
                 </div>
                 <div class="form-field">
-                    <label for="Exercises___INDEX____Sets">Sets</label>
+                    <label for="Exercises___INDEX____Sets">@L["sets"]</label>
                     <input id="Exercises___INDEX____Sets" name="Exercises[__INDEX__].Sets" class="form-control" type="number" value="3" min="1" max="20" />
                 </div>
                 <div class="form-field">
-                    <label for="Exercises___INDEX____Repetitions">Repetitions</label>
+                    <label for="Exercises___INDEX____Repetitions">@L["Repetitions"]</label>
                     <input id="Exercises___INDEX____Repetitions" name="Exercises[__INDEX__].Repetitions" class="form-control" type="number" value="10" min="1" max="100" />
                 </div>
             </div>
@@ -108,8 +108,8 @@
     </section>
 
     <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a class="btn btn-outline-secondary" asp-area="Trainer" asp-controller="WorkoutComplexes" asp-action="Index">Cancel</a>
+        <button type="submit" class="btn btn-primary">@L["Save"]</button>
+        <a class="btn btn-outline-secondary" asp-area="Trainer" asp-controller="WorkoutComplexes" asp-action="Index">@L["Cancel"]</a>
     </div>
 </form>
 

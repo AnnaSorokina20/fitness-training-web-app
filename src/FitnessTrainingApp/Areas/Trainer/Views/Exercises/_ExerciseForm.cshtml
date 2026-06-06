@@ -18,7 +18,7 @@
         </div>
 
         <div class="form-field">
-            <label asp-for="WorkoutType">Workout type</label>
+            <label asp-for="WorkoutType">@L["Workout type"]</label>
             <select asp-for="WorkoutType" class="form-select" asp-items="Html.GetEnumSelectList<WorkoutType>()"></select>
             <span asp-validation-for="WorkoutType" class="text-danger"></span>
         </div>
@@ -30,7 +30,7 @@
         </div>
 
         <div class="form-field">
-            <label asp-for="MuscleGroup">Muscle group</label>
+            <label asp-for="MuscleGroup">@L["Muscle group"]</label>
             <input asp-for="MuscleGroup" class="form-control" />
             <span asp-validation-for="MuscleGroup" class="text-danger"></span>
         </div>
@@ -54,14 +54,14 @@
         </div>
 
         <div class="form-field form-field-wide">
-            <label asp-for="SafetyNotes">Safety notes</label>
+            <label asp-for="SafetyNotes">@L["Safety notes"]</label>
             <textarea asp-for="SafetyNotes" class="form-control" rows="4"></textarea>
             <span asp-validation-for="SafetyNotes" class="text-danger"></span>
         </div>
     </div>
 
     <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a class="btn btn-outline-secondary" asp-area="Trainer" asp-controller="Exercises" asp-action="Index">Cancel</a>
+        <button type="submit" class="btn btn-primary">@L["Save"]</button>
+        <a class="btn btn-outline-secondary" asp-area="Trainer" asp-controller="Exercises" asp-action="Index">@L["Cancel"]</a>
     </div>
 </form>

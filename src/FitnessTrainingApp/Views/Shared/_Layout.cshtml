@@ -1,9 +1,13 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+@{
+    var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var returnUrl = Context.Request.PathBase + Context.Request.Path + Context.Request.QueryString;
+}
+<html lang="@currentCulture">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Fitness Training</title>
+    <title>@ViewData["Title"] - @L["Fitness Training"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FitnessTrainingApp.styles.css" asp-append-version="true" />
@@ -12,7 +16,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Fitness Training</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@L["Fitness Training"]</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,43 +24,51 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@L["Home"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Exercises" asp-action="Index">Exercises</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Exercises" asp-action="Index">@L["Exercises"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="WorkoutComplexes" asp-action="Index">Workout Complexes</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="WorkoutComplexes" asp-action="Index">@L["Workout Complexes"]</a>
                         </li>
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Playlist" asp-action="Index">My Playlist</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Playlist" asp-action="Index">@L["My Playlist"]</a>
                             </li>
                         }
                         @if (User.IsInRole("Trainer"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Trainer" asp-controller="Exercises" asp-action="Index">Trainer Exercises</a>
+                                <a class="nav-link text-dark" asp-area="Trainer" asp-controller="Exercises" asp-action="Index">@L["Trainer Exercises"]</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Trainer" asp-controller="WorkoutComplexes" asp-action="Index">Trainer Complexes</a>
+                                <a class="nav-link text-dark" asp-area="Trainer" asp-controller="WorkoutComplexes" asp-action="Index">@L["Trainer Complexes"]</a>
                             </li>
                         }
                         @if (User.IsInRole("Administrator"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Moderation" asp-action="Index">Moderation</a>
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Moderation" asp-action="Index">@L["Moderation"]</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a>
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Users" asp-action="Index">@L["Users"]</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="AdminLogs" asp-action="Index">Logs</a>
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="AdminLogs" asp-action="Index">@L["Logs"]</a>
                             </li>
                         }
                     </ul>
                     <ul class="navbar-nav account-nav">
+                        <li class="nav-item">
+                            <form asp-area="" asp-controller="Localization" asp-action="SetLanguage" method="post" class="language-switcher">
+                                <input type="hidden" name="returnUrl" value="@returnUrl" />
+                                <button type="submit" name="culture" value="en" class="language-option @(currentCulture == "en" ? "active" : "")">EN</button>
+                                <span class="language-divider">/</span>
+                                <button type="submit" name="culture" value="uk" class="language-option @(currentCulture == "uk" ? "active" : "")">UA</button>
+                            </form>
+                        </li>
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item">
@@ -64,17 +76,17 @@
                             </li>
                             <li class="nav-item">
                                 <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="nav-form">
-                                    <button type="submit" class="nav-link nav-button">Logout</button>
+                                    <button type="submit" class="nav-link nav-button">@L["Logout"]</button>
                                 </form>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">@L["Log in"]</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">@L["Register"]</a>
                             </li>
                         }
                     </ul>
@@ -92,44 +104,44 @@
         <div class="container">
             <div class="footer-main">
                 <div class="footer-brand-block">
-                    <a class="footer-brand" asp-area="" asp-controller="Home" asp-action="Index">Fitness Training</a>
-                    <p>Exercise catalog and structured workout plans for home and gym training.</p>
+                    <a class="footer-brand" asp-area="" asp-controller="Home" asp-action="Index">@L["Fitness Training"]</a>
+                    <p>@L["Exercise catalog and structured workout plans for home and gym training."]</p>
                 </div>
 
                 <nav class="footer-links" aria-label="Footer navigation">
-                    <h2>Catalog</h2>
-                    <a asp-area="" asp-controller="Exercises" asp-action="Index">Exercises</a>
-                    <a asp-area="" asp-controller="WorkoutComplexes" asp-action="Index">Workout Complexes</a>
+                    <h2>@L["Catalog"]</h2>
+                    <a asp-area="" asp-controller="Exercises" asp-action="Index">@L["Exercises"]</a>
+                    <a asp-area="" asp-controller="WorkoutComplexes" asp-action="Index">@L["Workout Complexes"]</a>
                     @if (User.Identity?.IsAuthenticated == true)
                     {
-                        <a asp-area="" asp-controller="Playlist" asp-action="Index">My Playlist</a>
+                        <a asp-area="" asp-controller="Playlist" asp-action="Index">@L["My Playlist"]</a>
                     }
                 </nav>
 
                 <nav class="footer-links" aria-label="Footer account navigation">
-                    <h2>Account</h2>
+                    <h2>@L["Account"]</h2>
                     @if (User.Identity?.IsAuthenticated == true)
                     {
                         <span>@User.Identity.Name</span>
                         @if (User.IsInRole("Trainer"))
                         {
-                            <a asp-area="Trainer" asp-controller="Exercises" asp-action="Index">Trainer Area</a>
+                            <a asp-area="Trainer" asp-controller="Exercises" asp-action="Index">@L["Trainer Area"]</a>
                         }
                         @if (User.IsInRole("Administrator"))
                         {
-                            <a asp-area="Admin" asp-controller="Moderation" asp-action="Index">Admin Area</a>
+                            <a asp-area="Admin" asp-controller="Moderation" asp-action="Index">@L["Admin Area"]</a>
                         }
                     }
                     else
                     {
-                        <a asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
-                        <a asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                        <a asp-area="" asp-controller="Account" asp-action="Login">@L["Log in"]</a>
+                        <a asp-area="" asp-controller="Account" asp-action="Register">@L["Register"]</a>
                     }
                 </nav>
             </div>
 
             <div class="footer-bottom">
-                <span>&copy; 2026 Fitness Training</span>
+                <span>&copy; 2026 @L["Fitness Training"]</span>
             </div>
         </div>
     </footer>

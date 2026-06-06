@@ -12,11 +12,11 @@
                 <div class="media-frame" id="media-@index">
                     @if (!string.IsNullOrWhiteSpace(youtubeEmbedUrl))
                     {
-                        <iframe src="@youtubeEmbedUrl" title="Exercise video" allowfullscreen loading="lazy"></iframe>
+                        <iframe src="@youtubeEmbedUrl" title="@L["Exercise video"]" allowfullscreen loading="lazy"></iframe>
                     }
                     else if (IsImageUrl(mediaUrl))
                     {
-                        <img src="@mediaUrl" alt="Exercise media" loading="lazy" />
+                        <img src="@mediaUrl" alt="@L["Exercise media"]" loading="lazy" />
                     }
                     else if (IsVideoUrl(mediaUrl))
                     {
@@ -24,7 +24,7 @@
                     }
                     else
                     {
-                        <a class="media-link" href="@mediaUrl" target="_blank" rel="noopener">Open media</a>
+                        <a class="media-link" href="@mediaUrl" target="_blank" rel="noopener">@L["Open media"]</a>
                     }
                 </div>
             }
@@ -32,10 +32,10 @@
 
         @if (Model.Count > 1)
         {
-            <div class="media-carousel-nav" aria-label="Media navigation">
+            <div class="media-carousel-nav" aria-label="@L["Media navigation"]">
                 @for (var index = 0; index < Model.Count; index++)
                 {
-                    <a href="#media-@index" aria-label="Show media @(index + 1)">@(index + 1)</a>
+                    <a href="#media-@index" aria-label="@L["Show media", index + 1]">@(index + 1)</a>
                 }
             </div>
         }

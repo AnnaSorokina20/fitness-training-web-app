@@ -7,9 +7,9 @@
 
 @if (Model.TotalItems > 0)
 {
-    <nav class="pagination-panel" aria-label="Pagination">
+    <nav class="pagination-panel" aria-label="@L["Pagination"]">
         <div class="page-size-form">
-            <span>Show</span>
+            <span>@L["Show"]</span>
             @foreach (var size in Model.PageSizeOptions)
             {
                 var sizeRouteValues = new Dictionary<string, string>(Model.RouteValues)
@@ -32,9 +32,9 @@
             <a class="page-link-button @(Model.HasPreviousPage ? string.Empty : "disabled")"
                asp-controller="@Model.ControllerName"
                asp-action="@Model.ActionName"
-               asp-all-route-data="routeValues">Previous</a>
+               asp-all-route-data="routeValues">@L["Previous"]</a>
 
-            <span>Page @Model.CurrentPage of @Model.TotalPages</span>
+            <span>@L["Page of", Model.CurrentPage, Model.TotalPages]</span>
 
             @{
                 routeValues["page"] = (Model.CurrentPage + 1).ToString();
@@ -42,7 +42,7 @@
             <a class="page-link-button @(Model.HasNextPage ? string.Empty : "disabled")"
                asp-controller="@Model.ControllerName"
                asp-action="@Model.ActionName"
-               asp-all-route-data="routeValues">Next</a>
+               asp-all-route-data="routeValues">@L["Next"]</a>
         </div>
     </nav>
 }
