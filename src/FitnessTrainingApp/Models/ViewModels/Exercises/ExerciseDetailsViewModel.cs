@@ -19,5 +19,8 @@ public sealed class ExerciseDetailsViewModel
     public int CommentCount { get; set; }
     public int? UserRating { get; set; }
     public int? PlaylistItemId { get; set; }
+    public string BackUrl { get; set; } = string.Empty;
+    public string BackLabel { get; set; } = "Back to catalog";
+    public bool HasCustomBackUrl { get; set; }
     public IReadOnlyList<ExerciseCommentViewModel> Comments { get; set; } = [];
 }

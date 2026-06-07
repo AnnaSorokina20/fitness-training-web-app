@@ -5,7 +5,7 @@
 }
 
 <article class="exercise-details">
-    <a class="back-link" asp-controller="Exercises" asp-action="Index">@L["Back to catalog"]</a>
+    <a class="back-link" href="@Model.BackUrl">@L[Model.BackLabel]</a>
 
     <header class="details-header">
         <div>
@@ -68,6 +68,10 @@
                 {
                     <form asp-controller="Exercises" asp-action="Rate" method="post" class="rating-form">
                         <input type="hidden" name="exerciseId" value="@Model.Id" />
+                        @if (Model.HasCustomBackUrl)
+                        {
+                            <input type="hidden" name="returnUrl" value="@Model.BackUrl" />
+                        }
                         <span class="rating-label">@L["Your rating"]</span>
                         <div class="star-rating" aria-label="@L["Your rating"]">
                             @for (var value = 5; value >= 1; value--)
@@ -80,6 +84,10 @@
 
                     <form asp-controller="Exercises" asp-action="AddComment" method="post" class="comment-form">
                         <input type="hidden" name="exerciseId" value="@Model.Id" />
+                        @if (Model.HasCustomBackUrl)
+                        {
+                            <input type="hidden" name="returnUrl" value="@Model.BackUrl" />
+                        }
                         <label for="commentText">@L["Comment"]</label>
                         <textarea id="commentText" name="text" class="form-control" rows="4" maxlength="1000" required></textarea>
                         <button type="submit" class="btn btn-primary">@L["Add comment"]</button>
