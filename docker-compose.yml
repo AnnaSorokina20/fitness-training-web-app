@@ -1,4 +1,22 @@
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fitness_training_app
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=fitness_training_dev;Username=postgres;Password=abracadabra
+    ports:
+      - "5127:8080"
+    volumes:
+      - fitness_training_uploads:/app/wwwroot/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+
   postgres:
     image: postgres:16-alpine
     container_name: fitness_training_postgres
@@ -19,3 +37,4 @@ services:
 
 volumes:
   fitness_training_postgres_data:
+  fitness_training_uploads:
